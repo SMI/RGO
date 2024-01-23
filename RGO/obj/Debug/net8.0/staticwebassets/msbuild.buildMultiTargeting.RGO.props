@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\RGO.props" />
+</Project>

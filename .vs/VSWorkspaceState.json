@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\RGO",
+    "\\RGO\\Controllers",
+    "\\RGO\\Data",
+    "\\RGO\\Models"
   ],
-  "SelectedNode": "\\C:\\Users\\slaw002\\source\\repos\\HicServices\\RGO",
   "PreviewInSolutionExplorer": false
 }

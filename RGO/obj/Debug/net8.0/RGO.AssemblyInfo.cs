@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RGO")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5277fcded8fb6e01471e101b8d4112d540155f55")]
 [assembly: System.Reflection.AssemblyProductAttribute("RGO")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RGO")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

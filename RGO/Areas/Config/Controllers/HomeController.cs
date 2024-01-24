@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using RGO.Models;
 using System.Diagnostics;
 
-namespace RGO.Controllers
+namespace RGO.Areas.Config.Controllers
 {
+    [Area("Config")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

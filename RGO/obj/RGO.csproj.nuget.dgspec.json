@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\slaw002\\Source\\Repos\\HicServices\\RGO\\RGO\\RGO.csproj": {}
+    "C:\\Users\\slaw002\\source\\repos\\HicServices\\RGO\\RGO\\RGO.csproj": {}
   },
   "projects": {
-    "C:\\Users\\slaw002\\Source\\Repos\\HicServices\\RGO\\RGO\\RGO.csproj": {
+    "C:\\Users\\slaw002\\source\\repos\\HicServices\\RGO\\RGO\\RGO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\slaw002\\Source\\Repos\\HicServices\\RGO\\RGO\\RGO.csproj",
+        "projectUniqueName": "C:\\Users\\slaw002\\source\\repos\\HicServices\\RGO\\RGO\\RGO.csproj",
         "projectName": "RGO",
-        "projectPath": "C:\\Users\\slaw002\\Source\\Repos\\HicServices\\RGO\\RGO\\RGO.csproj",
+        "projectPath": "C:\\Users\\slaw002\\source\\repos\\HicServices\\RGO\\RGO\\RGO.csproj",
         "packagesPath": "C:\\Users\\slaw002\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\slaw002\\Source\\Repos\\HicServices\\RGO\\RGO\\obj\\",
+        "outputPath": "C:\\Users\\slaw002\\source\\repos\\HicServices\\RGO\\RGO\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\slaw002\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -39,6 +39,22 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using RGO.Data;
+using RGO.DataAccess.Data;
 using RGO.Models;
 
 namespace RGO.Areas.Config.Controllers

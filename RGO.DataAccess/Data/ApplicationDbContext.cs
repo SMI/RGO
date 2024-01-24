@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RGO.Models;
 
-namespace RGO.Data
+namespace RGO.DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
     {

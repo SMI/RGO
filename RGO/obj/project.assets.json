@@ -2875,6 +2875,42 @@
             "rid": "win"
           }
         }
+      },
+      "RGO.DataAccess/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "8.0.1",
+          "Microsoft.EntityFrameworkCore.SqlServer": "8.0.1",
+          "RGO.Models": "1.0.0",
+          "RGO.Utility": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/RGO.DataAccess.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/RGO.DataAccess.dll": {}
+        }
+      },
+      "RGO.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/RGO.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/RGO.Models.dll": {}
+        }
+      },
+      "RGO.Utility/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/RGO.Utility.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/RGO.Utility.dll": {}
+        }
       }
     }
   },
@@ -7982,6 +8018,21 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "RGO.DataAccess/1.0.0": {
+      "type": "project",
+      "path": "../RGO.DataAccess/RGO.DataAccess.csproj",
+      "msbuildProject": "../RGO.DataAccess/RGO.DataAccess.csproj"
+    },
+    "RGO.Models/1.0.0": {
+      "type": "project",
+      "path": "../RGO.Models/RGO.Models.csproj",
+      "msbuildProject": "../RGO.Models/RGO.Models.csproj"
+    },
+    "RGO.Utility/1.0.0": {
+      "type": "project",
+      "path": "../RGO.Utility/RGO.Utility.csproj",
+      "msbuildProject": "../RGO.Utility/RGO.Utility.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -7990,7 +8041,8 @@
       "Microsoft.EntityFrameworkCore >= 8.0.1",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.1",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.1",
-      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 8.0.0"
+      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 8.0.0",
+      "RGO.DataAccess >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -8019,7 +8071,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\slaw002\\source\\repos\\HicServices\\RGO\\RGO.DataAccess\\RGO.DataAccess.csproj": {
+              "projectPath": "C:\\Users\\slaw002\\source\\repos\\HicServices\\RGO\\RGO.DataAccess\\RGO.DataAccess.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

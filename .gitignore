@@ -5,7 +5,7 @@
 RGO/bin
 RGO/obj
 .vs
-
+RGO/.vs
 
 # User-specific files
 *.rsuser

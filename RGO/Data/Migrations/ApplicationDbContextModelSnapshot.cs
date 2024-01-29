@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RGO.Data;
+using RGO.DataAccess.Data;
 using System;
 
 namespace RGO.Data.Migrations

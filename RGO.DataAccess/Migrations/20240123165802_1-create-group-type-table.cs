@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace RGO.Migrations
+namespace RGO.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class _1creategrouptypetable : Migration

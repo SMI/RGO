@@ -35,7 +35,7 @@ namespace RGO.DataAccess.Repository
             return query.ToList();
         }
 
-        public TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> filter)
+        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter)
         {
             IQueryable<TEntity> query = dbSet;
             query = query.Where(filter);

@@ -11,7 +11,7 @@ namespace RGO.DataAccess.Repository.IRepository
     {
         //TEntity - Group Type
         IEnumerable<TEntity> GetAll();
-        TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> filter);
+        TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter);
         void Add(TEntity entity);
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entity);

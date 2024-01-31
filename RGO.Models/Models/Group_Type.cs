@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using RGO.Models.Models;
+using System.Text.RegularExpressions;
 
 namespace RGO.Models
 {
@@ -25,6 +27,7 @@ namespace RGO.Models
 
         public string? Notes { get; set; }
 
+        public ICollection<Models.Group> Groups { get; }
 
     }
 }

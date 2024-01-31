@@ -10,9 +10,10 @@ namespace RGO.Models.Models
         public int Id { get; set; }
 
 
-        public required int Group_TypeId { get; set; }
-        [ForeignKey("Group_TypeId")]
-        public virtual required Group_Type Group_Type { get; set; }
+        public required int Group_TypeId { get; set; }  // Required Foreign Key Property
+        /*[ForeignKey("Group_TypeId")]
+        public virtual required Group_Type Group_Type { get; set; }*/
+        public required Group_Type Group_Type { get; set; }
 
         [DisplayName("Group Name")]
         public required string Name { get; set; }

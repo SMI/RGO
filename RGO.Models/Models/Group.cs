@@ -1,16 +1,24 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 
-namespace RGO.Models
+namespace RGO.Models.Models
 {
-    public class Group_Type
+    public class Group
     {
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(20)]
-        [DisplayName("Group Type Name")]
+
+        public required int Group_TypeId { get; set; }
+        [ForeignKey("Group_TypeId")]
+        public virtual required Group_Type Group_Type { get; set; }
+
+        [DisplayName("Group Name")]
         public required string Name { get; set; }
+
+        [DisplayName("Contact Details")]
+        public string? ContactInfo { get; set; }
 
 
         /* Common Columns that should appear on all tables */
@@ -24,7 +32,5 @@ namespace RGO.Models
         public DateTime? Updated_Date { get; set; }
 
         public string? Notes { get; set; }
-
-
     }
 }

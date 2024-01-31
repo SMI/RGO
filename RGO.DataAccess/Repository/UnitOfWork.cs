@@ -13,11 +13,13 @@ namespace RGO.DataAccess.Repository
         private ApplicationDbContext _db;
 
         public IGroup_TypeRepository Group_Type { get; private set; }
+        public IGroupRepository Group { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Group_Type = new Group_TypeRepository(_db);
+            Group = new GroupRepository(_db);
 
         }
 

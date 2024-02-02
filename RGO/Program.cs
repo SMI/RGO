@@ -2,13 +2,29 @@ using Microsoft.EntityFrameworkCore;
 using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.DataAccess.Repository;
+using RGO.Utility;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<ApplicationDbContext>(options => {
+    var dbType = builder.Configuration.GetValue(typeof(object), "DatabaseType");   //.Select(option => option.Key == "DatabaseType");
+    switch (dbType)
+    {
+        case nameof(DatabaseTypes.MicrosoftSQL):
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            DatabaseHelper.Instance.SetDatabaseType(DatabaseTypes.MicrosoftSQL);
+            break;
+        case nameof(DatabaseTypes.Postgres):
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+            DatabaseHelper.Instance.SetDatabaseType(DatabaseTypes.Postgres);
+            break;
+        default:
+            throw new Exception($"Unknown database type '{dbType}'");
+    }
+});
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();

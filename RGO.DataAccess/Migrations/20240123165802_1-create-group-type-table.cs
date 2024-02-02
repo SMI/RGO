@@ -36,15 +36,6 @@ namespace RGO.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Group_Types", x => x.Id);
                 });
-
-            //migrationBuilder.InsertData(
-            //    table: "Group_Types",
-            //    columns: new[] { "Id", "Created_By", "Created_Date", "Name", "Notes", "Updated_By", "Updated_Date" },
-            //    values: new object[,]
-            //    {
-            //        { 1, "seed", new DateTime(2024, 1, 23, 16, 58, 2, 404, DateTimeKind.Local).AddTicks(3116), "Research Group", null, null, null },
-            //        { 2, "seed", new DateTime(2024, 1, 23, 16, 58, 2, 404, DateTimeKind.Local).AddTicks(3190), "Data Team", null, null, null }
-            //    });
         }
 
         /// <inheritdoc />

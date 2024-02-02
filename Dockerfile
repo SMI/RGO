@@ -9,10 +9,13 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["RGO.csproj", "."]
-RUN dotnet restore "./././RGO.csproj"
+COPY ["RGO/RGO.csproj", "RGO/"]
+COPY ["RGO.DataAccess/RGO.DataAccess.csproj", "RGO.DataAccess/"]
+COPY ["RGO.Models/RGO.Models.csproj", "RGO.Models/"]
+COPY ["RGO.Utility/RGO.Utility.csproj", "RGO.Utility/"]
+RUN dotnet restore "./RGO/./RGO.csproj"
 COPY . .
-WORKDIR "/src/."
+WORKDIR "/src/RGO"
 RUN dotnet build "./RGO.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

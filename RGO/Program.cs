@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => {
-    var dbType = builder.Configuration.GetValue(typeof(object), "DatabaseType");   //.Select(option => option.Key == "DatabaseType");
+    var dbType = builder.Configuration.GetValue(typeof(object), "DatabaseType");
     switch (dbType)
     {
         case nameof(DatabaseTypes.MicrosoftSQL):

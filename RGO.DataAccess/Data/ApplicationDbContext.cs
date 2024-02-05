@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RGO.Models;
 using RGO.Utility;
+using RGO.Models.Models;
 
 namespace RGO.DataAccess.Data
 {
@@ -19,6 +20,7 @@ namespace RGO.DataAccess.Data
         }
 
         public DbSet<Group_Type> Group_Types { get; set; }
+        public DbSet<Group> Groups { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

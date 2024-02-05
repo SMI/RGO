@@ -10,8 +10,8 @@ namespace RGO.DataAccess.Repository.IRepository
     public interface IRepository<TEntity> where TEntity : class
     {
         //TEntity - Group Type
-        IEnumerable<TEntity> GetAll();
-        TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter);
+        IEnumerable<TEntity> GetAll(string? includeProperties = null);
+        TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter, string? includeProperties = null);
         void Add(TEntity entity);
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entity);

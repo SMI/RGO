@@ -1,0 +1,210 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using RGO.DataAccess.Data;
+using RGO.DataAccess.Repository;
+using RGO.DataAccess.Repository.IRepository;
+using RGO.Models;
+using RGO.Models.Models;
+using RGO.Models.ViewModels;
+
+namespace RGO.Areas.Config.Controllers
+{
+    [Area("Config")]
+    public class GroupController : Controller
+    {
+        private readonly IUnitOfWork _unitOfWork;
+
+
+        public GroupController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+        // GET: Config/Group
+        public IActionResult Index()
+        {
+            List<Group> objList = _unitOfWork.Group.GetAll(includeProperties:"Group_Type").ToList();
+            return View(objList);
+        }
+
+        // GET: Config/Group/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var group = _unitOfWork.Group
+                .FirstOrDefault(m => m.Id == id);
+            if (group == null)
+            {
+                return NotFound();
+            }
+
+            return View(group);
+        }
+
+        public IActionResult Upsert(int? id)
+        {
+
+            GroupVM groupVM = new()
+            {
+
+                Group_TypeList = _unitOfWork.Group_Type.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+                Group = new Group()
+            };
+            if (id == null || id == 0)
+            {
+                //Insert
+                return View(groupVM);
+            }
+            else
+            {
+                //Update
+                groupVM.Group = _unitOfWork.Group.FirstOrDefault(m => m.Id == id);
+                return View(groupVM);
+
+            }
+            
+        }
+
+        // POST: Config/Group/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Upsert(GroupVM groupVM)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Group.Add(groupVM.Group);
+                _unitOfWork.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            else
+
+            {
+                // if there are any errors on the page, you need to explicitly repopulate the dropdown
+                groupVM.Group_TypeList = _unitOfWork.Group_Type.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+                return View(groupVM);
+            }
+
+
+        }
+
+        // GET: Config/Group/Edit/5
+    /*    public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var group = _unitOfWork.Group.FirstOrDefault(m => m.Id == id);
+            if (group == null)
+            {
+                return NotFound();
+            }
+           // ViewData["Group_TypeId"] = new SelectList(_context.Group_Types, "Id", "Name", @group.Group_TypeList);
+            return View(group);
+        }
+
+        // POST: Config/Group/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Group_TypeId,Name,ContactInfo,Created_By,Created_Date,Updated_By,Updated_Date,Notes")] Group @group)
+        {
+            if (id != @group.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _unitOfWork.Group.Update(@group);
+                    //await _unitOfWork.Group.SaveChangesAsync();
+                    _unitOfWork.Save();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                  //  if (!GroupExists(@group.Id))
+                  //  {
+                  //      return NotFound();
+                  //  }
+                  //  else
+                  //  {
+                  //      throw;
+                  //  }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            //ViewData["Group_TypeId"] = new SelectList(_context.Group_Types, "Id", "Name", @group.Group_TypeId);
+            return View(@group);
+        }*/
+
+        // GET: Config/Group/Delete/5
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var group = _unitOfWork.Group.FirstOrDefault(m => m.Id == id);
+            if (group == null)
+            {
+                return NotFound();
+            }
+
+            return View(group);
+        }
+
+        // POST: Config/Group/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            //var @group = await _unitOfWork.Group.FindAsync(id);
+            var group = _unitOfWork.Group.FirstOrDefault(m => m.Id == id);
+            if (group != null)
+            {
+                _unitOfWork.Group.Remove(group);
+            }
+
+            //await _unitOfWork.SaveChangesAsync();
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        #region API CALLS
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Group> objList = _unitOfWork.Group.GetAll(includeProperties: "Group_Type").ToList();
+            return Json(new { data = objList });
+        }
+
+        #endregion
+    }
+}

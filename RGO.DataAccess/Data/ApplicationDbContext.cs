@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RGO.Models;
+using RGO.Utility;
 using RGO.Models.Models;
 
 namespace RGO.DataAccess.Data
@@ -8,19 +9,26 @@ namespace RGO.DataAccess.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
+            switch (DatabaseHelper.Instance.DatabaseType)
+            {
+                case DatabaseTypes.Postgres:
+                    AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+                    break;
+                default:
+                    break;
+            }
         }
 
         public DbSet<Group_Type> Group_Types { get; set; }
         public DbSet<Group> Groups { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-           {
+        {
             modelBuilder.Entity<Group_Type>().HasData(
-                new Group_Type { Id = 1, Name = "Research Group", Created_By ="seed", Created_Date=DateTime.Now},
+                new Group_Type { Id = 1, Name = "Research Group", Created_By = "seed", Created_Date = DateTime.Now },
                 new Group_Type { Id = 2, Name = "Data Team", Created_By = "seed", Created_Date = DateTime.Now }
                 ); ;
-           }
+        }
 
 
     }

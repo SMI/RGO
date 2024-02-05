@@ -2,11 +2,14 @@
 R-GO is a tool to...
 
 
+## Supported Databases
+R-GO supports both MicrosoftSQL and Postgres for its data storage needs.
+This can be configured by ...
 
 ## Installation Notes
 R-GO was designed to be deployed as a docker instance, ...
 ### Prerequisites
-* Access to an SQL database
+* Access to an SQL or Postgres database
 * TODO
 
 ### Docker Setup Steps

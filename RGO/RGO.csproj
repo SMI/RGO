@@ -34,7 +34,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\RGOData\Controllers\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,5 +52,5 @@
   <ItemGroup>
     <ProjectReference Include="..\RGO.DataAccess\RGO.DataAccess.csproj" />
   </ItemGroup>
-
+	
 </Project>

@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using RGO.Models.Models;
+using System.Text.RegularExpressions;
 
 namespace RGO.Models
 {
@@ -8,17 +10,16 @@ namespace RGO.Models
         [Key]
         public int Id { get; set; }
 
-
         [MaxLength(20)]
         [DisplayName("Group Type Name")]
-        public required string Name { get; set; }
+        public string Name { get; set; } = "";
 
 
         /* Common Columns that should appear on all tables */
 
-        public required string Created_By { get; set; }
+        public string Created_By { get; set; } = "";
 
-        public required DateTime Created_Date { get; set; }
+        public DateTime Created_Date { get; set; } = DateTime.UtcNow;
 
         public string? Updated_By { get; set; }
 
@@ -26,6 +27,7 @@ namespace RGO.Models
 
         public string? Notes { get; set; }
 
+        //public ICollection<Models.Group> Groups { get; }
 
     }
 }

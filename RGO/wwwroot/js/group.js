@@ -1,0 +1,31 @@
+﻿$(document).ready(function () {
+    loadDataTable();
+});
+
+function loadDataTable() {
+    dataTable = $('#tblData').DataTable({
+        "ajax": { url: '/config/group/getall' },
+        "columns": [
+            { data: 'group_Type.name', "width": "10%" },
+            { data: 'name', "width": "10%" },
+            { data: 'contactInfo', "width": "10%" },
+            { data: 'created_By', "width": "10%" },
+            { data: 'created_Date', "width": "10%" },
+            { data: 'updated_By', "width": "10%" },
+            { data: 'updated_Date', "width": "10%" },
+            { data: 'notes', "width": "10%" },
+            {
+                data: 'id',
+                "render": function (data) {
+                    return `<div class="w-75 btn-group" role="group">
+               <a href="/config/group/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>               
+               <a onClick=Delete('/config/group/delete/${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
+               </div>`
+                }, "width": "20%"
+            }
+        ]
+
+    });
+}
+
+

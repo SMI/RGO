@@ -76,7 +76,7 @@ namespace RGO.Areas.Config.Controllers
                 return NotFound();
             }
 
-            var group_Type = _unitOfWork.Group_Type.FirstOrDefault(m => m.Id == id); ;
+            var group_Type = _unitOfWork.Group_Type.FirstOrDefault(m => m.Id == id); 
             if (group_Type == null)
             {
                 return NotFound();

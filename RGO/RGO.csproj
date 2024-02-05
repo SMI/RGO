@@ -10,24 +10,36 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Config\Data\**" />
+    <Compile Remove="Areas\Config\Models\**" />
+    <Compile Remove="Areas\RGOData\Data\**" />
+    <Compile Remove="Areas\RGOData\Models\**" />
     <Compile Remove="Repositories\**" />
+    <Content Remove="Areas\Config\Data\**" />
+    <Content Remove="Areas\Config\Models\**" />
+    <Content Remove="Areas\RGOData\Data\**" />
+    <Content Remove="Areas\RGOData\Models\**" />
     <Content Remove="Repositories\**" />
+    <EmbeddedResource Remove="Areas\Config\Data\**" />
+    <EmbeddedResource Remove="Areas\Config\Models\**" />
+    <EmbeddedResource Remove="Areas\RGOData\Data\**" />
+    <EmbeddedResource Remove="Areas\RGOData\Models\**" />
     <EmbeddedResource Remove="Repositories\**" />
+    <None Remove="Areas\Config\Data\**" />
+    <None Remove="Areas\Config\Models\**" />
+    <None Remove="Areas\RGOData\Data\**" />
+    <None Remove="Areas\RGOData\Models\**" />
     <None Remove="Repositories\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Config\Data\" />
-    <Folder Include="Areas\Config\Models\" />
     <Folder Include="Areas\RGOData\Controllers\" />
-    <Folder Include="Areas\RGOData\Data\" />
-    <Folder Include="Areas\RGOData\Models\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1">
       <PrivateAssets>all</PrivateAssets>
@@ -40,5 +52,5 @@
   <ItemGroup>
     <ProjectReference Include="..\RGO.DataAccess\RGO.DataAccess.csproj" />
   </ItemGroup>
-
+	
 </Project>

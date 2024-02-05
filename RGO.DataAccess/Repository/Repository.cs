@@ -21,6 +21,7 @@ namespace RGO.DataAccess.Repository
             _db = db;
             //dbset is generic - will be set to the correct entity type i.e. indicated by TEntity
             this.dbSet = _db.Set<TEntity>();
+            _db.Groups.Include(u => u.Group_Type);
 
         }
 
@@ -29,16 +30,30 @@ namespace RGO.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public IEnumerable<TEntity> GetAll(string? includeProperties = null)
         {
             IQueryable<TEntity> query = dbSet;
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach(var includeProp in includeProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
             return query.ToList();
         }
 
-        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter)
+        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter, string? includeProperties = null)
         {
             IQueryable<TEntity> query = dbSet;
             query = query.Where(filter);
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
             return query.FirstOrDefault();
         }
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository;
 using RGO.DataAccess.Repository.IRepository;
@@ -79,17 +80,38 @@ namespace RGO.Areas.Config.Controllers
             
         }
 
-        // POST: Config/Group/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(GroupVM groupVM)
         {
+
+             string ActionType = "";
+
             if (ModelState.IsValid)
             {
-                _unitOfWork.Group.Add(groupVM.Group);
+                if (groupVM.Group.Id == 0)
+                {
+                    _unitOfWork.Group.Add(groupVM.Group);
+                    ActionType = "Create";
+    }
+                else
+                {
+                    _unitOfWork.Group.Update(groupVM.Group);
+                    ActionType = "Update";
+                }
+                
                 _unitOfWork.Save();
+
+                if (ActionType == "Create")
+                {
+                    TempData["success"] = "Group created successfully";
+                }
+                else
+                {
+                    TempData["success"] = "Group updated successfully";
+                }
+                
+
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -106,103 +128,31 @@ namespace RGO.Areas.Config.Controllers
 
 
         }
-
-        // GET: Config/Group/Edit/5
-    /*    public IActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var group = _unitOfWork.Group.FirstOrDefault(m => m.Id == id);
-            if (group == null)
-            {
-                return NotFound();
-            }
-           // ViewData["Group_TypeId"] = new SelectList(_context.Group_Types, "Id", "Name", @group.Group_TypeList);
-            return View(group);
-        }
-
-        // POST: Config/Group/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Group_TypeId,Name,ContactInfo,Created_By,Created_Date,Updated_By,Updated_Date,Notes")] Group @group)
-        {
-            if (id != @group.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _unitOfWork.Group.Update(@group);
-                    //await _unitOfWork.Group.SaveChangesAsync();
-                    _unitOfWork.Save();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                  //  if (!GroupExists(@group.Id))
-                  //  {
-                  //      return NotFound();
-                  //  }
-                  //  else
-                  //  {
-                  //      throw;
-                  //  }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            //ViewData["Group_TypeId"] = new SelectList(_context.Group_Types, "Id", "Name", @group.Group_TypeId);
-            return View(@group);
-        }*/
-
-        // GET: Config/Group/Delete/5
-        public IActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var group = _unitOfWork.Group.FirstOrDefault(m => m.Id == id);
-            if (group == null)
-            {
-                return NotFound();
-            }
-
-            return View(group);
-        }
-
-        // POST: Config/Group/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            //var @group = await _unitOfWork.Group.FindAsync(id);
-            var group = _unitOfWork.Group.FirstOrDefault(m => m.Id == id);
-            if (group != null)
-            {
-                _unitOfWork.Group.Remove(group);
-            }
-
-            //await _unitOfWork.SaveChangesAsync();
-            _unitOfWork.Save();
-
-            return RedirectToAction(nameof(Index));
-        }
-
+         
         #region API CALLS
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<Group> objList = _unitOfWork.Group.GetAll(includeProperties: "Group_Type").ToList();
-            return Json(new { data = objList });
+            List<Group> objGroupList = _unitOfWork.Group.GetAll(includeProperties: "Group_Type").ToList();
+            return Json(new { data = objGroupList });
+        }
+
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+
+            var groupToBeDeleted = _unitOfWork.Group.FirstOrDefault(u => u.Id == id);
+            if (groupToBeDeleted == null) 
+            { 
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            _unitOfWork.Group.Remove(groupToBeDeleted);
+            _unitOfWork.Save();
+
+            return Json(new { success = true, message = "Delete Successful" });
         }
 
         #endregion

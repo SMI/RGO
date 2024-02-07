@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository;
 using RGO.DataAccess.Repository.IRepository;
@@ -30,11 +29,10 @@ namespace RGO.Areas.Config.Controllers
         // GET: Config/Group
         public IActionResult Index()
         {
-            List<Group> objList = _unitOfWork.Group.GetAll(includeProperties:"Group_Type").ToList();
+            List<Group> objList = _unitOfWork.Group.GetAll(includeProperties: "Group_Type").ToList();
             return View(objList);
         }
 
-        // GET: Config/Group/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -77,41 +75,18 @@ namespace RGO.Areas.Config.Controllers
                 return View(groupVM);
 
             }
-            
+
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(GroupVM groupVM)
         {
-
-             string ActionType = "";
-
             if (ModelState.IsValid)
             {
-                if (groupVM.Group.Id == 0)
-                {
-                    _unitOfWork.Group.Add(groupVM.Group);
-                    ActionType = "Create";
-    }
-                else
-                {
-                    _unitOfWork.Group.Update(groupVM.Group);
-                    ActionType = "Update";
-                }
-                
+                _unitOfWork.Group.Add(groupVM.Group);
                 _unitOfWork.Save();
-
-                if (ActionType == "Create")
-                {
-                    TempData["success"] = "Group created successfully";
-                }
-                else
-                {
-                    TempData["success"] = "Group updated successfully";
-                }
-                
-
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -128,31 +103,48 @@ namespace RGO.Areas.Config.Controllers
 
 
         }
-         
+
+ 
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var group = _unitOfWork.Group.FirstOrDefault(m => m.Id == id);
+            if (group == null)
+            {
+                return NotFound();
+            }
+
+            return View(group);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            //var @group = await _unitOfWork.Group.FindAsync(id);
+            var group = _unitOfWork.Group.FirstOrDefault(m => m.Id == id);
+            if (group != null)
+            {
+                _unitOfWork.Group.Remove(group);
+            }
+
+            //await _unitOfWork.SaveChangesAsync();
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
+        }
+
         #region API CALLS
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<Group> objGroupList = _unitOfWork.Group.GetAll(includeProperties: "Group_Type").ToList();
-            return Json(new { data = objGroupList });
-        }
-
-
-        [HttpDelete]
-        public IActionResult Delete(int? id)
-        {
-
-            var groupToBeDeleted = _unitOfWork.Group.FirstOrDefault(u => u.Id == id);
-            if (groupToBeDeleted == null) 
-            { 
-                return Json(new { success = false, message = "Error while deleting" });
-            }
-
-            _unitOfWork.Group.Remove(groupToBeDeleted);
-            _unitOfWork.Save();
-
-            return Json(new { success = true, message = "Delete Successful" });
+            List<Group> objList = _unitOfWork.Group.GetAll(includeProperties: "Group_Type").ToList();
+            return Json(new { data = objList });
         }
 
         #endregion

@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using RGO.DataAccess;
 using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.DataAccess.Repository;
-using RGO.Utility;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 var builder = WebApplication.CreateBuilder(args);

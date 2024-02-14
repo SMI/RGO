@@ -5,22 +5,19 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace RGO.Models.Models
 {
-    public class Group
+    public class RGO_Record
     {
         [Key]
         public int Id { get; set; }
 
+        public int RGO_DatasetId { get; set; }
+        [DisplayName("Which RGO Dataset does this record belong to")]
+        [ForeignKey("RGO_DatasetId")]
+        public RGO_Dataset? RGO_Dataset { get; set; }
 
-        public int Group_TypeId { get; set; }
-        [ForeignKey("Group_TypeId")]
-        
-        public Group_Type? Group_Type { get; set; }
 
-        [DisplayName("Group Name")]
-        public string Name { get; set; } = "";
-
-        [DisplayName("Contact Details")]
-        public string? ContactInfo { get; set; }
+        [DisplayName("Record Status")]
+        public string Record_Status { get; set; } = "New";
 
 
         /* Common Columns that should appear on all tables */

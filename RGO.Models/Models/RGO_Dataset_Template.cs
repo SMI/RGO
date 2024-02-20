@@ -13,7 +13,7 @@ namespace RGO.Models.Models
         public int RGOutput_Id { get; set; }
         [DisplayName("Parent RG Output")]
         [ForeignKey("RGOutput_Id")]
-        public RGOutput? RGOutput { get; set; }
+        public RGOutput? RGOutputs { get; set; }
 
 
         [DisplayName("RGO Dataset Name")]

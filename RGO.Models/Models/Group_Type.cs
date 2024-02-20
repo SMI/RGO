@@ -27,6 +27,8 @@ namespace RGO.Models
 
         public string? Notes { get; set; }
 
+        public ICollection<Models.Group>? Groups { get; set; }
+
 
     }
 }

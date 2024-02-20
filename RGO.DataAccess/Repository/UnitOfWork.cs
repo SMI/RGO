@@ -16,6 +16,8 @@ namespace RGO.DataAccess.Repository
         public IGroup_TypeRepository Group_Type { get; private set; }
         public IGroupRepository Group { get; private set; }
 
+        public IRGO_TypeRepository RGO_Type { get; private set; }
+
         public IRGO_Dataset_TemplateRepository RGO_Dataset_Template { get; private set; }
         public IRGO_Column_TemplateRepository RGO_Column_Template { get; private set; }
 
@@ -35,6 +37,7 @@ namespace RGO.DataAccess.Repository
             _db = db;
             Group_Type = new Group_TypeRepository(_db);
             Group = new GroupRepository(_db);
+            RGO_Type = new RGO_TypeRepository(_db);
             RGO_Dataset_Template = new RGO_Dataset_TemplateRepository(_db);
             RGO_Column_Template = new RGO_Column_TemplateRepository(_db);
             RGO_Dataset = new RGO_DatasetRepository(_db);

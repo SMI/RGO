@@ -1,15 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using RGO.Models.Models;
+using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RGO.Models.Models
+namespace RGO.Models
 {
     public class RGOutput
     {
         [Key]
         public int Id { get; set; }
-
 
         public int RGO_TypeId { get; set; }
         [ForeignKey("RGO_TypeId")]
@@ -24,7 +24,7 @@ namespace RGO.Models.Models
         [DisplayName("Originating Group")]
         public int Originating_GroupId { get; set; }
         [ForeignKey("Originating_GroupId")]
-        public Group? Group { get; set; }
+        public Models.Group? Group { get; set; }
 
 
         /* Common Columns that should appear on all tables */
@@ -38,5 +38,8 @@ namespace RGO.Models.Models
         public DateTime? Updated_Date { get; set; }
 
         public string? Notes { get; set; }
+
+
+
     }
 }

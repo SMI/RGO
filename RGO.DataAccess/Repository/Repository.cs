@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository.IRepository;
 using System;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RGO.DataAccess.Repository
 {
@@ -59,7 +61,8 @@ namespace RGO.DataAccess.Repository
 
         public void Remove(TEntity entity)
         {
-            dbSet.Remove(entity);
+                dbSet.Remove(entity);
+
         }
 
         public void RemoveRange(IEnumerable<TEntity> entity)

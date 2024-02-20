@@ -34,7 +34,7 @@ namespace RGO.Areas.Config.Controllers
             return View(objGroup_TypeList);
         }
 
-        public ActionResult Details(int? id)
+  /*      public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -49,7 +49,7 @@ namespace RGO.Areas.Config.Controllers
             }
 
             return View(group_type);
-        }
+        }*/
 
         public IActionResult Upsert(int? id)
         {
@@ -131,15 +131,24 @@ namespace RGO.Areas.Config.Controllers
             var groupTypeToBeDeleted = _unitOfWork.Group_Type.FirstOrDefault(u => u.Id == id);
             if (groupTypeToBeDeleted == null)
             {
-                return Json(new { success = false, message = "Error while deleting" });
+                return Json(new { success = false, message = "Error while deleting Group Type" });
             }
 
             _unitOfWork.Group_Type.Remove(groupTypeToBeDeleted);
-            _unitOfWork.Save();
 
-            return Json(new { success = true, message = "Delete Successful" });
+            try
+            {
+                _unitOfWork.Save();
+
+            }
+            catch (DbUpdateException ex)
+            {
+                return Json(new { success = false, message = "This Group Type cannot be deleted as there are Groups " +
+                    $" that reference it.  If you want to delete this Group Type, please change the Group Type of these Groups first"});
+            }
+            return Json(new { success = true, message = "Group Type Deleted Successfully" });
+
         }
-
         #endregion
     }
 }

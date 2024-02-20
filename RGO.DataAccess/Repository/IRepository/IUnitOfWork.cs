@@ -12,6 +12,8 @@ namespace RGO.DataAccess.Repository.IRepository
         IGroup_TypeRepository Group_Type { get; }
         IGroupRepository Group { get; }
 
+        IRGO_TypeRepository RGO_Type { get; }
+
         IRGO_Dataset_TemplateRepository RGO_Dataset_Template { get; }
 
 

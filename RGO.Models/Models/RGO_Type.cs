@@ -17,7 +17,6 @@ namespace RGO.Models
         [DisplayName("RGO Type Description")]
         public string? Description { get; set; }
 
-
         /* Common Columns that should appear on all tables */
 
         public string Created_By { get; set; } = "";
@@ -29,6 +28,9 @@ namespace RGO.Models
         public DateTime? Updated_Date { get; set; }
 
         public string? Notes { get; set; }
+
+
+        public ICollection<RGOutput>? RGOutputs { get; set; }
 
 
     }

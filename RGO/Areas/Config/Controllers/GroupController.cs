@@ -121,7 +121,55 @@ namespace RGO.Areas.Config.Controllers
             return View(group);
         }
 
-        [HttpPost, ActionName("Delete")]
+
+
+
+
+
+
+
+        #region API CALLS
+
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Group> objGroupList = _unitOfWork.Group.GetAll(includeProperties: "Group_Type").ToList();
+            return Json(new { data = objGroupList });
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteConfirmed(int? id)
+        {
+
+            var groupToBeDeleted = _unitOfWork.Group.FirstOrDefault(u => u.Id == id);
+            if (groupToBeDeleted == null)
+            {
+                return Json(new { success = false, message = "Error while deleting Group" });
+            }
+
+            _unitOfWork.Group.Remove(groupToBeDeleted);
+
+            try
+            {
+                _unitOfWork.Save();
+
+            }
+            catch (DbUpdateException ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "This Group cannot be deleted as there are RG Ouptuts " +
+                    $" that reference it.  If you want to delete this Group, please change the Group referenced by these RGOs first"
+                });
+            }
+            return Json(new { success = true, message = "Group deleted Successfully" });
+
+        }
+
+
+  /*      [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
@@ -132,21 +180,14 @@ namespace RGO.Areas.Config.Controllers
                 _unitOfWork.Group.Remove(group);
             }
 
-            //await _unitOfWork.SaveChangesAsync();
             _unitOfWork.Save();
 
             return RedirectToAction(nameof(Index));
-        }
+        }*/
 
-        #region API CALLS
-
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            List<Group> objList = _unitOfWork.Group.GetAll(includeProperties: "Group_Type").ToList();
-            return Json(new { data = objList });
-        }
 
         #endregion
+
+
     }
 }

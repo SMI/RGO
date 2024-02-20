@@ -10,17 +10,18 @@ namespace RGO.Models.Models
         [Key]
         public int Id { get; set; }
 
-
         public int Group_TypeId { get; set; }
         [ForeignKey("Group_TypeId")]
-        
-        public Group_Type? Group_Type { get; set; }
+
+        public Group_Type Group_Type { get; set; }
 
         [DisplayName("Group Name")]
         public string Name { get; set; } = "";
 
         [DisplayName("Contact Details")]
         public string? ContactInfo { get; set; }
+
+        public ICollection<RGOutput>? RGOutputs { get; set; }
 
 
         /* Common Columns that should appear on all tables */

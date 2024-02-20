@@ -5,9 +5,10 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/config/group_type/getall'},
+        "ajax": { url: '/config/rgo_type/getall'},
         "columns": [
-            { data: 'name', "width": "30%" },
+            { data: 'name', "width": "10%" },
+            { data: 'description', "width": "25%" },
             { data: 'created_By', "width": "10%" },
             { data: 'created_Date', "width": "10%" },
             { data: 'updated_By', "width": "10%" },
@@ -15,12 +16,12 @@ function loadDataTable() {
             { data: 'notes', "width": "10%" },
             {
                 data: 'id', "render": function (data) {
-                    return `<div class="w-75 btn-group" role="group">
-                     <a href="/config/group_type/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>               
-                     <a onClick=Delete('/config/group_type/delete/${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
+                    return `<div class="w-75 btn-group" role="rgo">
+                     <a href="/config/rgo_type/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>               
+                     <a onClick=Delete('/config/rgo_type/delete/${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
                      </div>`
                 },
-                "width": "20%"
+                "width": "15%"
             }
         ]
 

@@ -46,12 +46,25 @@ namespace RGO.DataAccess.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Group>()
+                .HasOne(gt =>gt.Group_Type)
+                .WithMany(t => t.Groups)
+                .HasForeignKey(gt => gt.Group_TypeId)
+                .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+
+            modelBuilder.Entity<RGOutput>()
+                .HasOne(g => g.Group)
+                .WithMany(r => r.RGOutputs)
+                .HasForeignKey(r => r.Originating_GroupId)
+                .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+
+
             modelBuilder.Entity<Group_Type>().HasData(
                 new Group_Type { Id = 1, Name = "Research Group", Created_By = "seed", Created_Date = DateTime.UtcNow },
                 new Group_Type { Id = 2, Name = "Data Team", Created_By = "seed", Created_Date = DateTime.UtcNow }
                 );
 
-           // modelBuilder.Entity<Group_Type>().HasMany(gt => gt.Gr);
             modelBuilder.Entity<Group>().HasData(
                 new Group { Id = 1, Group_TypeId = 1, Name = "Classification of Brain Images", Created_By = "seed", Created_Date = DateTime.UtcNow }
                 );
@@ -78,7 +91,7 @@ namespace RGO.DataAccess.Data
             //);
 
             modelBuilder.Entity<RGO_Type>().HasData(
-                new RGO_Type { Id = 1, Name = "Group Truth", Description = "Annotations that have been manually created or validated by a human expert", Created_By = "seed", Created_Date = DateTime.UtcNow }
+                new RGO_Type { Id = 1, Name = "Ground Truth", Description = "Annotations that have been manually created or validated by a human expert", Created_By = "seed", Created_Date = DateTime.UtcNow }
             );
 
             modelBuilder.Entity<RGOutput>().HasData(

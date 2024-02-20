@@ -33,23 +33,6 @@ namespace RGO.Areas.Config.Controllers
             return View(objList);
         }
 
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var group = _unitOfWork.Group
-                .FirstOrDefault(m => m.Id == id);
-            if (group == null)
-            {
-                return NotFound();
-            }
-
-            return View(group);
-        }
-
         public IActionResult Upsert(int? id)
         {
 
@@ -83,6 +66,7 @@ namespace RGO.Areas.Config.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(GroupVM groupVM)
         {
+
             if (ModelState.IsValid)
             {
                 _unitOfWork.Group.Add(groupVM.Group);

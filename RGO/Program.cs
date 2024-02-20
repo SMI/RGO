@@ -1,14 +1,16 @@
 using Microsoft.EntityFrameworkCore;
+using RGO.DataAccess;
 using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.DataAccess.Repository;
-using RGO.Utility;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddDbContext<ApplicationDbContext>(options => {
     var dbType = builder.Configuration.GetValue(typeof(object), "DatabaseType");
     switch (dbType)

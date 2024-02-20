@@ -1,76 +1,103 @@
 ﻿@model GroupVM
 
 
-<h1>@(Model.Group.Id!=0?"Update":"Create") Group</h1>
 
-<h4>Group</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Upsert">
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2"> @(Model.Group.Id != 0 ? "Update" : "Create") Group</h2>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="card-body p-4">
+        <form method="post" class="row" enctype="multipart/form-data">
             <input asp-for="Group.Id" hidden />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Group.Group_TypeId" class="control-label"></label>
-                <select asp-for="Group.Group_TypeId" class="form-control" asp-items="@Model.Group_TypeList">
-                    <option disabled selected>--Select Category--</option>
-                </select>
 
-                <span asp-validation-for="Group.Group_TypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Group.Name" class="control-label"></label>
-                <input asp-for="Group.Name" class="form-control" />
-                <span asp-validation-for="Group.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Group.ContactInfo" class="control-label"></label>
-                <input asp-for="Group.ContactInfo" class="form-control" />
-                <span asp-validation-for="Group.ContactInfo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Group.Created_By" class="control-label"></label>
-                <input asp-for="Group.Created_By" class="form-control" />
-                <span asp-validation-for="Group.Created_By" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Group.Created_Date" class="control-label"></label>
-                <input asp-for="Group.Created_Date" class="form-control" />
-                <span asp-validation-for="Group.Created_Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Group.Updated_By" class="control-label"></label>
-                <input asp-for="Group.Updated_By" class="form-control" />
-                <span asp-validation-for="Group.Updated_By" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Group.Updated_Date" class="control-label"></label>
-                <input asp-for="Group.Updated_Date" class="form-control" />
-                <span asp-validation-for="Group.Updated_Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Group.Notes" class="control-label"></label>
-                <input asp-for="Group.Notes" class="form-control" />
-                <span asp-validation-for="Group.Notes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @if (Model.Group.Id != 0)
-                {
-                    <button type="submit" class="btn btn-primary form-control">Update</button>
-                }
-                else
-                {
-                    <button type="submit" class="btn btn-primary form-control">Create</button>
-                }
-                <!-- <input type="submit" value="Create" class="btn btn-primary" /> -->
-            </div>
+            <div class="row">
+                <div class="col-10">
+                    <div class="border p-3">
+
+                        @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+                        <div class="form-floating py-2 col-12">
+
+
+                            <div class="form-floating py-2 col-12">
+                                <select asp-for="@Model.Group.Group_TypeId" asp-items="@Model.Group_TypeList" class="form-select border-0 shadow">
+                                    <option disabled selected>--Select Group Type--</option>
+                                </select>
+                                <label asp-for="Group.Group_TypeId" class="ms-2"></label>
+                                <span asp-validation-for="Group.Group_TypeId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Group.Name" class="form-control border-0 shadow" />
+                                <label asp-for="Group.Name" class="ms-2"></label>
+                                <span asp-validation-for="Group.Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Group.ContactInfo" class="form-control border-0 shadow" />
+                                <label asp-for="Group.ContactInfo" class="ms-2"></label>
+                                <span asp-validation-for="Group.ContactInfo" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Group.Created_By" class="form-control border-0 shadow" />
+                                <label asp-for="Group.Created_By" class="ms-2"></label>
+                                <span asp-validation-for="Group.Created_By" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Group.Created_Date" class="form-control border-0 shadow" />
+                                <label asp-for="Group.Created_Date" class="ms-2"></label>
+                                <span asp-validation-for="Group.Created_Date" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Group.Updated_By" class="form-control border-0 shadow" />
+                                <label asp-for="Group.Updated_By" class="ms-2"></label>
+                                <span asp-validation-for="Group.Updated_By" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Group.Updated_Date" class="form-control border-0 shadow" />
+                                <label asp-for="Group.Updated_Date" class="ms-2"></label>
+                                <span asp-validation-for="Group.Updated_Date" class="text-danger"></span>
+                            </div>
+                            <div class="py-2 col-12">
+                                <label asp-for="Group.Notes" class="ms-2 text-muted"></label>
+                                <textarea asp-for="Group.Notes" class="form-control border-0 shadow"></textarea>
+                            </div>
+
+
+                            <div class="row pt-2">
+                                <div class="col-6 col-md-3">
+                                    @if (Model.Group.Id != 0)
+                                    {
+                                        <button type="submit" class="btn btn-primary form-control">Update</button>
+                                    }   
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-primary form-control">Create</button>
+                                    }
+                                 </div>
+                                <div class="col-6 col-md-3">
+                                    <a asp-controller="Group" asp-action="Index" class="btn btn-outline-primary border  form-control">
+                                        Back to List
+                                    </a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

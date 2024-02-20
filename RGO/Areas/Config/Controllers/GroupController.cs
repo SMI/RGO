@@ -29,11 +29,10 @@ namespace RGO.Areas.Config.Controllers
         // GET: Config/Group
         public IActionResult Index()
         {
-            List<Group> objList = _unitOfWork.Group.GetAll(includeProperties:"Group_Type").ToList();
+            List<Group> objList = _unitOfWork.Group.GetAll(includeProperties: "Group_Type").ToList();
             return View(objList);
         }
 
-        // GET: Config/Group/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -76,12 +75,10 @@ namespace RGO.Areas.Config.Controllers
                 return View(groupVM);
 
             }
-            
+
         }
 
-        // POST: Config/Group/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(GroupVM groupVM)
@@ -107,61 +104,7 @@ namespace RGO.Areas.Config.Controllers
 
         }
 
-        // GET: Config/Group/Edit/5
-    /*    public IActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var group = _unitOfWork.Group.FirstOrDefault(m => m.Id == id);
-            if (group == null)
-            {
-                return NotFound();
-            }
-           // ViewData["Group_TypeId"] = new SelectList(_context.Group_Types, "Id", "Name", @group.Group_TypeList);
-            return View(group);
-        }
-
-        // POST: Config/Group/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Group_TypeId,Name,ContactInfo,Created_By,Created_Date,Updated_By,Updated_Date,Notes")] Group @group)
-        {
-            if (id != @group.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _unitOfWork.Group.Update(@group);
-                    //await _unitOfWork.Group.SaveChangesAsync();
-                    _unitOfWork.Save();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                  //  if (!GroupExists(@group.Id))
-                  //  {
-                  //      return NotFound();
-                  //  }
-                  //  else
-                  //  {
-                  //      throw;
-                  //  }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            //ViewData["Group_TypeId"] = new SelectList(_context.Group_Types, "Id", "Name", @group.Group_TypeId);
-            return View(@group);
-        }*/
-
-        // GET: Config/Group/Delete/5
+ 
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -178,8 +121,55 @@ namespace RGO.Areas.Config.Controllers
             return View(group);
         }
 
-        // POST: Config/Group/Delete/5
-        [HttpPost, ActionName("Delete")]
+
+
+
+
+
+
+
+        #region API CALLS
+
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Group> objGroupList = _unitOfWork.Group.GetAll(includeProperties: "Group_Type").ToList();
+            return Json(new { data = objGroupList });
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteConfirmed(int? id)
+        {
+
+            var groupToBeDeleted = _unitOfWork.Group.FirstOrDefault(u => u.Id == id);
+            if (groupToBeDeleted == null)
+            {
+                return Json(new { success = false, message = "Error while deleting Group" });
+            }
+
+            _unitOfWork.Group.Remove(groupToBeDeleted);
+
+            try
+            {
+                _unitOfWork.Save();
+
+            }
+            catch (DbUpdateException ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "This Group cannot be deleted as there are RG Ouptuts " +
+                    $" that reference it.  If you want to delete this Group, please change the Group referenced by these RGOs first"
+                });
+            }
+            return Json(new { success = true, message = "Group deleted Successfully" });
+
+        }
+
+
+  /*      [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
@@ -190,21 +180,14 @@ namespace RGO.Areas.Config.Controllers
                 _unitOfWork.Group.Remove(group);
             }
 
-            //await _unitOfWork.SaveChangesAsync();
             _unitOfWork.Save();
 
             return RedirectToAction(nameof(Index));
-        }
+        }*/
 
-        #region API CALLS
-
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            List<Group> objList = _unitOfWork.Group.GetAll(includeProperties: "Group_Type").ToList();
-            return Json(new { data = objList });
-        }
 
         #endregion
+
+
     }
 }

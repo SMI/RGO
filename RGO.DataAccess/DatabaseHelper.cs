@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RGO.Utility;
+namespace RGO.DataAccess;
 
 public class DatabaseHelper
 {

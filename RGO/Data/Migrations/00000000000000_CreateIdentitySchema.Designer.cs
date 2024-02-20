@@ -5,9 +5,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RGO.Data;
+using RGO.DataAccess;
 using RGO.DataAccess.Data;
-using RGO.Utility;
 using System;
 using TypeGuesser;
 

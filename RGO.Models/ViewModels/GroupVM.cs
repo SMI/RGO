@@ -13,6 +13,6 @@ namespace RGO.Models.ViewModels
     {
         public required Group Group { get; set; }
         [ValidateNever]
-        public IEnumerable<SelectListItem> Group_TypeList { get; set; } = Enumerable.Empty<SelectListItem>();
+        public IEnumerable<SelectListItem> Group_TypeList { get; set; } 
     }
 }

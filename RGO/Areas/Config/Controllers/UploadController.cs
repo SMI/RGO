@@ -23,7 +23,16 @@ namespace RGO.Areas.Config.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upload(int? id) {
-            var csvToUpload = Request.Form.Files.First();
+            IFormFile csvToUpload;
+            try
+            {
+               csvToUpload = Request.Form.Files.First();
+            }
+            catch (Exception)
+            {
+                TempData["error"] = "No CSV file selected";
+                return View();
+            }
             var stream = csvToUpload.OpenReadStream();
             string fileName = Path.GetTempPath() + csvToUpload.FileName;
 
@@ -34,12 +43,11 @@ namespace RGO.Areas.Config.Controllers
                 {
                     stream.CopyTo(fs);
                 }
-                // Do whatever you want with the file here
                 var uploader = new CSV_Uploader(fileName);
                 if (!uploader.PreCheck())
                 {
-                    //todo handle this better
-                    throw new Exception("Something went wrong with the precheck");
+                    TempData["error"] = "Something went wrong with the Upload. Please try again.";
+                    return View();
                 }
                 uploader.ExecuteUpload();
             }
@@ -47,6 +55,7 @@ namespace RGO.Areas.Config.Controllers
             {
                 System.IO.File.Delete(fileName);
             }
+            TempData["success"] = "CSV Successfully Uploaded";
             return View();
         }
 

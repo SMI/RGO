@@ -1,0 +1,11 @@
+﻿@* @model RGO.Models.Models.CSVUpload
+ *@@{
+    ViewData["Title"] = "Upload Results";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to upload your results.</p>
+<form method="post" class="row" enctype="multipart/form-data">
+    <input type="file" id="csv_picker" name="csv_picker" accept=".csv" />
+    <button type="submit" class="btn btn-primary">Upload Results</button>
+</form>

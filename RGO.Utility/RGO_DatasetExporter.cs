@@ -1,8 +1,10 @@
 ﻿using Humanizer;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.Models.Models;
+using RGO.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -64,15 +66,21 @@ public class RGO_DatasetExporter
 //todo add group and also template dewcriptions to csv export
 
 
-////attemp1 1 at view
 //DECLARE @cols AS NVARCHAR(MAX),
-//    @query AS NVARCHAR(MAX)
+//    @query AS NVARCHAR(MAX),
+//	@datasetId AS int
+
+//set @datasetId=1
 
 //select @cols = STUFF((SELECT ',' + QUOTENAME(Name)
-//                    from[R - GO].[dbo].[RGO_Columns]
-//                    group by[RGO_RecordId], Name, id
+//                    from[R - GO].[dbo].[RGO_Columns] as cols
+
+//                    join[R - GO].[dbo].[RGO_Records] as records on records.Id = RGO_RecordId
+
+//                    where records.RGO_DatasetId = @datasetId
+//                    group by[RGO_RecordId], Name, cols.id
 //                    having[RGO_RecordId] = (SELECT TOP 1 MIN([RGO_RecordId])FROM[R - GO].[dbo].[RGO_Columns])
-//                    order by id
+//                    order by cols.id
 //            FOR XML PATH(''), TYPE
 //            ).value('.', 'NVARCHAR(MAX)')
 //        ,1,1,'')
@@ -84,6 +92,8 @@ public class RGO_DatasetExporter
 //             (
 //                select Column_Value, Name,[RGO_RecordId]
 //                from [R - GO].[dbo].[RGO_Columns]
+//join[R - GO].[dbo].[RGO_Records] as records on records.Id = RGO_RecordId
+//where records.RGO_DatasetId='+ CAST(@datasetId as varchar)+ ' 
 //GROUP BY[RGO_RecordId], Name, Column_Value
 //            ) x
 //            pivot

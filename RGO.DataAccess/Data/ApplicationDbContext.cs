@@ -47,6 +47,7 @@ namespace RGO.DataAccess.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+            // Model the FKs (from the viewpoint of the child table
             modelBuilder.Entity<Group>()
                 .HasOne(gt =>gt.Group_Type)
                 .WithMany(t => t.Groups)
@@ -59,7 +60,14 @@ namespace RGO.DataAccess.Data
                 .HasForeignKey(r => r.Originating_GroupId)
                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
+            modelBuilder.Entity<RGOutput>()
+                .HasOne(rt => rt.RGO_Type)
+                .WithMany(r => r.RGOutputs)
+                .HasForeignKey(r => r.RGO_TypeId)
+                .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
+
+            // Add in the seed data
             modelBuilder.Entity<Group_Type>().HasData(
                 new Group_Type { Id = 1, Name = "Research Group", Created_By = "seed", Created_Date = DateTime.UtcNow },
                 new Group_Type { Id = 2, Name = "Data Team", Created_By = "seed", Created_Date = DateTime.UtcNow }

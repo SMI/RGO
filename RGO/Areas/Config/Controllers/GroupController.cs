@@ -29,8 +29,8 @@ namespace RGO.Areas.Config.Controllers
         // GET: Config/Group
         public IActionResult Index()
         {
-            List<Group> objList = _unitOfWork.Group.GetAll(includeProperties: "Group_Type").ToList();
-            return View(objList);
+            List<Group> objGroupList = _unitOfWork.Group.GetAll(includeProperties: "Group_Type").ToList();
+            return View(objGroupList);
         }
 
         public IActionResult Upsert(int? id)
@@ -54,7 +54,7 @@ namespace RGO.Areas.Config.Controllers
             else
             {
                 //Update
-                groupVM.Group = _unitOfWork.Group.FirstOrDefault(m => m.Id == id);
+                groupVM.Group = _unitOfWork.Group.FirstOrDefault(m => m.Id == id,includeProperties:"Group_Type");
                 return View(groupVM);
 
             }
@@ -67,49 +67,41 @@ namespace RGO.Areas.Config.Controllers
         public IActionResult Upsert(GroupVM groupVM)
         {
 
+            string ActionType = "";
+
             if (ModelState.IsValid)
             {
-                _unitOfWork.Group.Add(groupVM.Group);
+                if (groupVM.Group.Id == 0)
+                {
+                    _unitOfWork.Group.Add(groupVM.Group);
+                    ActionType = "Create";
+                }
+                else
+                {
+                    _unitOfWork.Group.Update(groupVM.Group);
+                    ActionType = "Update";
+                }
+
                 _unitOfWork.Save();
+
+                if (ActionType == "Create")
+                {
+                    TempData["success"] = "Group created successfully";
+                }
+                else
+                {
+                    TempData["success"] = "Group updated successfully";
+                }
+
+
                 return RedirectToAction(nameof(Index));
             }
             else
-
             {
-                // if there are any errors on the page, you need to explicitly repopulate the dropdown
-                groupVM.Group_TypeList = _unitOfWork.Group_Type.GetAll().Select(u => new SelectListItem
-                {
-                    Text = u.Name,
-                    Value = u.Id.ToString()
-                });
                 return View(groupVM);
             }
 
-
         }
-
- 
-        public IActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var group = _unitOfWork.Group.FirstOrDefault(m => m.Id == id);
-            if (group == null)
-            {
-                return NotFound();
-            }
-
-            return View(group);
-        }
-
-
-
-
-
-
 
 
         #region API CALLS
@@ -123,7 +115,7 @@ namespace RGO.Areas.Config.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteConfirmed(int? id)
+        public IActionResult Delete(int? id)
         {
 
             var groupToBeDeleted = _unitOfWork.Group.FirstOrDefault(u => u.Id == id);
@@ -144,31 +136,13 @@ namespace RGO.Areas.Config.Controllers
                 return Json(new
                 {
                     success = false,
-                    message = "This Group cannot be deleted as there are RG Ouptuts " +
+                    message = "This Group cannot be deleted as there are RG Outputs " +
                     $" that reference it.  If you want to delete this Group, please change the Group referenced by these RGOs first"
                 });
             }
             return Json(new { success = true, message = "Group deleted Successfully" });
 
         }
-
-
-  /*      [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            //var @group = await _unitOfWork.Group.FindAsync(id);
-            var group = _unitOfWork.Group.FirstOrDefault(m => m.Id == id);
-            if (group != null)
-            {
-                _unitOfWork.Group.Remove(group);
-            }
-
-            _unitOfWork.Save();
-
-            return RedirectToAction(nameof(Index));
-        }*/
-
 
         #endregion
 

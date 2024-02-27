@@ -24,6 +24,8 @@ namespace RGO.DataAccess.Repository
             //dbset is generic - will be set to the correct entity type i.e. indicated by TEntity
             this.dbSet = _db.Set<TEntity>();
             _db.Groups.Include(u => u.Group_Type);
+            _db.RGOutputs.Include(u => u.RGO_Type);
+            _db.RGOutputs.Include(u => u.Group);
 
         }
 

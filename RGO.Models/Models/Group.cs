@@ -12,6 +12,7 @@ namespace RGO.Models.Models
 
         public int Group_TypeId { get; set; }
         [ForeignKey("Group_TypeId")]
+        [ValidateNever]
 
         public Group_Type Group_Type { get; set; }
 

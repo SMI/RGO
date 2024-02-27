@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 
 namespace RGO.Models.ViewModels
 {
-    public class GroupVM
+    public class RGOutputVM
     {
-        public Group Group { get; set; }
+        public RGOutput RGOutput { get; set; }
         [ValidateNever]
-        public IEnumerable<SelectListItem> Group_TypeList { get; set; }
+        public IEnumerable<SelectListItem> RGO_TypeList { get; set; }
+        
+        public IEnumerable<SelectListItem> GroupList { get; set; }
+
     }
 }

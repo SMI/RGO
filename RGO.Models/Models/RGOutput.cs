@@ -3,6 +3,7 @@ using System.ComponentModel;
 using RGO.Models.Models;
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations.Schema;
+using Group = RGO.Models.Models.Group;
 
 namespace RGO.Models
 {
@@ -24,8 +25,9 @@ namespace RGO.Models
         [DisplayName("Originating Group")]
         public int Originating_GroupId { get; set; }
         [ForeignKey("Originating_GroupId")]
-        public Models.Group? Group { get; set; }
+        public Group? Group { get; set; }
 
+        public ICollection<RGO_Dataset_Template>? RGO_Dataset_Template { get; set; }
 
         /* Common Columns that should appear on all tables */
 

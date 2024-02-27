@@ -9,7 +9,6 @@ namespace RGO.DataAccess.Repository.IRepository
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        //TEntity - Group Type
         IEnumerable<TEntity> GetAll(string? includeProperties = null);
         TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter, string? includeProperties = null);
         void Add(TEntity entity);

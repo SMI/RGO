@@ -1,0 +1,114 @@
+﻿@model RGOutputVM
+
+
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2"> @(Model.RGOutput.Id != 0 ? "Update" : "Create") RG Output</h2>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="card-body p-4">
+        <form method="post" class="row" enctype="multipart/form-data">
+            <input asp-for="RGOutput.Id" hidden />
+
+            <div class="row">
+                <div class="col-10">
+                    <div class="border p-3">
+
+                        @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+                        <div class="form-floating py-2 col-12">
+
+
+                            <div class="form-floating py-2 col-12">
+                                <select asp-for="@Model.RGOutput.RGO_TypeId" asp-items="@Model.RGO_TypeList" class="form-select border-0 shadow">
+                                    <option disabled selected>--Select RG Output Type--</option>
+                                </select>
+                                <label asp-for="RGOutput.RGO_TypeId" class="ms-2"></label>
+                                <span asp-validation-for="RGOutput.RGO_TypeId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGOutput.Name" class="form-control border-0 shadow" />
+                                <label asp-for="RGOutput.Name" class="ms-2"></label>
+                                <span asp-validation-for="RGOutput.Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGOutput.Description" class="form-control border-0 shadow" />
+                                <label asp-for="RGOutput.Description" class="ms-2"></label>
+                                <span asp-validation-for="RGOutput.Description" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <select asp-for="@Model.RGOutput.Originating_GroupId" asp-items="@Model.GroupList" class="form-select border-0 shadow">
+                                    <option disabled selected>--Select Originating Group / Research Project--</option>
+                                </select>
+                                <label asp-for="RGOutput.Originating_GroupId" class="ms-2"></label>
+                                <span asp-validation-for="RGOutput.Originating_GroupId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGOutput.Created_By" class="form-control border-0 shadow" />
+                                <label asp-for="RGOutput.Created_By" class="ms-2"></label>
+                                <span asp-validation-for="RGOutput.Created_By" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGOutput.Created_Date" class="form-control border-0 shadow" />
+                                <label asp-for="RGOutput.Created_Date" class="ms-2"></label>
+                                <span asp-validation-for="RGOutput.Created_Date" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGOutput.Updated_By" class="form-control border-0 shadow" />
+                                <label asp-for="RGOutput.Updated_By" class="ms-2"></label>
+                                <span asp-validation-for="RGOutput.Updated_By" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGOutput.Updated_Date" class="form-control border-0 shadow" />
+                                <label asp-for="RGOutput.Updated_Date" class="ms-2"></label>
+                                <span asp-validation-for="RGOutput.Updated_Date" class="text-danger"></span>
+                            </div>
+                            <div class="py-2 col-12">
+                                <label asp-for="RGOutput.Notes" class="ms-2 text-muted"></label>
+                                <textarea asp-for="RGOutput.Notes" class="form-control border-0 shadow"></textarea>
+                            </div>
+
+
+                            <div class="row pt-2">
+                                <div class="col-6 col-md-3">
+                                    @if (Model.RGOutput.Id != 0)
+                                    {
+                                        <button type="submit" class="btn btn-primary form-control">Update</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-primary form-control">Create</button>
+                                    }
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <a asp-controller="RGOutput" asp-action="Index" class="btn btn-outline-primary border  form-control">
+                                        Back to List
+                                    </a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

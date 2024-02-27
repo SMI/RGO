@@ -3,6 +3,7 @@ using RGO.DataAccess.Repository;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.Models;
 using RGO.Models.Models;
+using RGO.Utility;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -43,9 +44,10 @@ namespace RGO.Areas.Config.Controllers
         public IActionResult Download(int id)
         {
             RGO_Dataset dataset = _unitOfWork.RGO_Dataset.GetAll().Where(ds => ds.Id == id).First();
-            var net = new System.Net.WebClient();
-            var data = Encoding.ASCII.GetBytes("this is some data");
-            var content = new System.IO.MemoryStream(data);
+            var exporter = new RGO_DatasetExporter(_unitOfWork, dataset);
+            
+            var data = Encoding.ASCII.GetBytes(exporter.GenerateExportableData());
+            var content = new MemoryStream(data);
             var contentType = "APPLICATION/octet-stream";
             var fileName = "test.csv";
             return File(content, contentType, fileName);

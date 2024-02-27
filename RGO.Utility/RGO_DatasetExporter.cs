@@ -1,10 +1,13 @@
-﻿using RGO.DataAccess.Repository.IRepository;
+﻿using Humanizer;
+using RGO.DataAccess.Repository.IRepository;
 using RGO.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace RGO.Utility;
 //generates an exportable csv string  from a dataset
@@ -59,3 +62,33 @@ public class RGO_DatasetExporter
 
 
 //todo add group and also template dewcriptions to csv export
+
+
+////attemp1 1 at view
+//DECLARE @cols AS NVARCHAR(MAX),
+//    @query AS NVARCHAR(MAX)
+
+//select @cols = STUFF((SELECT ',' + QUOTENAME(Name)
+//                    from[R - GO].[dbo].[RGO_Columns]
+//                    group by[RGO_RecordId], Name, id
+//                    having[RGO_RecordId] = (SELECT TOP 1 MIN([RGO_RecordId])FROM[R - GO].[dbo].[RGO_Columns])
+//                    order by id
+//            FOR XML PATH(''), TYPE
+//            ).value('.', 'NVARCHAR(MAX)')
+//        ,1,1,'')
+
+
+        
+
+//set @query = N'SELECT ' + @cols + N' from 
+//             (
+//                select Column_Value, Name,[RGO_RecordId]
+//                from [R - GO].[dbo].[RGO_Columns]
+//GROUP BY[RGO_RecordId], Name, Column_Value
+//            ) x
+//            pivot
+//            (
+//                max(Column_Value)
+//                for Name in (' + @cols + N')
+//            ) p '
+//exec sp_executesql @query;

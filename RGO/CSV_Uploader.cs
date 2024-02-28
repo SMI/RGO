@@ -164,8 +164,6 @@ namespace RGO
 
             var _repository = new RGO_Dataset_TemplateRepository(_context);
 
-            //var datasetTemplate = _repository.FirstOrDefault(r => r.Id.Equals(int.Parse(datasetTemplateId)));//
-
             _datasetTemplateId = int.Parse(datasetTemplateId);
             _datasetTemplate = _repository.GetAll().Where(r => r.Id.Equals(_datasetTemplateId)).FirstOrDefault();
 
@@ -182,7 +180,6 @@ namespace RGO
             dsrec.Dataset_Name = _datasetTemplate.Name;
             dsrec.Dataset_Status = "Uploading";
             dsrec.Created_By = "RGO_Upload";
-            //dsrec.Created_Date = DateTime.Now;
 
             RGO_DatasetRepository dsrepo = new RGO_DatasetRepository(_context);
             dsrepo.Add(dsrec);
@@ -242,7 +239,6 @@ GROUP BY[RGO_RecordId], Name, Column_Value
             ) p
             ";
             //tell JRF to fix this
-            //ImplementationManager.Load(
             ImplementationManager.Load<MicrosoftSQLImplementation>();
 
             var ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=R-GO;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";

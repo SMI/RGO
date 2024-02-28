@@ -1,11 +1,18 @@
-﻿using Microsoft.VisualBasic.FileIO;
+﻿using FAnsi.Discovery;
+using FAnsi.Implementation;
+using FAnsi.Implementations.MicrosoftSQL;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
+using Microsoft.VisualBasic.FileIO;
 using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository;
 using RGO.Models.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace RGO
@@ -97,7 +104,8 @@ namespace RGO
                                 colrepo.Add(colrec);
 
 
-                            } else
+                            }
+                            else
                             {
                                 //Find the id of the person record with this name
 
@@ -116,7 +124,7 @@ namespace RGO
 
                                 rprepo.Add(rprec);
                             }
-                            
+
                             _context.SaveChanges();
 
                             columnIndex++;
@@ -126,10 +134,12 @@ namespace RGO
 
                     }
 
-                    recordIndex++; 
+                    recordIndex++;
                 }
 
                 _context.SaveChanges();
+
+                CreateView();
 
             }
         }
@@ -138,7 +148,7 @@ namespace RGO
         {
             _filePath = filePath;
 
-        } 
+        }
 
         public bool PreCheck()
         {
@@ -150,11 +160,9 @@ namespace RGO
             var datasetTemplateId = _fileNameNoExt.Substring(4);
 
             var applicationContext = new ApplicationDbContextFactory();
-            _context = applicationContext.CreateDbContext(new string[] {});
+            _context = applicationContext.CreateDbContext(new string[] { });
 
             var _repository = new RGO_Dataset_TemplateRepository(_context);
-
-            //var datasetTemplate = _repository.FirstOrDefault(r => r.Id.Equals(int.Parse(datasetTemplateId)));//
 
             _datasetTemplateId = int.Parse(datasetTemplateId);
             _datasetTemplate = _repository.GetAll().Where(r => r.Id.Equals(_datasetTemplateId)).FirstOrDefault();
@@ -169,10 +177,9 @@ namespace RGO
             RGO_Dataset dsrec = new RGO_Dataset();
 
             dsrec.RGO_Dataset_TemplateId = _datasetTemplateId;
-            dsrec.Dataset_Name  = _datasetTemplate.Name;
+            dsrec.Dataset_Name = _datasetTemplate.Name;
             dsrec.Dataset_Status = "Uploading";
             dsrec.Created_By = "RGO_Upload";
-            //dsrec.Created_Date = DateTime.Now;
 
             RGO_DatasetRepository dsrepo = new RGO_DatasetRepository(_context);
             dsrepo.Add(dsrec);
@@ -181,6 +188,65 @@ namespace RGO
             _datasetId = dsrec.Id;
 
             return true;
+        }
+
+        private static readonly Regex sWhitespace = new Regex(@"\s+");
+        public static string ReplaceWhitespace(string input, string replacement)
+        {
+            return sWhitespace.Replace(input, replacement);
+        }
+
+
+        private void CreateView()
+        {
+            var datasetId = _datasetId;
+            RGO_DatasetRepository dsr = new RGO_DatasetRepository(_context);
+            var dataset = dsr.GetAll().Where(ds => ds.Id == datasetId).FirstOrDefault();
+            RGO_Dataset_TemplateRepository dstr = new RGO_Dataset_TemplateRepository(_context);
+            var datasetTemplate = dstr.GetAll().Where(t => t.Id == dataset.RGO_Dataset_TemplateId).FirstOrDefault();
+            RGO_Column_TemplateRepository ctr = new RGO_Column_TemplateRepository(_context);
+            var columns = string.Join(',', ctr.GetAll().Where(c => c.RGO_Dataset_TemplateId == datasetTemplate.Id).Select(c => c.Name).ToList());
+            var viewName = $"{_datasetTemplate.Name}_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+            viewName = ReplaceWhitespace(viewName, "_");
+            var sql = @$"
+                create view {viewName} as
+with cols as (
+select STUFF((SELECT ',' + QUOTENAME(Name)
+                    from[R-GO].[dbo].[RGO_Columns] as cols
+
+                    join[R-GO].[dbo].[RGO_Records] as records on records.Id = RGO_RecordId
+
+                    where records.RGO_DatasetId = {datasetId}
+                    group by[RGO_RecordId], Name, cols.id
+                    having[RGO_RecordId] = (SELECT TOP 1 MIN([RGO_RecordId])FROM[R-GO].[dbo].[RGO_Columns])
+                    order by cols.id
+            FOR XML PATH(''), TYPE
+            ).value('.', 'NVARCHAR(MAX)')
+        ,1,1,'') as linkedcols
+)
+select {columns} from
+             (
+                select Column_Value, Name,[RGO_RecordId]
+                from [R-GO].[dbo].[RGO_Columns]
+join[R-GO].[dbo].[RGO_Records] as records on records.Id = RGO_RecordId
+where records.RGO_DatasetId= {datasetId}
+GROUP BY[RGO_RecordId], Name, Column_Value
+            ) x
+            pivot
+          (
+                max(Column_Value)
+                for Name in ( {columns})
+            ) p
+            ";
+            //tell JRF to fix this
+            ImplementationManager.Load<MicrosoftSQLImplementation>();
+
+            var ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=R-GO;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+            DiscoveredServer server = new DiscoveredServer(ConnectionString, FAnsi.DatabaseType.MicrosoftSQLServer);
+            using var conn = server.GetConnection();
+            conn.Open();
+            var cmd = server.GetCommand(sql, conn);
+            cmd.ExecuteNonQuery();
         }
 
     }

@@ -5,7 +5,7 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/config/group_type/getall'},
+        "ajax": { url: '/config/group_type/getall' },
         "columns": [
             { data: 'name', "width": "30%" },
             { data: 'created_By', "width": "10%" },
@@ -43,11 +43,19 @@ function Delete(url) {
                 type: 'DELETE',
                 success: function (data) {
                     dataTable.ajax.reload();
-                    toastr.success(data.message);
+                    if (data.success) {
+                        toastr.success(data.message);
+                    } else {
+                        toastr.error(data.message);
+                    }
                 },
                 error: function (data) {
                     dataTable.ajax.reload();
-                    toastr.error(data.message);
+                    if (data.success) {
+                        toastr.success(data.message);
+                    } else {
+                        toastr.error(data.message);
+                    }
                 }
             })
         }

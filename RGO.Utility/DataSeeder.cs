@@ -40,6 +40,7 @@ public class DataSeeder
 
             };
             _unitOfWork.Group_Type.Add(seedGroupType);
+            _unitOfWork.Save();
         }
         //People
         var people = _unitOfWork.Person.GetAll();
@@ -85,6 +86,7 @@ public class DataSeeder
                 OrcId = ""
             };
             _unitOfWork.Person.Add(seedPerson);
+            _unitOfWork.Save();
         }
         //RGO Types
         var RGOTypes = _unitOfWork.RGO_Type.GetAll();
@@ -98,6 +100,7 @@ public class DataSeeder
                 Name="Ground Truth"
             };
             _unitOfWork.RGO_Type.Add(rgoType);
+            _unitOfWork.Save();
         }
         // groups
         var groups = _unitOfWork.Group.GetAll();
@@ -107,17 +110,28 @@ public class DataSeeder
             {
                 Created_By="seed",
                 Created_Date= new DateTime(2024, 2, 20, 9, 2, 28, 43, DateTimeKind.Utc).AddTicks(2246),
-                Group_TypeId=1,
+                Group_Type= _unitOfWork.Group_Type.GetAll().First() ,
                 Name= "Classification of Brain Images"
             };
             _unitOfWork.Group.Add(group);
+            _unitOfWork.Save();
         }
         //RGOOutputs
-        //migrationBuilder.InsertData(
-        //    table: "RGOutputs",
-        //    columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "Originating_GroupId", "RGO_TypeId", "Updated_By", "Updated_Date" },
-        //    values: new object[] { 1, "seed", new DateTime(2024, 2, 20, 9, 2, 28, 43, DateTimeKind.Utc).AddTicks(2366), "Brain Scan Classifications", "MRI Classification Group Truth", null, 1, 1, null, null });
-        
+        var outputs = _unitOfWork.RGO_Output.GetAll();
+        if (!outputs.Any())
+        {
+            var output = new RGOutput() { 
+                Created_By="seed",
+                Created_Date= new DateTime(2024, 2, 20, 9, 2, 28, 43, DateTimeKind.Utc).AddTicks(2366),
+                Description= "Brain Scan Classifications",
+                Name= "MRI Classification Group Truth",
+                RGO_Type= _unitOfWork.RGO_Type.GetAll().First(),
+                Originating_GroupId= _unitOfWork.Group.GetAll().First().Id,
+            };
+            _unitOfWork.RGO_Output.Add(output);
+            _unitOfWork.Save();
+        }
+  
         //dataset templates
         var datasetTemplates = _unitOfWork.RGO_Dataset_Template.GetAll();
         if(!datasetTemplates.Any())
@@ -127,27 +141,77 @@ public class DataSeeder
                 Created_Date= new DateTime(2024, 2, 20, 9, 2, 28, 43, DateTimeKind.Utc).AddTicks(2406),
                 Description= "Classifying the type of Brain Scans, done by Gerry and Grant",
                 Name = "MRI Classification Group Truth",
-                RGOutput_Id=1
+                RGOutput_Id= _unitOfWork.RGO_Output.GetAll().First().Id,
             };
             _unitOfWork.RGO_Dataset_Template.Add(datasetTemplate);
+            _unitOfWork.Save();
 
         }
         //column templates
-
-
-        _unitOfWork.Save();
-
-
-        //migrationBuilder.InsertData(
-        //    table: "RGO_Column_Templates",
-        //    columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "PK_Column_Order", "Potentially_Disclosive", "RGO_Dataset_TemplateId", "Type", "Updated_By", "Updated_Date" },
-        //    values: new object[,]
-        //    {
-        //        { 1, "seed", new DateTime(2024, 2, 20, 9, 2, 28, 43, DateTimeKind.Utc).AddTicks(2508), "Identifier of this image", "Image_Identifier", null, 1, "N", 1, "Int", null, null },
-        //        { 2, "seed", new DateTime(2024, 2, 20, 9, 2, 28, 43, DateTimeKind.Utc).AddTicks(2512), "The ground truth that classifies the type of MRI this is e.g. T1, T2", "MRI_Classification", null, null, "N", 1, "Char", null, null },
-        //        { 3, "seed", new DateTime(2024, 2, 20, 9, 2, 28, 43, DateTimeKind.Utc).AddTicks(2515), "An expert who generate this ground truth (1)", "Ground_Truther_1", null, null, "N", 1, "Int", null, null },
-        //        { 4, "seed", new DateTime(2024, 2, 20, 9, 2, 28, 43, DateTimeKind.Utc).AddTicks(2518), "An expert who generate this ground truth (2)", "Ground_Truther_2", null, null, "N", 1, "Int", null, null },
-        //        { 5, "seed", new DateTime(2024, 2, 20, 9, 2, 28, 43, DateTimeKind.Utc).AddTicks(2521), "The date on which this Ground Truth was finalised", "Date_GT_Recorded", null, null, "N", 1, "Date", null, null }
-        //    });
+        var columnTemplates = _unitOfWork.RGO_Column_Template.GetAll();
+        if (!columnTemplates.Any())
+        {
+            var columnTemplate = new RGO_Column_Template()
+            {
+                Created_By="seed",
+                Created_Date = new DateTime(2024, 2, 20, 9, 2, 28, 43, DateTimeKind.Utc).AddTicks(2508),
+                Description= "Identifier of this image",
+                Name="Image_Identifier",
+                PK_Column_Order=1,
+                Potentially_Disclosive="N",
+                RGO_Dataset_TemplateId=_unitOfWork.RGO_Dataset_Template.GetAll().First().Id,
+                Type="Int"
+            };
+            _unitOfWork.RGO_Column_Template.Add(columnTemplate);
+            columnTemplate = new RGO_Column_Template()
+            {
+                Created_By = "seed",
+                Created_Date = new DateTime(2024, 2, 20, 9, 2, 28, 43, DateTimeKind.Utc).AddTicks(2512),
+                Description = "The ground truth that classifies the type of MRI this is e.g. T1, T2",
+                Name = "MRI_Classification",
+                PK_Column_Order = 1,
+                Potentially_Disclosive = "N",
+                RGO_Dataset_TemplateId = _unitOfWork.RGO_Dataset_Template.GetAll().First().Id,
+                Type = "Char"
+            };
+            _unitOfWork.RGO_Column_Template.Add(columnTemplate);
+            columnTemplate = new RGO_Column_Template()
+            {
+                Created_By = "seed",
+                Created_Date = new DateTime(2024, 2, 20, 9, 2, 28, 43, DateTimeKind.Utc).AddTicks(2515),
+                Description = "An expert who generate this ground truth (1)",
+                Name = "Ground_Truther_1",
+                PK_Column_Order = 1,
+                Potentially_Disclosive = "N",
+                RGO_Dataset_TemplateId = _unitOfWork.RGO_Dataset_Template.GetAll().First().Id,
+                Type = "Int"
+            };
+            _unitOfWork.RGO_Column_Template.Add(columnTemplate);
+            columnTemplate = new RGO_Column_Template()
+            {
+                Created_By = "seed",
+                Created_Date = new DateTime(2024, 2, 20, 9, 2, 28, 43, DateTimeKind.Utc).AddTicks(2518),
+                Description = "An expert who generate this ground truth (2)",
+                Name = "Ground_Truther_2",
+                PK_Column_Order = 1,
+                Potentially_Disclosive = "N",
+                RGO_Dataset_TemplateId = _unitOfWork.RGO_Dataset_Template.GetAll().First().Id,
+                Type = "Int"
+            };
+            _unitOfWork.RGO_Column_Template.Add(columnTemplate);
+            columnTemplate = new RGO_Column_Template()
+            {
+                Created_By = "seed",
+                Created_Date = new DateTime(2024, 2, 20, 9, 2, 28, 43, DateTimeKind.Utc).AddTicks(2521),
+                Description = "The date on which this Ground Truth was finalised",
+                Name = "Date_GT_Recorded",
+                PK_Column_Order = 1,
+                Potentially_Disclosive = "N",
+                RGO_Dataset_TemplateId = _unitOfWork.RGO_Dataset_Template.GetAll().First().Id,
+                Type = "Date"
+            };
+            _unitOfWork.RGO_Column_Template.Add(columnTemplate);
+            _unitOfWork.Save();
+        }
     }
 }

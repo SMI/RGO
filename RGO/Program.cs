@@ -4,6 +4,8 @@ using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.DataAccess.Repository;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Drawing.Text;
+using RGO.Utility;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,7 +45,11 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     db.Database.Migrate();
+    var seeder = new DataSeeder(db);
+    seeder.Seed();
 }
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

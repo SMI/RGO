@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.VisualBasic.FileIO;
 using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository;
+using RGO.DataAccess.Repository.IRepository;
 using RGO.Models.Models;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace RGO
         private int _datasetId;
         private int _recordId;
         private ApplicationDbContext _context;
+        private IUnitOfWork _unitOfWork;
         private RGO_Dataset_Template _datasetTemplate;
 
 
@@ -38,9 +40,9 @@ namespace RGO
 
                 createDatasetRecord();
 
-                RGO_RecordRepository recrepo = new RGO_RecordRepository(_context);
-                RGO_ColumnRepository colrepo = new RGO_ColumnRepository(_context);
-                RGO_Record_PersonRepository rprepo = new RGO_Record_PersonRepository(_context);
+                //RGO_RecordRepository recrepo = new RGO_RecordRepository(_context);
+                //RGO_ColumnRepository colrepo = new RGO_ColumnRepository(_context);
+                //RGO_Record_PersonRepository rprepo = new RGO_Record_PersonRepository(_context);
 
                 int recordIndex = 0;
                 List<string> columnHeaders = new List<string>();
@@ -68,9 +70,9 @@ namespace RGO
                         recrec.RGO_DatasetId = _datasetId;
                         recrec.Created_By = "RGO_Upload";
                         recrec.Record_Status = "Uploading";
-                        recrepo.Add(recrec);
+                        _unitOfWork.RGO_Record.Add(recrec);
 
-                        _context.SaveChanges();
+                        _unitOfWork.Save();
                         _recordId = recrec.Id;
 
                         // Grab the column values for this record
@@ -82,9 +84,8 @@ namespace RGO
                         foreach (var header in columnHeaders)
                         {
 
-                            var _colRepository = new RGO_Column_TemplateRepository(_context);
-                            //var _columnTemplate = _colRepository.GetAll().Where(r => r.Id.Equals(_DatasetTemplateId) && r.Name == header).FirstOrDefault();
-                            var _columnTemplate = _colRepository.GetAll().Where(r => r.Id.Equals(_datasetTemplateId)).FirstOrDefault();
+                            //var _colRepository = new RGO_Column_TemplateRepository(_context);
+                            var _columnTemplate = _unitOfWork.RGO_Column_Template.GetAll().Where(r => r.RGO_Dataset_TemplateId.Equals(_datasetTemplateId)).FirstOrDefault();
 
                             if (!header.StartsWith("Ground_Truther"))
                             {
@@ -101,16 +102,15 @@ namespace RGO
                                 colrec.Created_By = "RGO_Upload";
                                 //colrec.Created_Date = DateTime.Now;
 
-                                colrepo.Add(colrec);
-
+                                _unitOfWork.RGO_Column.Add(colrec);
+                                _unitOfWork.Save();
 
                             }
                             else
                             {
                                 //Find the id of the person record with this name
 
-                                var _personRepository = new PersonRepository(_context);
-                                var _person = _personRepository.GetAll().Where(pr => pr.Name.Equals(columnValues[columnIndex])).FirstOrDefault();
+                                var _person = _unitOfWork.Person.GetAll().Where(pr => pr.Name.Equals(columnValues[columnIndex])).FirstOrDefault();
 
                                 // Create a new RGO_Person_Record Record
                                 RGO_Record_Person rprec = new RGO_Record_Person();
@@ -122,11 +122,9 @@ namespace RGO
                                 rprec.Created_By = "RGO_Upload";
                                 //rprec.Created_Date = DateTime.Now;
 
-                                rprepo.Add(rprec);
+                                _unitOfWork.RGO_Record_Person.Add(rprec);
+                                _unitOfWork.Save();
                             }
-
-                            _context.SaveChanges();
-
                             columnIndex++;
 
                         }
@@ -137,16 +135,15 @@ namespace RGO
                     recordIndex++;
                 }
 
-                _context.SaveChanges();
-
                 CreateView();
 
             }
         }
 
-        public CSV_Uploader(string filePath)
+        public CSV_Uploader(string filePath,IUnitOfWork unitOfWork)
         {
             _filePath = filePath;
+            _unitOfWork = unitOfWork;
 
         }
 
@@ -159,13 +156,8 @@ namespace RGO
             if (!_fileNameNoExt.StartsWith("RGO_")) return false;
             var datasetTemplateId = _fileNameNoExt.Substring(4);
 
-            var applicationContext = new ApplicationDbContextFactory();
-            _context = applicationContext.CreateDbContext(new string[] { });
-
-            var _repository = new RGO_Dataset_TemplateRepository(_context);
-
             _datasetTemplateId = int.Parse(datasetTemplateId);
-            _datasetTemplate = _repository.GetAll().Where(r => r.Id.Equals(_datasetTemplateId)).FirstOrDefault();
+            _datasetTemplate = _unitOfWork.RGO_Dataset_Template.GetAll().Where(r => r.Id.Equals(_datasetTemplateId)).FirstOrDefault();
 
             if (_datasetTemplate == null) { return false; }
 
@@ -181,11 +173,10 @@ namespace RGO
             dsrec.Dataset_Status = "Uploading";
             dsrec.Created_By = "RGO_Upload";
 
-            RGO_DatasetRepository dsrepo = new RGO_DatasetRepository(_context);
-            dsrepo.Add(dsrec);
-            _context.SaveChanges();
+            _unitOfWork.RGO_Dataset.Add(dsrec);
+            _unitOfWork.Save();
 
-            _datasetId = dsrec.Id;
+            _datasetId = dsrec.Id; //does this exist? 
 
             return true;
         }
@@ -199,13 +190,11 @@ namespace RGO
 
         private void CreateView()
         {
+            //todo this doesn't work in postgres
             var datasetId = _datasetId;
-            RGO_DatasetRepository dsr = new RGO_DatasetRepository(_context);
-            var dataset = dsr.GetAll().Where(ds => ds.Id == datasetId).FirstOrDefault();
-            RGO_Dataset_TemplateRepository dstr = new RGO_Dataset_TemplateRepository(_context);
-            var datasetTemplate = dstr.GetAll().Where(t => t.Id == dataset.RGO_Dataset_TemplateId).FirstOrDefault();
-            RGO_Column_TemplateRepository ctr = new RGO_Column_TemplateRepository(_context);
-            var columns = string.Join(',', ctr.GetAll().Where(c => c.RGO_Dataset_TemplateId == datasetTemplate.Id).Select(c => c.Name).ToList());
+            var dataset = _unitOfWork.RGO_Dataset.GetAll().Where(ds => ds.Id == datasetId).FirstOrDefault();
+            var datasetTemplate = _unitOfWork.RGO_Dataset_Template.GetAll().Where(t => t.Id == dataset.RGO_Dataset_TemplateId).FirstOrDefault();
+            var columns = string.Join(',', _unitOfWork.RGO_Column_Template.GetAll().Where(c => c.RGO_Dataset_TemplateId == datasetTemplate.Id).Select(c => c.Name).ToList());
             var viewName = $"{_datasetTemplate.Name}_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
             viewName = ReplaceWhitespace(viewName, "_");
             var sql = @$"
@@ -240,7 +229,7 @@ GROUP BY[RGO_RecordId], Name, Column_Value
             ";
             //tell JRF to fix this
             ImplementationManager.Load<MicrosoftSQLImplementation>();
-
+            
             var ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=R-GO;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
             DiscoveredServer server = new DiscoveredServer(ConnectionString, FAnsi.DatabaseType.MicrosoftSQLServer);
             using var conn = server.GetConnection();

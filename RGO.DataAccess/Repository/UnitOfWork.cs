@@ -54,5 +54,6 @@ namespace RGO.DataAccess.Repository
 
             _db.SaveChanges();
         }
+
     }
 }

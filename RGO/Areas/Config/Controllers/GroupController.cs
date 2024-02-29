@@ -85,6 +85,13 @@ namespace RGO.Areas.Config.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(groupVM.Group.Id != null)
+                {
+
+                    _unitOfWork.Group.Update(groupVM.Group);
+                    _unitOfWork.Save();
+                    return RedirectToAction(nameof(Index));
+                }
                 _unitOfWork.Group.Add(groupVM.Group);
                 _unitOfWork.Save();
                 return RedirectToAction(nameof(Index));

@@ -114,18 +114,28 @@ namespace RGO.Areas.Config.Controllers
  
         public IActionResult Delete(int? id)
         {
-            if (id == null)
+            var groupToBeDeleted = _unitOfWork.Group.FirstOrDefault(u => u.Id == id);
+            if (groupToBeDeleted == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Error while deleting Group" });
             }
 
-            var group = _unitOfWork.Group.FirstOrDefault(m => m.Id == id);
-            if (group == null)
-            {
-                return NotFound();
-            }
+            _unitOfWork.Group.Remove(groupToBeDeleted);
 
-            return View(group);
+            try
+            {
+                _unitOfWork.Save();
+
+            }
+            catch (DbUpdateException ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "This Group cannot be deleted." //TODO why?
+                });
+            }
+            return Json(new { success = true, message = "Group Deleted Successfully" });
         }
 
 

@@ -1,4 +1,5 @@
-﻿using RGO.DataAccess.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.Models.Models;
 using System;
@@ -54,6 +55,5 @@ namespace RGO.DataAccess.Repository
 
             _db.SaveChanges();
         }
-
     }
 }

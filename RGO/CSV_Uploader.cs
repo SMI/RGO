@@ -34,17 +34,11 @@ namespace RGO
 
         public void ExecuteUpload()
         {
-            //string inputFile = @"C:\Temp\RGO_2.csv";
-            //var uploader = new CSV_Uploader("C:\RGX_2.csv");
 
             if (PreCheck().Equals(true))
             {
 
                 createDatasetRecord();
-
-                //RGO_RecordRepository recrepo = new RGO_RecordRepository(_context);
-                //RGO_ColumnRepository colrepo = new RGO_ColumnRepository(_context);
-                //RGO_Record_PersonRepository rprepo = new RGO_Record_PersonRepository(_context);
 
                 int recordIndex = 0;
                 List<string> columnHeaders = new List<string>();
@@ -86,7 +80,6 @@ namespace RGO
                         foreach (var header in columnHeaders)
                         {
 
-                            //var _colRepository = new RGO_Column_TemplateRepository(_context);
                             var _columnTemplate = _unitOfWork.RGO_Column_Template.GetAll().Where(r => r.RGO_Dataset_TemplateId.Equals(_datasetTemplateId)).FirstOrDefault();
 
                             if (!header.StartsWith("Ground_Truther"))
@@ -122,7 +115,6 @@ namespace RGO
                                 rprec.PersonId = _person.Id;
                                 rprec.Person_Record_Role = "Ground Truther";
                                 rprec.Created_By = "RGO_Upload";
-                                //rprec.Created_Date = DateTime.Now;
 
                                 _unitOfWork.RGO_Record_Person.Add(rprec);
                                 _unitOfWork.Save();
@@ -270,30 +262,3 @@ GROUP BY[RGO_RecordId], Name, Column_Value
 
     }
 }
-
-//postgres
-//SELECT string_agg("Name",',') FROM(
-//select distinct "Name", cc."Id" from "RGO_Columns" as cc
-//join "RGO_Records" as records on records."Id" = "RGO_RecordId"
-//where records."RGO_DatasetId" = 1
-//group by "RGO_RecordId", "Name", cc."Id"
-//having "RGO_RecordId" = (SELECT MIN("RGO_RecordId")FROM "RGO_Columns" limit 1)
-//order by cc."Id"
-//)
-
-//with rc as (
-//select "Column_Value", "Name", "RGO_RecordId"
-//                from "RGO_Columns" as rc
-//join "RGO_Records" as records on records."Id" = "RGO_RecordId" --and "Column_Value" = 'Image_Identifier'
-//order by 3
-//)
-
-//select 
-//"RGO_RecordId",
-//  MIN(CASE WHEN rc."Name" = 'Image_identifier' THEN rc."Column_Value" END) AS Image_identifier,
-//  MIN(CASE WHEN rc."Name" = 'MRI_Classification' THEN rc."Column_Value" END) AS MRI_Classification,
-//  MIN(CASE WHEN rc."Name" = 'Expert_1' THEN rc."Column_Value" END) AS Expert_1,
-//  MIN(CASE WHEN rc."Name" = 'Expert_2' THEN rc."Column_Value" END) AS Export_2,
-//  MIN(CASE WHEN rc."Name" = 'Date_GT_Recorded' THEN rc."Column_Value" END) AS Date_GT_Recorded
-//from rc
-//group by "RGO_RecordId"

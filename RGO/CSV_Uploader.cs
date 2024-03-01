@@ -28,6 +28,7 @@ namespace RGO
         private ApplicationDbContext _context;
         private IUnitOfWork _unitOfWork;
         private RGO_Dataset_Template _datasetTemplate;
+        private IConfigurationRoot _config;
 
 
 
@@ -134,8 +135,7 @@ namespace RGO
 
                     recordIndex++;
                 }
-                var MyConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-                if (MyConfig.GetValue(typeof(object), "DatabaseType").ToString() == "Postgres")
+                if (_config.GetValue(typeof(object), "DatabaseType").ToString() == "Postgres")
                 {
                     CreatePostgresView();
                 }
@@ -151,6 +151,7 @@ namespace RGO
         {
             _filePath = filePath;
             _unitOfWork = unitOfWork;
+            _config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
         }
 
@@ -225,13 +226,18 @@ namespace RGO
             from rc
             group by ""RGO_RecordId""
             ";
-            Console.WriteLine(sql);
+            var ConnectionString = _config.GetValue(typeof(object), "ConnectionStrings:DefaultConnection");
+            DiscoveredServer server = new DiscoveredServer(ConnectionString.ToString(), FAnsi.DatabaseType.MicrosoftSQLServer);
+            using var conn = server.GetConnection();
+            conn.Open();
+            var cmd = server.GetCommand(sql, conn);
+            cmd.ExecuteNonQuery();
         }
 
 
         private void CreateView()
         {
-            //todo this doesn't work in postgres
+            //todo ground truthers aren't working
             var datasetId = _datasetId;
             var dataset = _unitOfWork.RGO_Dataset.GetAll().Where(ds => ds.Id == datasetId).FirstOrDefault();
             var datasetTemplate = _unitOfWork.RGO_Dataset_Template.GetAll().Where(t => t.Id == dataset.RGO_Dataset_TemplateId).FirstOrDefault();
@@ -254,11 +260,8 @@ GROUP BY[RGO_RecordId], Name, Column_Value
                 for Name in ( {columns})
             ) p
             ";
-            //tell JRF to fix this
-
-
-            var ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=R-GO;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
-            DiscoveredServer server = new DiscoveredServer(ConnectionString, FAnsi.DatabaseType.MicrosoftSQLServer);
+            var ConnectionString = _config.GetValue(typeof(object), "ConnectionStrings:DefaultConnection");
+            DiscoveredServer server = new DiscoveredServer(ConnectionString.ToString(), FAnsi.DatabaseType.MicrosoftSQLServer);
             using var conn = server.GetConnection();
             conn.Open();
             var cmd = server.GetCommand(sql, conn);

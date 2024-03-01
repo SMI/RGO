@@ -18,6 +18,8 @@ namespace RGO.Areas.Config.Controllers
         public DatasetsController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            var csvgen = new CSVGenerator(_unitOfWork.RGO_Dataset_Template.GetAll().First(), _unitOfWork);
+            csvgen.CreateCSV();
         }
 
         public IActionResult Index()

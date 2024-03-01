@@ -3,6 +3,9 @@ using FAnsi.Implementation;
 using FAnsi.Implementations.MicrosoftSQL;
 using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.VisualBasic.FileIO;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using RGO.DataAccess;
 using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository;
@@ -46,6 +49,75 @@ namespace RGO
                 int columnIndex = 0;
                 List<string> columnValues = new List<string>();
 
+                if (_filePath.EndsWith(".xlsx"))
+                {
+                    //convert to csv
+                    string csvSeparator = ",";
+                    var newFilePath = _filePath.Replace(".xlsx", ".csv");
+                    StreamWriter sw = new StreamWriter(newFilePath, false);
+                    using (var file = new FileStream(_filePath, FileMode.Open, FileAccess.Read))
+                    {
+                        string strExt = System.IO.Path.GetExtension(_filePath);
+
+                        IWorkbook wb;
+
+                        #region Check extension to define the Workbook
+                        if (strExt.Equals(".xls"))
+                        {
+                            wb = new HSSFWorkbook(file);
+                        }
+                        else
+                        {
+                            wb = new XSSFWorkbook(file);
+                        }
+                        #endregion
+
+                        ISheet sheet = wb.GetSheetAt(0);//Start reading at index 0
+
+                        for (int i = 0; i <= sheet.LastRowNum; i++)//Row
+                        {
+                            IRow row = sheet.GetRow(i);
+
+                            for (int j = 0; j < row.LastCellNum; j++)//Column
+                            {
+                                ICell cell = row.GetCell(j);
+
+                                object cellValue = null;
+
+                                #region Check cell type in order to define its value type
+                                switch (cell.CellType)
+                                {
+                                    case CellType.Blank:
+                                    case CellType.Error:
+                                        cellValue = null;
+                                        break;
+                                    case CellType.Boolean:
+                                        cellValue = cell.BooleanCellValue;
+                                        break;
+                                    case CellType.Numeric:
+                                        cellValue = cell.NumericCellValue;
+                                        break;
+                                    case CellType.String:
+                                        cellValue = cell.StringCellValue;
+                                        break;
+                                    default:
+                                        cellValue = cell.StringCellValue;
+                                        break;
+                                }
+                                #endregion
+
+                                sw.Write(cellValue.ToString());//Write the cell value
+                                sw.Write(csvSeparator);//Add the CSV separator
+                            }
+                            sw.Write(Environment.NewLine);//Add new line
+                        }
+                        sw.Flush();
+                        sw.Close();
+                        _filePath = newFilePath;
+                    }
+
+                }
+
 
                 foreach (var line in File.ReadLines(_filePath))
                 {
@@ -53,8 +125,6 @@ namespace RGO
                     {
                         //Grab the column headers
                         line.Split(",").ToList().ForEach(columnHeaders.Add);
-
-
 
                     }
                     else
@@ -154,7 +224,7 @@ namespace RGO
             var _fileName = _fileInfo.FullName;
             var _fileNameNoExt = Path.GetFileNameWithoutExtension(_fileName);
             if (!_fileNameNoExt.StartsWith("RGO_")) return false;
-            var datasetTemplateId = _fileNameNoExt.Substring(4);
+            var datasetTemplateId = _fileNameNoExt.Split("_").Reverse().First();
 
             _datasetTemplateId = int.Parse(datasetTemplateId);
             _datasetTemplate = _unitOfWork.RGO_Dataset_Template.GetAll().Where(r => r.Id.Equals(_datasetTemplateId)).FirstOrDefault();

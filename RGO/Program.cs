@@ -6,6 +6,9 @@ using RGO.DataAccess.Repository;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Drawing.Text;
 using RGO.Utility;
+using FAnsi.Implementation;
+using FAnsi.Implementations.MicrosoftSQL;
+using FAnsi.Implementations.PostgreSql;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,7 +35,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
-
+ImplementationManager.Load<MicrosoftSQLImplementation>(); 
+ImplementationManager.Load<PostgreSqlImplementation>();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

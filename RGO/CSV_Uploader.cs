@@ -228,7 +228,7 @@ GROUP BY[RGO_RecordId], Name, Column_Value
             ) p
             ";
             //tell JRF to fix this
-            ImplementationManager.Load<MicrosoftSQLImplementation>();
+            
             
             var ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=R-GO;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
             DiscoveredServer server = new DiscoveredServer(ConnectionString, FAnsi.DatabaseType.MicrosoftSQLServer);

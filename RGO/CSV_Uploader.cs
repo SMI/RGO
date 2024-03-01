@@ -3,6 +3,7 @@ using FAnsi.Implementation;
 using FAnsi.Implementations.MicrosoftSQL;
 using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.VisualBasic.FileIO;
+using RGO.DataAccess;
 using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository;
 using RGO.DataAccess.Repository.IRepository;
@@ -133,14 +134,20 @@ namespace RGO
 
                     recordIndex++;
                 }
-
-                //CreateView();
-                CreatePostgresView();
+                var MyConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+                if (MyConfig.GetValue(typeof(object), "DatabaseType").ToString() == "Postgres")
+                {
+                    CreatePostgresView();
+                }
+                else
+                {
+                    CreateView();
+                }
 
             }
         }
 
-        public CSV_Uploader(string filePath,IUnitOfWork unitOfWork)
+        public CSV_Uploader(string filePath, IUnitOfWork unitOfWork)
         {
             _filePath = filePath;
             _unitOfWork = unitOfWork;
@@ -198,12 +205,13 @@ namespace RGO
             var viewName = $"{_datasetTemplate.Name}_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
             viewName = ReplaceWhitespace(viewName, "_");
             var columnStrings = new List<string>();
-            foreach(var column in columns)
+            foreach (var column in columns)
             {
                 var str = $"  MIN(CASE WHEN LOWER(rc.\"Name\") = LOWER('{column}') THEN rc.\"Column_Value\" END) AS {column}";
                 columnStrings.Add(str);
             }
             var sql = $@"
+            create view {viewName} as
             with rc as (
                 select ""Column_Value"", ""Name"", ""RGO_RecordId""
                 from ""RGO_Columns"" as rc
@@ -213,7 +221,7 @@ namespace RGO
             )
             select 
             ""RGO_RecordId"",
-            {string.Join(',',columnStrings)}
+            {string.Join(',', columnStrings)}
             from rc
             group by ""RGO_RecordId""
             ";
@@ -232,20 +240,6 @@ namespace RGO
             viewName = ReplaceWhitespace(viewName, "_");
             var sql = @$"
                 create view {viewName} as
-with cols as (
-select STUFF((SELECT ',' + QUOTENAME(Name)
-                    from[R-GO].[dbo].[RGO_Columns] as cols
-
-                    join[R-GO].[dbo].[RGO_Records] as records on records.Id = RGO_RecordId
-
-                    where records.RGO_DatasetId = {datasetId}
-                    group by[RGO_RecordId], Name, cols.id
-                    having[RGO_RecordId] = (SELECT TOP 1 MIN([RGO_RecordId])FROM[R-GO].[dbo].[RGO_Columns])
-                    order by cols.id
-            FOR XML PATH(''), TYPE
-            ).value('.', 'NVARCHAR(MAX)')
-        ,1,1,'') as linkedcols
-)
 select {columns} from
              (
                 select Column_Value, Name,[RGO_RecordId]
@@ -261,8 +255,8 @@ GROUP BY[RGO_RecordId], Name, Column_Value
             ) p
             ";
             //tell JRF to fix this
-            
-            
+
+
             var ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=R-GO;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
             DiscoveredServer server = new DiscoveredServer(ConnectionString, FAnsi.DatabaseType.MicrosoftSQLServer);
             using var conn = server.GetConnection();

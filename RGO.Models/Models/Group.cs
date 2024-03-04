@@ -13,7 +13,7 @@ namespace RGO.Models.Models
         public int Group_TypeId { get; set; }
         [ForeignKey("Group_TypeId")]
 
-        public Group_Type Group_Type { get; set; }
+        public Group_Type? Group_Type { get; set; }
 
         [DisplayName("Group Name")]
         public string Name { get; set; } = "";

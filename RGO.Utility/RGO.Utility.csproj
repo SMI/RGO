@@ -1,19 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="HIC.FansiSql" Version="3.1.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="HIC.FansiSql" Version="3.1.1" />
+		<PackageReference Include="NPOI" Version="2.6.2" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\RGO.Models\RGO.Models.csproj" />
-    <ProjectReference Include="..\RGO.DataAccess\RGO.DataAccess.csproj" />
+	<ItemGroup>
+		<ProjectReference Include="..\RGO.Models\RGO.Models.csproj" />
+		<ProjectReference Include="..\RGO.DataAccess\RGO.DataAccess.csproj" />
 
-  </ItemGroup>
+	</ItemGroup>
 
 </Project>

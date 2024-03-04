@@ -52,6 +52,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RGO.DataAccess\RGO.DataAccess.csproj" />
+    <ProjectReference Include="..\RGO.Utility\RGO.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>

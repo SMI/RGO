@@ -4,6 +4,11 @@ using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.DataAccess.Repository;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Drawing.Text;
+using RGO.Utility;
+using FAnsi.Implementation;
+using FAnsi.Implementations.MicrosoftSQL;
+using FAnsi.Implementations.PostgreSql;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +35,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
-
+ImplementationManager.Load<MicrosoftSQLImplementation>(); 
+ImplementationManager.Load<PostgreSqlImplementation>();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -42,8 +48,12 @@ if (!app.Environment.IsDevelopment())
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    //db.Database.Migrate();
+    db.Database.Migrate();
+    var seeder = new DataSeeder(db);
+    seeder.Seed();
 }
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

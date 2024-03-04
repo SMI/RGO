@@ -5,9 +5,10 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/config/group_type/getall' },
+        "ajax": { url: '/config/datasets/getall' },
         "columns": [
-            { data: 'name', "width": "30%" },
+            { data: 'dataset_Name', "width": "15%" },
+            { data: 'dataset_Status', "width": "15%" },
             { data: 'created_By', "width": "10%" },
             { data: 'created_Date', "width": "10%" },
             { data: 'updated_By', "width": "10%" },
@@ -16,8 +17,7 @@ function loadDataTable() {
             {
                 data: 'id', "render": function (data) {
                     return `<div class="w-75 btn-group" role="group">
-                     <a href="/config/group_type/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>               
-                     <a onClick=Delete('/config/group_type/delete/${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
+                     <a href="/config/datasets/download?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-box-arrow-down"></i>Download</a>               
                      </div>`
                 },
                 "width": "20%"
@@ -43,19 +43,11 @@ function Delete(url) {
                 type: 'DELETE',
                 success: function (data) {
                     dataTable.ajax.reload();
-                    if (data.success) {
-                        toastr.success(data.message);
-                    } else {
-                        toastr.error(data.message);
-                    }
+                    toastr.success(data.message);
                 },
                 error: function (data) {
                     dataTable.ajax.reload();
-                    if (data.success) {
-                        toastr.success(data.message);
-                    } else {
-                        toastr.error(data.message);
-                    }
+                    toastr.error(data.message);
                 }
             })
         }

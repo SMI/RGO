@@ -210,6 +210,19 @@ namespace RGO
                 from ""RGO_Columns"" as rc
                 join ""RGO_Records"" as records on records.""Id"" = ""RGO_RecordId"" 
 	            where records.""RGO_DatasetId""= {_datasetId}
+
+	            union all
+				(select p.""Name"", concat('Ground_Truther_',(1+ rec.""Id"" - startValue)), rec.""RGO_RecordId""
+from ""RGO_Record_People"" as rec
+join ""People"" as p on p.""Id"" = rec.""PersonId""
+join(
+select min(rec.""Id"") as startValue, rec.""RGO_RecordId""
+from ""RGO_Record_People"" as rec
+join ""People"" as p on p.""Id"" = rec.""PersonId""
+join ""RGO_Records"" as r on r.""Id"" = rec.""RGO_RecordId""
+where R.""RGO_DatasetId""= {_datasetId}
+group by rec.""RGO_RecordId"") as mid on mid.""RGO_RecordId"" = rec.""RGO_RecordId"")
+
                 order by 3
             )
             select 

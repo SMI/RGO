@@ -7,6 +7,9 @@ RGO/obj
 .vs
 RGO/.vs
 
+./RGO/DesignTimeBuild/.dtbcache.v2
+./RGO/v17/.futdcache.v2
+
 # User-specific files
 *.rsuser
 *.suo

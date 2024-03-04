@@ -11,18 +11,18 @@ using System.Threading.Tasks;
 
 namespace RGO.DataAccess.Repository
 {
-    public class RGO_OutputRepository : Repository<RGOutput>, IRGO_OutputRepository
+    public class RGO_RecordRepository : Repository<RGO_Record>, IRGO_RecordRepository
     {
 
         private ApplicationDbContext _db;
-        public RGO_OutputRepository(ApplicationDbContext db) : base(db)
+        public RGO_RecordRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
 
-        public void Update(RGOutput obj)
+        public void Update(RGO_Record obj)
         {
-            _db.RGOutputs.Update(obj);
+            _db.RGO_Records.Update(obj);
         }
     }
 }

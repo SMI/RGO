@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RGO.DataAccess.Repository;
+using RGO.DataAccess.Repository.IRepository;
 using RGO.Models;
 using RGO.Models.Models;
 using System.Diagnostics;
@@ -8,11 +10,10 @@ namespace RGO.Areas.Config.Controllers
     [Area("Config")]
     public class UploadController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public UploadController(ILogger<HomeController> logger)
+        private IUnitOfWork _unitOfWork;
+        public UploadController(IUnitOfWork unitOfWork)
         {
-            _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Upload()
@@ -43,7 +44,7 @@ namespace RGO.Areas.Config.Controllers
                 {
                     stream.CopyTo(fs);
                 }
-                var uploader = new CSV_Uploader(fileName);
+                var uploader = new CSV_Uploader(fileName,_unitOfWork);
                 if (!uploader.PreCheck())
                 {
                     TempData["error"] = "Something went wrong with the Upload. Please try again.";

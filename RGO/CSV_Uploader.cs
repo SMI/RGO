@@ -1,11 +1,23 @@
-﻿using Microsoft.VisualBasic.FileIO;
+﻿using FAnsi.Discovery;
+using FAnsi.Implementation;
+using FAnsi.Implementations.MicrosoftSQL;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
+using Microsoft.VisualBasic.FileIO;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using RGO.DataAccess;
 using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository;
+using RGO.DataAccess.Repository.IRepository;
 using RGO.Models.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace RGO
@@ -17,29 +29,94 @@ namespace RGO
         private int _datasetId;
         private int _recordId;
         private ApplicationDbContext _context;
+        private IUnitOfWork _unitOfWork;
         private RGO_Dataset_Template _datasetTemplate;
+        private IConfigurationRoot _config;
 
 
 
         public void ExecuteUpload()
         {
-            //string inputFile = @"C:\Temp\RGO_2.csv";
-            //var uploader = new CSV_Uploader("C:\RGX_2.csv");
 
             if (PreCheck().Equals(true))
             {
 
                 createDatasetRecord();
 
-                RGO_RecordRepository recrepo = new RGO_RecordRepository(_context);
-                RGO_ColumnRepository colrepo = new RGO_ColumnRepository(_context);
-                RGO_Record_PersonRepository rprepo = new RGO_Record_PersonRepository(_context);
-
                 int recordIndex = 0;
                 List<string> columnHeaders = new List<string>();
 
                 int columnIndex = 0;
                 List<string> columnValues = new List<string>();
+
+                if (_filePath.EndsWith(".xlsx"))
+                {
+                    //convert to csv
+                    string csvSeparator = ",";
+                    var newFilePath = _filePath.Replace(".xlsx", ".csv");
+                    StreamWriter sw = new StreamWriter(newFilePath, false);
+                    using (var file = new FileStream(_filePath, FileMode.Open, FileAccess.Read))
+                    {
+                        string strExt = System.IO.Path.GetExtension(_filePath);
+
+                        IWorkbook wb;
+
+                        #region Check extension to define the Workbook
+                        if (strExt.Equals(".xls"))
+                        {
+                            wb = new HSSFWorkbook(file);
+                        }
+                        else
+                        {
+                            wb = new XSSFWorkbook(file);
+                        }
+                        #endregion
+
+                        ISheet sheet = wb.GetSheetAt(0);//Start reading at index 0
+
+                        for (int i = 0; i <= sheet.LastRowNum; i++)//Row
+                        {
+                            IRow row = sheet.GetRow(i);
+
+                            for (int j = 0; j < row.LastCellNum; j++)//Column
+                            {
+                                ICell cell = row.GetCell(j);
+
+                                object cellValue = null;
+
+                                #region Check cell type in order to define its value type
+                                switch (cell.CellType)
+                                {
+                                    case CellType.Blank:
+                                    case CellType.Error:
+                                        cellValue = null;
+                                        break;
+                                    case CellType.Boolean:
+                                        cellValue = cell.BooleanCellValue;
+                                        break;
+                                    case CellType.Numeric:
+                                        cellValue = cell.NumericCellValue;
+                                        break;
+                                    case CellType.String:
+                                        cellValue = cell.StringCellValue;
+                                        break;
+                                    default:
+                                        cellValue = cell.StringCellValue;
+                                        break;
+                                }
+                                #endregion
+
+                                sw.Write(cellValue.ToString());//Write the cell value
+                                sw.Write(csvSeparator);//Add the CSV separator
+                            }
+                            sw.Write(Environment.NewLine);//Add new line
+                        }
+                        sw.Flush();
+                        sw.Close();
+                        _filePath = newFilePath;
+                    }
+
+                }
 
 
                 foreach (var line in File.ReadLines(_filePath))
@@ -48,8 +125,6 @@ namespace RGO
                     {
                         //Grab the column headers
                         line.Split(",").ToList().ForEach(columnHeaders.Add);
-
-
 
                     }
                     else
@@ -61,9 +136,9 @@ namespace RGO
                         recrec.RGO_DatasetId = _datasetId;
                         recrec.Created_By = "RGO_Upload";
                         recrec.Record_Status = "Uploading";
-                        recrepo.Add(recrec);
+                        _unitOfWork.RGO_Record.Add(recrec);
 
-                        _context.SaveChanges();
+                        _unitOfWork.Save();
                         _recordId = recrec.Id;
 
                         // Grab the column values for this record
@@ -75,9 +150,7 @@ namespace RGO
                         foreach (var header in columnHeaders)
                         {
 
-                            var _colRepository = new RGO_Column_TemplateRepository(_context);
-                            //var _columnTemplate = _colRepository.GetAll().Where(r => r.Id.Equals(_DatasetTemplateId) && r.Name == header).FirstOrDefault();
-                            var _columnTemplate = _colRepository.GetAll().Where(r => r.Id.Equals(_datasetTemplateId)).FirstOrDefault();
+                            var _columnTemplate = _unitOfWork.RGO_Column_Template.GetAll().Where(r => r.RGO_Dataset_TemplateId.Equals(_datasetTemplateId)).FirstOrDefault();
 
                             if (!header.StartsWith("Ground_Truther"))
                             {
@@ -94,15 +167,15 @@ namespace RGO
                                 colrec.Created_By = "RGO_Upload";
                                 //colrec.Created_Date = DateTime.Now;
 
-                                colrepo.Add(colrec);
+                                _unitOfWork.RGO_Column.Add(colrec);
+                                _unitOfWork.Save();
 
-
-                            } else
+                            }
+                            else
                             {
                                 //Find the id of the person record with this name
 
-                                var _personRepository = new PersonRepository(_context);
-                                var _person = _personRepository.GetAll().Where(pr => pr.Name.Equals(columnValues[columnIndex])).FirstOrDefault();
+                                var _person = _unitOfWork.Person.GetAll().Where(pr => pr.Name.Equals(columnValues[columnIndex])).FirstOrDefault();
 
                                 // Create a new RGO_Person_Record Record
                                 RGO_Record_Person rprec = new RGO_Record_Person();
@@ -112,33 +185,37 @@ namespace RGO
                                 rprec.PersonId = _person.Id;
                                 rprec.Person_Record_Role = "Ground Truther";
                                 rprec.Created_By = "RGO_Upload";
-                                //rprec.Created_Date = DateTime.Now;
 
-                                rprepo.Add(rprec);
+                                _unitOfWork.RGO_Record_Person.Add(rprec);
+                                _unitOfWork.Save();
                             }
-                            
-                            _context.SaveChanges();
-
                             columnIndex++;
 
                         }
 
-
                     }
 
-                    recordIndex++; 
+                    recordIndex++;
                 }
-
-                _context.SaveChanges();
+                if (_config.GetValue(typeof(object), "DatabaseType").ToString() == "Postgres")
+                {
+                    CreatePostgresView();
+                }
+                else
+                {
+                    CreateView();
+                }
 
             }
         }
 
-        public CSV_Uploader(string filePath)
+        public CSV_Uploader(string filePath, IUnitOfWork unitOfWork)
         {
             _filePath = filePath;
+            _unitOfWork = unitOfWork;
+            _config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
-        } 
+        }
 
         public bool PreCheck()
         {
@@ -147,17 +224,10 @@ namespace RGO
             var _fileName = _fileInfo.FullName;
             var _fileNameNoExt = Path.GetFileNameWithoutExtension(_fileName);
             if (!_fileNameNoExt.StartsWith("RGO_")) return false;
-            var datasetTemplateId = _fileNameNoExt.Substring(4);
-
-            var applicationContext = new ApplicationDbContextFactory();
-            _context = applicationContext.CreateDbContext(new string[] {});
-
-            var _repository = new RGO_Dataset_TemplateRepository(_context);
-
-            //var datasetTemplate = _repository.FirstOrDefault(r => r.Id.Equals(int.Parse(datasetTemplateId)));//
+            var datasetTemplateId = _fileNameNoExt.Split("_").Reverse().First();
 
             _datasetTemplateId = int.Parse(datasetTemplateId);
-            _datasetTemplate = _repository.GetAll().Where(r => r.Id.Equals(_datasetTemplateId)).FirstOrDefault();
+            _datasetTemplate = _unitOfWork.RGO_Dataset_Template.GetAll().Where(r => r.Id.Equals(_datasetTemplateId)).FirstOrDefault();
 
             if (_datasetTemplate == null) { return false; }
 
@@ -169,18 +239,121 @@ namespace RGO
             RGO_Dataset dsrec = new RGO_Dataset();
 
             dsrec.RGO_Dataset_TemplateId = _datasetTemplateId;
-            dsrec.Dataset_Name  = _datasetTemplate.Name;
+            dsrec.Dataset_Name = _datasetTemplate.Name;
             dsrec.Dataset_Status = "Uploading";
             dsrec.Created_By = "RGO_Upload";
-            //dsrec.Created_Date = DateTime.Now;
 
-            RGO_DatasetRepository dsrepo = new RGO_DatasetRepository(_context);
-            dsrepo.Add(dsrec);
-            _context.SaveChanges();
+            _unitOfWork.RGO_Dataset.Add(dsrec);
+            _unitOfWork.Save();
 
             _datasetId = dsrec.Id;
 
             return true;
+        }
+
+        private static readonly Regex sWhitespace = new Regex(@"\s+");
+        public static string ReplaceWhitespace(string input, string replacement)
+        {
+            return sWhitespace.Replace(input, replacement);
+        }
+
+
+        private void CreatePostgresView()
+        {
+            //todo ground truthers aren't working
+            var datasetId = _datasetId;
+            var dataset = _unitOfWork.RGO_Dataset.GetAll().Where(ds => ds.Id == datasetId).FirstOrDefault();
+            var datasetTemplate = _unitOfWork.RGO_Dataset_Template.GetAll().Where(t => t.Id == dataset.RGO_Dataset_TemplateId).FirstOrDefault();
+            var columns = _unitOfWork.RGO_Column_Template.GetAll().Where(c => c.RGO_Dataset_TemplateId == datasetTemplate.Id).Select(c => c.Name).ToList();
+            var viewName = $"{_datasetTemplate.Name}_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+            viewName = ReplaceWhitespace(viewName, "_");
+            var columnStrings = new List<string>();
+            foreach (var column in columns)
+            {
+                var str = $"  MIN(CASE WHEN LOWER(rc.\"Name\") = LOWER('{column}') THEN rc.\"Column_Value\" END) AS {column}";
+                columnStrings.Add(str);
+            }
+            var sql = $@"
+            create view {viewName} as
+            with rc as (
+                select ""Column_Value"", ""Name"", ""RGO_RecordId""
+                from ""RGO_Columns"" as rc
+                join ""RGO_Records"" as records on records.""Id"" = ""RGO_RecordId"" 
+	            where records.""RGO_DatasetId""= {_datasetId}
+
+	            union all
+				(select p.""Name"", concat('Ground_Truther_',(1+ rec.""Id"" - startValue)), rec.""RGO_RecordId""
+from ""RGO_Record_People"" as rec
+join ""People"" as p on p.""Id"" = rec.""PersonId""
+join(
+select min(rec.""Id"") as startValue, rec.""RGO_RecordId""
+from ""RGO_Record_People"" as rec
+join ""People"" as p on p.""Id"" = rec.""PersonId""
+join ""RGO_Records"" as r on r.""Id"" = rec.""RGO_RecordId""
+where R.""RGO_DatasetId""= {_datasetId}
+group by rec.""RGO_RecordId"") as mid on mid.""RGO_RecordId"" = rec.""RGO_RecordId"")
+
+                order by 3
+            )
+            select 
+            ""RGO_RecordId"",
+            {string.Join(',', columnStrings)}
+            from rc
+            group by ""RGO_RecordId""
+            ";
+            var ConnectionString = _config.GetValue(typeof(object), "ConnectionStrings:DefaultConnection");
+            DiscoveredServer server = new DiscoveredServer(ConnectionString.ToString(), FAnsi.DatabaseType.MicrosoftSQLServer);
+            using var conn = server.GetConnection();
+            conn.Open();
+            var cmd = server.GetCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+        }
+
+
+        private void CreateView()
+        {
+            //todo ground truthers aren't working
+            var datasetId = _datasetId;
+            var dataset = _unitOfWork.RGO_Dataset.GetAll().Where(ds => ds.Id == datasetId).FirstOrDefault();
+            var datasetTemplate = _unitOfWork.RGO_Dataset_Template.GetAll().Where(t => t.Id == dataset.RGO_Dataset_TemplateId).FirstOrDefault();
+            var columns = string.Join(',', _unitOfWork.RGO_Column_Template.GetAll().Where(c => c.RGO_Dataset_TemplateId == datasetTemplate.Id).Select(c => c.Name).ToList());
+            var viewName = $"{_datasetTemplate.Name}_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+            viewName = ReplaceWhitespace(viewName, "_");
+            var sql = @$"
+                create view {viewName} as
+select {columns} from
+             (
+                select Column_Value, Name,[RGO_RecordId]
+                from [R-GO].[dbo].[RGO_Columns]
+join[R-GO].[dbo].[RGO_Records] as records on records.Id = RGO_RecordId
+where records.RGO_DatasetId= {datasetId}
+GROUP BY[RGO_RecordId], Name, Column_Value
+
+union all
+select p.Name, 'Ground_Truther_'+ cast(1+ rec.Id - startValue as varchar(100)), rec.RGO_RecordId
+from [R-GO].[dbo].[RGO_Record_People] as rec
+join [R-GO].[dbo].[People] as p on p.Id = rec.PersonId
+join(
+select min(rec.Id) as startValue, rec.RGO_RecordId
+from [R-GO].[dbo].[RGO_Record_People] as rec
+join [R-GO].[dbo].[People] as p on p.Id = rec.PersonId
+join [R-GO].[dbo].RGO_Records as r on r.Id = rec.RGO_RecordId
+where r.RGO_DataSetId = {datasetId}
+group by rec.RGO_RecordId) as mid on mid.RGO_RecordId = rec.RGO_RecordId
+
+            ) x
+            pivot
+          (
+                max(Column_Value)
+                for Name in ( {columns})
+            ) p
+            ";
+            var ConnectionString = _config.GetValue(typeof(object), "ConnectionStrings:DefaultConnection");
+            DiscoveredServer server = new DiscoveredServer(ConnectionString.ToString(), FAnsi.DatabaseType.MicrosoftSQLServer);
+            using var conn = server.GetConnection();
+            conn.Open();
+            var cmd = server.GetCommand(sql, conn);
+            cmd.ExecuteNonQuery();
         }
 
     }

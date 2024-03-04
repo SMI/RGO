@@ -1,4 +1,5 @@
-﻿using RGO.DataAccess.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.Models.Models;
 using System;
@@ -21,6 +22,8 @@ namespace RGO.DataAccess.Repository
         public IRGO_Dataset_TemplateRepository RGO_Dataset_Template { get; private set; }
         public IRGO_Column_TemplateRepository RGO_Column_Template { get; private set; }
 
+        public IRGO_OutputRepository RGO_Output { get; private set; }
+
 
         public IRGO_DatasetRepository RGO_Dataset { get; private set; }
         public IRGO_RecordRepository RGO_Record { get; private set; }
@@ -29,8 +32,6 @@ namespace RGO.DataAccess.Repository
         public IPersonRepository Person { get; private set; }
 
         public IRGO_Record_PersonRepository RGO_Record_Person { get; private set; }
-
-
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -45,6 +46,7 @@ namespace RGO.DataAccess.Repository
             RGO_Column = new RGO_ColumnRepository(_db);
             Person = new PersonRepository(_db);
             RGO_Record_Person = new RGO_Record_PersonRepository(_db);
+            RGO_Output = new RGO_OutputRepository(_db);
 
         }
 

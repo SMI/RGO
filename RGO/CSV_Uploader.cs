@@ -245,6 +245,19 @@ select {columns} from
 join[R-GO].[dbo].[RGO_Records] as records on records.Id = RGO_RecordId
 where records.RGO_DatasetId= {datasetId}
 GROUP BY[RGO_RecordId], Name, Column_Value
+
+union all
+select p.Name, 'Ground_Truther_'+ cast(1+ rec.Id - startValue as varchar(100)), rec.RGO_RecordId
+from [R-GO].[dbo].[RGO_Record_People] as rec
+join [R-GO].[dbo].[People] as p on p.Id = rec.PersonId
+join(
+select min(rec.Id) as startValue, rec.RGO_RecordId
+from [R-GO].[dbo].[RGO_Record_People] as rec
+join [R-GO].[dbo].[People] as p on p.Id = rec.PersonId
+join [R-GO].[dbo].RGO_Records as r on r.Id = rec.RGO_RecordId
+where r.RGO_DataSetId = {datasetId}
+group by rec.RGO_RecordId) as mid on mid.RGO_RecordId = rec.RGO_RecordId
+
             ) x
             pivot
           (

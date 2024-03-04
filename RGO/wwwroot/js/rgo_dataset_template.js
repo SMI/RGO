@@ -5,26 +5,24 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/config/rgoutput/getall'},
+        "ajax": { url: '/config/rgo_dataset_template/getall' },
         "columns": [
-            
-            { data: 'name', "width": "13%" },
-            { data: 'rgo_type.name', "width": "9%" },
-            { data: 'description', "width": "14%" },
-            { data: 'group.name', "width": "9%" },
-            { data: 'created_By', "width": "9%" },
-            { data: 'created_Date', "width": "9%" },
-            { data: 'updated_By', "width": "9%" },
-            { data: 'updated_Date', "width": "9%" },
-            { data: 'notes', "width": "9%" },
+            { data: 'rgOutput.name', "width": "10%" },
+            { data: 'name', "width": "10%" },
+            { data: 'description', "width": "10%" },
+            { data: 'created_By', "width": "10%" },
+            { data: 'created_Date', "width": "10%" },
+            { data: 'updated_By', "width": "10%" },
+            { data: 'updated_Date', "width": "10%" },
+            { data: 'notes', "width": "10%" },
             {
                 data: 'id', "render": function (data) {
                     return `<div class="w-75 btn-group" role="group">
-                     <a href="/config/rgoutput/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
-                     <a onClick=Delete('/config/rgoutput/delete/${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
+                     <a href="/config/rgo_dataset_template/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
+                     <a onClick=Delete('/config/rgo_dataset_template/delete/${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
                      </div>`
                 },
-                "width": "10%"
+                "width": "20%"
             }
         ]
 

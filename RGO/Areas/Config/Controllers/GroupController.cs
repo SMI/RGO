@@ -26,7 +26,7 @@ namespace RGO.Areas.Config.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        // GET: Config/Group
+
         public IActionResult Index()
         {
             List<Group> objGroupList = _unitOfWork.Group.GetAll(includeProperties: "Group_Type").ToList();

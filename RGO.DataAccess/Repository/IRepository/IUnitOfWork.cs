@@ -17,7 +17,6 @@ namespace RGO.DataAccess.Repository.IRepository
 
         IRGO_Dataset_TemplateRepository RGO_Dataset_Template { get; }
 
-
         IRGO_Column_TemplateRepository RGO_Column_Template { get; }
 
         IRGO_DatasetRepository RGO_Dataset { get; }

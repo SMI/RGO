@@ -13,7 +13,7 @@ namespace RGO.Models.Models
         public int RGOutput_Id { get; set; }
         [DisplayName("Parent RG Output")]
         [ForeignKey("RGOutput_Id")]
-        public RGOutput? RGOutputs { get; set; }
+        public RGOutput? RGOutput { get; set; }
 
 
         [DisplayName("RGO Dataset Name")]
@@ -21,6 +21,8 @@ namespace RGO.Models.Models
 
         [DisplayName("RGO Dataset Description")]
         public string? Description { get; set; }
+
+        public ICollection<Models.RGO_Column_Template>? RGO_Column_Template { get; set; }
 
 
         /* Common Columns that should appear on all tables */

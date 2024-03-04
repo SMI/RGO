@@ -4,6 +4,7 @@ using RGO.Models.Models;
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations.Schema;
 using Group = RGO.Models.Models.Group;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace RGO.Models
 {
@@ -12,9 +13,11 @@ namespace RGO.Models
         [Key]
         public int Id { get; set; }
 
+
+        [ForeignKey("RGO_TypeId")] 
         public int RGO_TypeId { get; set; }
-        [ForeignKey("RGO_TypeId")]
         public RGO_Type? RGO_Type { get; set; }
+
 
         [DisplayName("RGO Name")]
         public string Name { get; set; } = "";
@@ -23,8 +26,9 @@ namespace RGO.Models
         public string? Description { get; set; }
 
         [DisplayName("Originating Group")]
-        public int Originating_GroupId { get; set; }
         [ForeignKey("Originating_GroupId")]
+        public int Originating_GroupId { get; set; }
+        
         public Group? Group { get; set; }
 
         public ICollection<RGO_Dataset_Template>? RGO_Dataset_Template { get; set; }

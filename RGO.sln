@@ -14,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGO.Models", "RGO.Models\RG
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGO.Utility", "RGO.Utility\RGO.Utility.csproj", "{CE06F635-DBFF-452E-9228-B007BF8D19C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RGO.Tests", "RGO.Tests\RGO.Tests.csproj", "{E104A350-49AA-4E09-8E07-9D3BFC4C742F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGO.Tests", "RGO.Tests\RGO.Tests.csproj", "{E104A350-49AA-4E09-8E07-9D3BFC4C742F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

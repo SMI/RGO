@@ -9,15 +9,10 @@ using System.Threading.Tasks;
 
 namespace RGO.Models.ViewModels
 {
-    public class RGOutputVM
+    public class RGO_Dataset_TemplateVM
     {
-        public RGOutput? RGOutput { get; set; }
-
-        public IEnumerable<SelectListItem>? GroupList { get; set; }
-
-        public IEnumerable<SelectListItem>? RGO_TypeList { get; set; }
-        
-
-
+        public RGO_Dataset_Template? RGO_Dataset_Template { get; set; }
+        [ValidateNever]
+        public IEnumerable<SelectListItem>? RGOutputList { get; set; }
     }
 }

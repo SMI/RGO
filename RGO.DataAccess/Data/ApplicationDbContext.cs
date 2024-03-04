@@ -23,11 +23,6 @@ namespace RGO.DataAccess.Data
 
         public DbSet<Person> People { get; set; }
 
-
-        //public DbSet<Group_Role> Group_Roles { get; set; }
-
-        //public DbSet<Person_Group_Role> People_Group_Roles { get; set; }
-
         public DbSet<RGO_Type> RGO_Types { get; set; }
 
         public DbSet<RGOutput> RGOutputs { get; set; }
@@ -47,25 +42,50 @@ namespace RGO.DataAccess.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            // Model the FKs (from the viewpoint of the child table
+            // Model the FKs (from the viewpoint of the child table)
+
             modelBuilder.Entity<Group>()
-                .HasOne(gt =>gt.Group_Type)
-                .WithMany(t => t.Groups)
-                .HasForeignKey(gt => gt.Group_TypeId)
+                .HasOne(e => e.Group_Type)
+                .WithMany(e => e.Group)
+                .HasForeignKey("Group_TypeId")
                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
             modelBuilder.Entity<RGOutput>()
-                .HasOne(g => g.Group)
-                .WithMany(r => r.RGOutputs)
-                .HasForeignKey(r => r.Originating_GroupId)
+                .HasOne(r => r.Group)
+                .WithMany(g => g.RGOutput)
+                .HasForeignKey("Originating_GroupId")
                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
             modelBuilder.Entity<RGOutput>()
-                .HasOne(rt => rt.RGO_Type)
-                .WithMany(r => r.RGOutputs)
-                .HasForeignKey(r => r.RGO_TypeId)
+                .HasOne(r => r.RGO_Type)
+                .WithMany(t => t.RGOutput)
+                .HasForeignKey("RGO_TypeId")
                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
+
+            modelBuilder.Entity<RGO_Dataset_Template>()
+              .HasOne(t => t.RGOutput)
+              .WithMany(a => a.RGO_Dataset_Template)
+              .HasForeignKey("RGOutput_Id")
+              .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+
+            modelBuilder.Entity<RGO_Column_Template>()
+                 .HasOne(r => r.RGO_Dataset_Template)
+                 .WithMany(t => t.RGO_Column_Template)
+                 .HasForeignKey("RGO_Dataset_TemplateId")
+                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+
+
+            modelBuilder.Entity<Group>().Navigation(e => e.Group_Type).AutoInclude();
+            modelBuilder.Entity<RGOutput>().Navigation(e => e.RGO_Type).AutoInclude();
+            modelBuilder.Entity<RGOutput>().Navigation(e => e.Group).AutoInclude();
+            modelBuilder.Entity<RGO_Dataset_Template>().Navigation(e => e.RGOutput).AutoInclude();
+            modelBuilder.Entity<RGO_Column_Template>().Navigation(e => e.RGO_Dataset_Template).AutoInclude();
+
+
+
+  
+ 
 
             // Add in the seed data
             modelBuilder.Entity<Group_Type>().HasData(

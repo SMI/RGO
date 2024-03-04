@@ -31,6 +31,7 @@ namespace RGO.Areas.Config.Controllers
         public IActionResult Index()
         {
             List<RGOutput> objRGOutputList = _unitOfWork.RGOutput.GetAll(includeProperties: "RGO_Type,Group").ToList();
+
             return View(objRGOutputList);
         }
 
@@ -118,7 +119,8 @@ namespace RGO.Areas.Config.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<RGOutput> objRGOutputList = _unitOfWork.RGOutput.GetAll(includeProperties: "RGO_Type").ToList();
+            List<RGOutput> objRGOutputList = _unitOfWork.RGOutput.GetAll(includeProperties: "RGO_Type,Group").ToList();
+            Console.Write(objRGOutputList);
             return Json(new { data = objRGOutputList });
         }
 

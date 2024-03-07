@@ -23,6 +23,12 @@ namespace RGO.DataAccess.Data
 
         public DbSet<Person> People { get; set; }
 
+        public DbSet<Evidence_Type> Evidence_Types { get; set; }
+
+        public DbSet<Evidence> Evidences { get; set; }
+
+        public DbSet<RGO_Evidence> RGO_Evidences { get; set; }
+
         public DbSet<RGO_Type> RGO_Types { get; set; }
 
         public DbSet<RGOutput> RGOutputs { get; set; }
@@ -43,6 +49,31 @@ namespace RGO.DataAccess.Data
         {
 
             // Model the FKs (from the viewpoint of the child table)
+
+
+            modelBuilder.Entity<Evidence>()
+                .HasOne(e => e.Evidence_Type)
+                .WithMany(e => e.Evidence)
+                .HasForeignKey("Evidence_TypeId")
+                .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+
+            modelBuilder.Entity<RGO_Evidence>()
+                .HasOne(e => e.Evidence)
+                .WithMany(e => e.RGO_Evidence)
+                .HasForeignKey("Evidence_Id")
+                .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+
+            modelBuilder.Entity<RGO_Record_Person>()
+                .HasOne(e => e.Person)
+                .WithMany(e => e.RGO_Record_Person)
+                .HasForeignKey("PersonId")
+                .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+
+            modelBuilder.Entity<RGO_Record_Person>()
+                .HasOne(e => e.RGO_Record)
+                .WithMany(e => e.RGO_Record_Person)
+                .HasForeignKey("RGO_RecordId")
+                .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
             modelBuilder.Entity<Group>()
                 .HasOne(e => e.Group_Type)
@@ -96,6 +127,12 @@ namespace RGO.DataAccess.Data
             modelBuilder.Entity<Group>().HasData(
                 new Group { Id = 1, Group_TypeId = 1, Name = "Classification of Brain Images", Created_By = "seed", Created_Date = DateTime.UtcNow }
                 );
+
+            modelBuilder.Entity<Evidence_Type>().HasData(
+                new Evidence_Type { Id = 1, Name = "Peer Reviewed Publication", Created_By = "seed", Created_Date = DateTime.UtcNow },
+                new Evidence_Type { Id = 2, Name = "Requested by another Research Project", Created_By = "seed", Created_Date = DateTime.UtcNow }
+                );
+
 
             modelBuilder.Entity<Person>().HasData(
                 new Person { Id = 1, Name = "Gerry Thomson", ContactInfo = "gerry@yahoo.ac.uk", OrcId = "123ABC", Created_By = "seed", Created_Date = DateTime.UtcNow, Notes= "Academic Neuroradiologist" },

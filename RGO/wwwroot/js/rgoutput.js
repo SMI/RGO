@@ -9,7 +9,7 @@ function loadDataTable() {
         "columns": [
             
             { data: 'name', "width": "13%" },
-            { data: 'rgo_type.name', "width": "9%" },
+            { data: 'rgO_Type.name', "width": "9%" },
             { data: 'description', "width": "14%" },
             { data: 'group.name', "width": "9%" },
             { data: 'created_By', "width": "9%" },

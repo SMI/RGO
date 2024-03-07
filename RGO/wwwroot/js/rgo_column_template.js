@@ -1,11 +1,32 @@
 ﻿var dataTable;
 $(document).ready(function () {
+
     loadDataTable();
 });
 
+
+function GetURLParameter(sParam) {
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) {
+            return sParameterName[1];
+        }
+    }
+}
+function mapURLParameters() {
+    var parentId = GetURLParameter("parentId");
+    if (parentId) {
+        return "/" + parentId;
+    }
+
+    return "";
+
+}
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/config/rgo_column_template/getall'},
+        "ajax": { url: '/config/rgo_column_template/getall' + mapURLParameters() },
         "columns": [
             { data: 'rgO_Dataset_Template.name', "width": "10%" },
             { data: 'name', "width": "10%" },

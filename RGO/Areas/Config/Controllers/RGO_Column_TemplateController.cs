@@ -26,11 +26,32 @@ namespace RGO.Areas.Config.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        //public IActionResult Index()
+        //{
+        //    List<RGO_Column_Template> objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(includeProperties: "RGO_Dataset_Template").ToList();
+        //    return View(objRGO_Column_TemplateList);
+        //}
+
+
+        public IActionResult Index(int? parentId)
         {
-            List<RGO_Column_Template> objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(includeProperties: "RGO_Dataset_Template").ToList();
-            return View(objRGO_Column_TemplateList);
+            List<RGO_Column_Template> objRGO_Column_TemplateList;
+
+            if (parentId == null | parentId == 0)
+            {
+                 objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(includeProperties: "RGO_Dataset_Template").ToList();
+                return View(objRGO_Column_TemplateList);
+            }
+            else
+            {
+                objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(r => r.RGO_Dataset_TemplateId == parentId, includeProperties: "RGO_Dataset_Template").ToList();
+
+                return View(objRGO_Column_TemplateList);
+            }
+
         }
+
+
 
         public IActionResult Upsert(int? id)
         {
@@ -108,12 +129,38 @@ namespace RGO.Areas.Config.Controllers
         #region API CALLS
 
 
-        [HttpGet]
-        public IActionResult GetAll()
+        //[HttpGet]
+        //public IActionResult GetAll()
+        //{
+        //    List<RGO_Column_Template> objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(includeProperties: "RGO_Dataset_Template").ToList();
+        //    return Json(new { data = objRGO_Column_TemplateList });
+        //}
+
+
+        [HttpGet("/config/rgo_column_template/getall/{parentId}")]
+        public IActionResult GetAll(int? parentId)
         {
-            List<RGO_Column_Template> objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(includeProperties: "RGO_Dataset_Template").ToList();
-            return Json(new { data = objRGO_Column_TemplateList });
+            List<RGO_Column_Template> objRGO_Column_TemplateList;
+
+            if (parentId == null | parentId == 0)
+            {
+                objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(includeProperties: "RGO_Dataset_Template").ToList();
+                return Json(new { data = objRGO_Column_TemplateList });
+            }
+            else
+            {
+                objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(r => r.RGO_Dataset_TemplateId == parentId, includeProperties: "RGO_Dataset_Template").ToList();
+                return Json(new { data = objRGO_Column_TemplateList });
+            }
+
         }
+
+
+
+
+
+
+
 
         [HttpDelete]
         public IActionResult Delete(int? id)

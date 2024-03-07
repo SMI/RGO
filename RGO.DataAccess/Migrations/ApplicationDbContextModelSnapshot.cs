@@ -22,6 +22,106 @@ namespace RGO.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("RGO.Models.Evidence", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Created_By")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Doi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EvidenceDetails")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Evidence_TypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Updated_By")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Updated_Date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Evidence_TypeId");
+
+                    b.ToTable("Evidences");
+                });
+
+            modelBuilder.Entity("RGO.Models.Evidence_Type", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Created_By")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Updated_By")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Updated_Date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Evidence_Types");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created_By = "seed",
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(3683),
+                            Description = "",
+                            Name = "Peer Reviewed Publication"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created_By = "seed",
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(3685),
+                            Description = "",
+                            Name = "Requested by another Research Project"
+                        });
+                });
+
             modelBuilder.Entity("RGO.Models.Group_Type", b =>
                 {
                     b.Property<int>("Id")
@@ -53,21 +153,21 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Group_Types", (string)null);
+                    b.ToTable("Group_Types");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 3, 2, 18, 26, 14, 615, DateTimeKind.Utc).AddTicks(3471),
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(3536),
                             Name = "Research Group"
                         },
                         new
                         {
                             Id = 2,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 3, 2, 18, 26, 14, 615, DateTimeKind.Utc).AddTicks(3473),
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(3538),
                             Name = "Data Team"
                         });
                 });
@@ -110,97 +210,16 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("Group_TypeId");
 
-                    b.ToTable("Groups", (string)null);
+                    b.ToTable("Groups");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 3, 2, 18, 26, 14, 615, DateTimeKind.Utc).AddTicks(3775),
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(3662),
                             Group_TypeId = 1,
                             Name = "Classification of Brain Images"
-                        });
-                });
-
-            modelBuilder.Entity("RGO.Models.Models.Person", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ContactInfo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Created_By")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Created_Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OrcId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Updated_By")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("Updated_Date")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("People", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ContactInfo = "gerry@yahoo.ac.uk",
-                            Created_By = "seed",
-                            Created_Date = new DateTime(2024, 3, 2, 18, 26, 14, 615, DateTimeKind.Utc).AddTicks(3817),
-                            Name = "Gerry Thomson",
-                            Notes = "Academic Neuroradiologist",
-                            OrcId = "123ABC"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ContactInfo = "grant@yahoo.ac.uk",
-                            Created_By = "seed",
-                            Created_Date = new DateTime(2024, 3, 2, 18, 26, 14, 615, DateTimeKind.Utc).AddTicks(3819),
-                            Name = "Grant Mair",
-                            Notes = "Senior Clinical Lecturer in Neuroradiology",
-                            OrcId = "456DEF"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ContactInfo = "smarti@yahoo.ac.uk",
-                            Created_By = "seed",
-                            Created_Date = new DateTime(2024, 3, 2, 18, 26, 14, 615, DateTimeKind.Utc).AddTicks(3821),
-                            Name = "Smarti Reel",
-                            Notes = "Postdoctoral Researcher",
-                            OrcId = ""
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ContactInfo = "kara@yahoo.ac.uk",
-                            Created_By = "seed",
-                            Created_Date = new DateTime(2024, 3, 2, 18, 26, 14, 615, DateTimeKind.Utc).AddTicks(3823),
-                            Name = "Kara Moraw",
-                            Notes = "EPCC Applications Developer",
-                            OrcId = ""
                         });
                 });
 
@@ -254,7 +273,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("RGO_RecordId");
 
-                    b.ToTable("RGO_Columns", (string)null);
+                    b.ToTable("RGO_Columns");
                 });
 
             modelBuilder.Entity("RGO.Models.Models.RGO_Column_Template", b =>
@@ -306,14 +325,14 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("RGO_Dataset_TemplateId");
 
-                    b.ToTable("RGO_Column_Templates", (string)null);
+                    b.ToTable("RGO_Column_Templates");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 3, 2, 18, 26, 14, 615, DateTimeKind.Utc).AddTicks(3935),
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(4114),
                             Description = "Identifier of this image",
                             Name = "Image_Identifier",
                             PK_Column_Order = 1,
@@ -325,7 +344,7 @@ namespace RGO.DataAccess.Migrations
                         {
                             Id = 2,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 3, 2, 18, 26, 14, 615, DateTimeKind.Utc).AddTicks(3938),
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(4122),
                             Description = "The ground truth that classifies the type of MRI this is e.g. T1, T2",
                             Name = "MRI_Classification",
                             Potentially_Disclosive = "N",
@@ -336,7 +355,7 @@ namespace RGO.DataAccess.Migrations
                         {
                             Id = 3,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 3, 2, 18, 26, 14, 615, DateTimeKind.Utc).AddTicks(3940),
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(4124),
                             Description = "An expert who generate this ground truth (1)",
                             Name = "Ground_Truther_1",
                             Potentially_Disclosive = "N",
@@ -347,7 +366,7 @@ namespace RGO.DataAccess.Migrations
                         {
                             Id = 4,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 3, 2, 18, 26, 14, 615, DateTimeKind.Utc).AddTicks(3942),
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(4126),
                             Description = "An expert who generate this ground truth (2)",
                             Name = "Ground_Truther_2",
                             Potentially_Disclosive = "N",
@@ -358,7 +377,7 @@ namespace RGO.DataAccess.Migrations
                         {
                             Id = 5,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 3, 2, 18, 26, 14, 615, DateTimeKind.Utc).AddTicks(3944),
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(4130),
                             Description = "The date on which this Ground Truth was finalised",
                             Name = "Date_GT_Recorded",
                             Potentially_Disclosive = "N",
@@ -405,7 +424,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("RGO_Dataset_TemplateId");
 
-                    b.ToTable("RGO_Datasets", (string)null);
+                    b.ToTable("RGO_Datasets");
                 });
 
             modelBuilder.Entity("RGO.Models.Models.RGO_Dataset_Template", b =>
@@ -446,14 +465,14 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("RGOutput_Id");
 
-                    b.ToTable("RGO_Dataset_Templates", (string)null);
+                    b.ToTable("RGO_Dataset_Templates");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 3, 2, 18, 26, 14, 615, DateTimeKind.Utc).AddTicks(3908),
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(4066),
                             Description = "Classifying the type of Brain Scans, done by Gerry and Grant",
                             Name = "MRI Classification Group Truth",
                             RGOutput_Id = 1
@@ -495,7 +514,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("RGO_DatasetId");
 
-                    b.ToTable("RGO_Records", (string)null);
+                    b.ToTable("RGO_Records");
                 });
 
             modelBuilder.Entity("RGO.Models.Models.RGO_Record_Person", b =>
@@ -537,7 +556,127 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("RGO_RecordId");
 
-                    b.ToTable("RGO_Record_People", (string)null);
+                    b.ToTable("RGO_Record_People");
+                });
+
+            modelBuilder.Entity("RGO.Models.Person", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ContactInfo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Created_By")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrcId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Updated_By")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Updated_Date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("People");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ContactInfo = "gerry@yahoo.ac.uk",
+                            Created_By = "seed",
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(3704),
+                            Name = "Gerry Thomson",
+                            Notes = "Academic Neuroradiologist",
+                            OrcId = "123ABC"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ContactInfo = "grant@yahoo.ac.uk",
+                            Created_By = "seed",
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(3707),
+                            Name = "Grant Mair",
+                            Notes = "Senior Clinical Lecturer in Neuroradiology",
+                            OrcId = "456DEF"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ContactInfo = "smarti@yahoo.ac.uk",
+                            Created_By = "seed",
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(3709),
+                            Name = "Smarti Reel",
+                            Notes = "Postdoctoral Researcher",
+                            OrcId = ""
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ContactInfo = "kara@yahoo.ac.uk",
+                            Created_By = "seed",
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(3710),
+                            Name = "Kara Moraw",
+                            Notes = "EPCC Applications Developer",
+                            OrcId = ""
+                        });
+                });
+
+            modelBuilder.Entity("RGO.Models.RGO_Evidence", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Created_By")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Evidence_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RGOutput_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Updated_By")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Updated_Date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Evidence_Id");
+
+                    b.HasIndex("RGOutput_Id");
+
+                    b.ToTable("RGO_Evidences");
                 });
 
             modelBuilder.Entity("RGO.Models.RGO_Type", b =>
@@ -574,14 +713,14 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RGO_Types", (string)null);
+                    b.ToTable("RGO_Types");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 3, 2, 18, 26, 14, 615, DateTimeKind.Utc).AddTicks(3854),
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(3733),
                             Description = "Annotations that have been manually created or validated by a human expert",
                             Name = "Ground Truth"
                         });
@@ -630,19 +769,30 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("RGO_TypeId");
 
-                    b.ToTable("RGOutputs", (string)null);
+                    b.ToTable("RGOutputs");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 3, 2, 18, 26, 14, 615, DateTimeKind.Utc).AddTicks(3883),
+                            Created_Date = new DateTime(2024, 3, 6, 15, 56, 59, 417, DateTimeKind.Utc).AddTicks(3753),
                             Description = "Brain Scan Classifications",
                             Name = "MRI Classification Group Truth",
                             Originating_GroupId = 1,
                             RGO_TypeId = 1
                         });
+                });
+
+            modelBuilder.Entity("RGO.Models.Evidence", b =>
+                {
+                    b.HasOne("RGO.Models.Evidence_Type", "Evidence_Type")
+                        .WithMany("Evidence")
+                        .HasForeignKey("Evidence_TypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Evidence_Type");
                 });
 
             modelBuilder.Entity("RGO.Models.Models.Group", b =>
@@ -713,21 +863,40 @@ namespace RGO.DataAccess.Migrations
 
             modelBuilder.Entity("RGO.Models.Models.RGO_Record_Person", b =>
                 {
-                    b.HasOne("RGO.Models.Models.Person", "Person")
-                        .WithMany()
+                    b.HasOne("RGO.Models.Person", "Person")
+                        .WithMany("RGO_Record_Person")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("RGO.Models.Models.RGO_Record", "RGO_Record")
-                        .WithMany()
+                        .WithMany("RGO_Record_Person")
                         .HasForeignKey("RGO_RecordId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Person");
 
                     b.Navigation("RGO_Record");
+                });
+
+            modelBuilder.Entity("RGO.Models.RGO_Evidence", b =>
+                {
+                    b.HasOne("RGO.Models.Evidence", "Evidence")
+                        .WithMany("RGO_Evidence")
+                        .HasForeignKey("Evidence_Id")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("RGO.Models.RGOutput", "RGOutput")
+                        .WithMany()
+                        .HasForeignKey("RGOutput_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Evidence");
+
+                    b.Navigation("RGOutput");
                 });
 
             modelBuilder.Entity("RGO.Models.RGOutput", b =>
@@ -749,6 +918,16 @@ namespace RGO.DataAccess.Migrations
                     b.Navigation("RGO_Type");
                 });
 
+            modelBuilder.Entity("RGO.Models.Evidence", b =>
+                {
+                    b.Navigation("RGO_Evidence");
+                });
+
+            modelBuilder.Entity("RGO.Models.Evidence_Type", b =>
+                {
+                    b.Navigation("Evidence");
+                });
+
             modelBuilder.Entity("RGO.Models.Group_Type", b =>
                 {
                     b.Navigation("Group");
@@ -762,6 +941,16 @@ namespace RGO.DataAccess.Migrations
             modelBuilder.Entity("RGO.Models.Models.RGO_Dataset_Template", b =>
                 {
                     b.Navigation("RGO_Column_Template");
+                });
+
+            modelBuilder.Entity("RGO.Models.Models.RGO_Record", b =>
+                {
+                    b.Navigation("RGO_Record_Person");
+                });
+
+            modelBuilder.Entity("RGO.Models.Person", b =>
+                {
+                    b.Navigation("RGO_Record_Person");
                 });
 
             modelBuilder.Entity("RGO.Models.RGO_Type", b =>

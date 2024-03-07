@@ -12,6 +12,11 @@ namespace RGO.DataAccess.Repository.IRepository
         IGroup_TypeRepository Group_Type { get; }
         IGroupRepository Group { get; }
 
+        IEvidence_TypeRepository Evidence_Type { get; }
+        IEvidenceRepository Evidence { get; }
+
+        IPersonRepository Person { get; }
+
         IRGO_TypeRepository RGO_Type { get; }
         IRGOutputRepository RGOutput { get; }
 
@@ -23,7 +28,7 @@ namespace RGO.DataAccess.Repository.IRepository
         IRGO_RecordRepository RGO_Record { get; }
         IRGO_ColumnRepository RGO_Column { get; }
 
-        IPersonRepository Person { get; }
+
         IRGO_Record_PersonRepository RGO_Record_Person { get; }
         void Save();
     }

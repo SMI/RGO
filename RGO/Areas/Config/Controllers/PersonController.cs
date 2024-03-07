@@ -28,26 +28,33 @@ namespace RGO.Areas.Config.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        public IActionResult Index()
+        {
+            List<Person> objPersonList = _unitOfWork.Person.GetAll().ToList();
+            return View(objPersonList);
+        }
+
+
         public IActionResult Upsert(int? id)
         {
 
 
-            //if (id == null || id == 0)
-            //{
+            if (id == null || id == 0)
+            {
                 //Insert
                 return View(new Person());
-            //}
-            //else
-            //{
-            //    //Update
-            //    var group_Type = _unitOfWork.Group_Type.FirstOrDefault(m => m.Id == id);
-            //    if (group_Type == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //    return View(group_Type);
+            }
+            else
+            {
+                //Update
+                var person = _unitOfWork.Person.FirstOrDefault(m => m.Id == id);
+                if (person == null)
+                {
+                    return NotFound();
+                }
+                return View(person);
 
-            //}
+            }
 
         }
 
@@ -65,11 +72,11 @@ namespace RGO.Areas.Config.Controllers
                     _unitOfWork.Person.Add(person);
                     ActionType = "Create";
                 }
-                //else
-                //{
-                //    _unitOfWork.Group_Type.Update(group_type);
-                //    ActionType = "Update";
-                //}
+                else
+                {
+                    _unitOfWork.Person.Update(person);
+                    ActionType = "Update";
+                }
 
                 _unitOfWork.Save();
 
@@ -77,20 +84,56 @@ namespace RGO.Areas.Config.Controllers
                 {
                     TempData["success"] = "Person created successfully";
                 }
-                //else
-                //{
-                //    TempData["success"] = "rgo_Dataset_Template updated successfully";
-                //}
+                else
+                {
+                    TempData["success"] = "Person updated successfully";
+                }
 
 
                 return RedirectToAction(nameof(Index));
-            }
-            else
+            } else 
             {
-                return View(person);
+                return View(person); 
             }
 
         }
 
+        #region API CALLS
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Person> objPersonList = _unitOfWork.Person.GetAll().ToList();
+            return Json(new { data = objPersonList });
+        }
+
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+
+            var personToBeDeleted = _unitOfWork.Person.FirstOrDefault(u => u.Id == id);
+            if (personToBeDeleted == null)
+            {
+                return Json(new { success = false, message = "Error while deleting Person" });
+            }
+
+            _unitOfWork.Person.Remove(personToBeDeleted);
+
+            try
+            {
+                _unitOfWork.Save();
+
+            }
+            catch (DbUpdateException ex)
+            {
+                return Json(new { success = false, message = "This Person cannot be deleted as there are Research outputs " +
+                    $" that reference it.  If you want to delete this Person, please change the Ground Truthers of these Research Outputs first"
+                });
+            }
+            return Json(new { success = true, message = "Person Deleted Successfully" });
+
+        }
+        #endregion
     }
 }

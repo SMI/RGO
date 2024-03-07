@@ -169,7 +169,7 @@ namespace RGO.DataAccess.Migrations
                     Name = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
                     Description = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     PK_Column_Order = table.Column<int>(type: "int", nullable: true),
-                    IsIdentifier = table.Column<bool>(type: "bool", nullable: true),
+                    IsIdentifier = table.Column<bool>(type: "int", nullable: true),
                     Type = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
                     Potentially_Disclosive = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
                     Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
@@ -196,6 +196,7 @@ namespace RGO.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1").Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     RGO_Dataset_TemplateId = table.Column<int>(type: "int", nullable: false),
+                    RGO_ReIdentificationConfigurationId = table.Column<int>(type: "int", nullable: false),
                     Dataset_Name = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Dataset_Status = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
                     Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
@@ -213,6 +214,12 @@ namespace RGO.DataAccess.Migrations
                         principalTable: "RGO_Dataset_Templates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    //table.ForeignKey(
+                    //   name: "FK_RGO_Datasets_RGO_ReIdentificationConfiguration_RGO_ReIdentificationConfigurationId",
+                    //   column: x => x.RGO_ReIdentificationConfigurationId,
+                    //   principalTable: "RGO_ReidentificationConfiguration",
+                    //   principalColumn: "Id"
+
                 });
 
             migrationBuilder.CreateTable(
@@ -254,7 +261,7 @@ namespace RGO.DataAccess.Migrations
                     Column_Value = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Column_Status = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
                     Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
-                    IsIdentifier = table.Column<bool>(type: "bool", nullable: true),
+                    IsIdentifier = table.Column<bool>(type: "int", nullable: true),
                     Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
                     Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),

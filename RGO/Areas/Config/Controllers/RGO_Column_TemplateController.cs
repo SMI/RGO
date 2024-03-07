@@ -39,7 +39,7 @@ namespace RGO.Areas.Config.Controllers
 
             if (parentId == null | parentId == 0)
             {
-                 objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(includeProperties: "RGO_Dataset_Template").ToList();
+                objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(includeProperties: "RGO_Dataset_Template").ToList();
                 return View(objRGO_Column_TemplateList);
             }
             else
@@ -136,6 +136,13 @@ namespace RGO.Areas.Config.Controllers
         //    return Json(new { data = objRGO_Column_TemplateList });
         //}
 
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<RGO_Column_Template> objRGO_Column_TemplateList;
+            objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(includeProperties: "RGO_Dataset_Template").ToList();
+            return Json(new { data = objRGO_Column_TemplateList });
+        }
 
         [HttpGet("/config/rgo_column_template/getall/{parentId}")]
         public IActionResult GetAll(int? parentId)

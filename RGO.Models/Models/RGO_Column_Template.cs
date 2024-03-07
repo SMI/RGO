@@ -31,6 +31,7 @@ namespace RGO.Models.Models
         [DisplayName("Potentially Disclosive? (N or a description)")]
         public string Potentially_Disclosive { get; set; } = "N";
 
+        public bool IsIdentifier { get; set; }
 
         /* Common Columns that should appear on all tables */
 
@@ -43,5 +44,6 @@ namespace RGO.Models.Models
         public DateTime? Updated_Date { get; set; }
 
         public string? Notes { get; set; }
+
     }
 }

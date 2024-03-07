@@ -101,7 +101,8 @@ namespace RGO.DataAccess.Migrations
                     DeIdentifiedColumn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdentityColumn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DatabaseType = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

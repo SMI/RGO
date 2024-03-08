@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.Models;
 using RGO.Models.Models;
+using RGO.Utility;
 
 namespace RGO.Areas.Config.Controllers
 {
@@ -34,6 +35,19 @@ namespace RGO.Areas.Config.Controllers
         {
             List<RGO_ReIdentificationConfiguration> objRGOTypeList = _unitOfWork.Reidentification.GetAll().ToList();
             return Json(new { data = objRGOTypeList });
+        }
+
+
+        [HttpPost("/config/RGO_ReIdentificationConfiguration/reidentify")]
+        public IActionResult ReIdentify(int datasetId, int reidentificationId)
+        {
+            RGO_Dataset dataset = _unitOfWork.RGO_Dataset.GetAll().Where(ds => ds.Id == datasetId).First();
+            RGO_ReIdentificationConfiguration config = _unitOfWork.Reidentification.GetAll().Where(re => re.Id == reidentificationId).First();
+            var reidentifier = new ReIdentify(dataset, config, _unitOfWork);
+            reidentifier.Execute();
+            TempData["success"] = "Successfully ReIdentified the Data";
+            //will want do do a fail message also
+            return Json(TempData);
         }
 
         [HttpPost]

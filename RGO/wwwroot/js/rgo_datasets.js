@@ -17,11 +17,19 @@ function handleReIdentificationOptions(jsonData, selectedValue) {
         if (!$("#reidentifyClick").length) {
             $("#reIdentifiyWrapper").append(
                 `<div class="w-75 btn-group" role="group">
-                     <a id="reidentifyClick" class="btn btn-primary mx-2"> <i class="bi bi-search"></i>ReIdentify</a>               
+                     <a id="reidentifyClick" class="btn btn-primary mx-2"> <i class="bi bi-search"  ></i>ReIdentify</a>               
                      </div>`
             )
             $("#reidentifyClick").on('click', function () {
-                alert('hi!');//todo this should alla reidentify endpoint, need to know the dataset ID
+                var row = dataTable.rows(this.parentNode.parentNode.parentNode).data()[0];
+                $.ajax({
+                    url: '/config/RGO_ReIdentificationConfiguration/reidentify',
+                    data: {
+                        datasetId: row.id, reidentificationId: row.rgO_ReIdentificationConfigurationId
+                    },
+                    type: 'POST',
+                    success: res => toastr.success(res.success)
+                })
             })
         }
     }
@@ -34,6 +42,10 @@ function handleReIdentificationOptions(jsonData, selectedValue) {
             success: res => console.log(res)
         })
     })
+}
+
+function Test(obj) {
+    console.log(table.row(obj).index());
 }
 
 function loadDataTable() {

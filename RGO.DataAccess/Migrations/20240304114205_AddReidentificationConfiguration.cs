@@ -158,14 +158,14 @@ namespace RGO.DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "RGO_Column_Templates",
-                columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "PK_Column_Order", "Potentially_Disclosive", "RGO_Dataset_TemplateId", "Type", "Updated_By", "Updated_Date" },
+                columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "PK_Column_Order", "Potentially_Disclosive", "RGO_Dataset_TemplateId", "Type", "Updated_By", "Updated_Date", "IsIdentifier" },
                 values: new object[,]
                 {
-                    { 1, "seed", new DateTime(2024, 3, 4, 11, 10, 54, 285, DateTimeKind.Utc).AddTicks(9985), "Identifier of this image", "Image_Identifier", null, 1, "N", 1, "Int", null, null },
-                    { 2, "seed", new DateTime(2024, 3, 4, 11, 10, 54, 285, DateTimeKind.Utc).AddTicks(9989), "The ground truth that classifies the type of MRI this is e.g. T1, T2", "MRI_Classification", null, null, "N", 1, "Char", null, null },
-                    { 3, "seed", new DateTime(2024, 3, 4, 11, 10, 54, 285, DateTimeKind.Utc).AddTicks(9991), "An expert who generate this ground truth (1)", "Ground_Truther_1", null, null, "N", 1, "Int", null, null },
-                    { 4, "seed", new DateTime(2024, 3, 4, 11, 10, 54, 285, DateTimeKind.Utc).AddTicks(9993), "An expert who generate this ground truth (2)", "Ground_Truther_2", null, null, "N", 1, "Int", null, null },
-                    { 5, "seed", new DateTime(2024, 3, 4, 11, 10, 54, 285, DateTimeKind.Utc).AddTicks(9995), "The date on which this Ground Truth was finalised", "Date_GT_Recorded", null, null, "N", 1, "Date", null, null }
+                    { 1, "seed", new DateTime(2024, 3, 4, 11, 10, 54, 285, DateTimeKind.Utc).AddTicks(9985), "Identifier of this image", "Image_Identifier", null, 1, "N", 1, "Int", null, null,1 },
+                    { 2, "seed", new DateTime(2024, 3, 4, 11, 10, 54, 285, DateTimeKind.Utc).AddTicks(9989), "The ground truth that classifies the type of MRI this is e.g. T1, T2", "MRI_Classification", null, null, "N", 1, "Char", null, null,0 },
+                    { 3, "seed", new DateTime(2024, 3, 4, 11, 10, 54, 285, DateTimeKind.Utc).AddTicks(9991), "An expert who generate this ground truth (1)", "Ground_Truther_1", null, null, "N", 1, "Int", null, null,0 },
+                    { 4, "seed", new DateTime(2024, 3, 4, 11, 10, 54, 285, DateTimeKind.Utc).AddTicks(9993), "An expert who generate this ground truth (2)", "Ground_Truther_2", null, null, "N", 1, "Int", null, null,0 },
+                    { 5, "seed", new DateTime(2024, 3, 4, 11, 10, 54, 285, DateTimeKind.Utc).AddTicks(9995), "The date on which this Ground Truth was finalised", "Date_GT_Recorded", null, null, "N", 1, "Date", null, null,0 }
                 });
         }
     }

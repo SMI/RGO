@@ -1,6 +1,7 @@
 ﻿using FAnsi.Discovery;
 using Microsoft.Data.SqlClient;
 using RGO.DataAccess.Repository;
+using RGO.DataAccess.Repository.IRepository;
 using RGO.Models.Models;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,10 @@ public class ReIdentify
 {
     private RGO_Dataset _dataset;
     private RGO_ReIdentificationConfiguration _config;
-    private UnitOfWork _unitOfWork;
+    private IUnitOfWork _unitOfWork;
 
-    public ReIdentify(RGO_Dataset dataset, RGO_ReIdentificationConfiguration reidentificationConfiguration, UnitOfWork unitOfWork) {
+    public ReIdentify(RGO_Dataset dataset, RGO_ReIdentificationConfiguration reidentificationConfiguration, IUnitOfWork unitOfWork)
+    {
         _dataset = dataset;
         _config = reidentificationConfiguration;
         _unitOfWork = unitOfWork;
@@ -30,19 +32,32 @@ public class ReIdentify
 
         //this only does sql atm, should add type
         var ConnectionString = $"Server={_config.Server};Database={_config.Database};Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
-        var records = _unitOfWork.RGO_Record.GetAll().Where( r => r.RGO_Dataset.Id == _dataset.Id ).Select(r => r.Id).ToList();
-        var ids = _unitOfWork.RGO_Column.GetAll().Where(c => c.IsIdentifier ==1  && records.Contains(c.RGO_RecordId)).ToList();
-        var sql = $"select {_config.DeIdentifiedColumn}, {_config.IdentityColumn} from {_config.Table} where {_config.DeIdentifiedColumn} in ({string.Join(",",ids)})";
+        var records = _unitOfWork.RGO_Record.GetAll().Where(r => r.RGO_Dataset.Id == _dataset.Id).Select(r => r.Id).ToList();
+        var ids = _unitOfWork.RGO_Column.GetAll().Where(c => c.IsIdentifier == 1 && records.Contains(c.RGO_RecordId)).Select(c => c.Column_Value).ToList();
+        var sql = $"select [{_config.DeIdentifiedColumn}], [{_config.IdentityColumn}] from {_config.Table} where {_config.DeIdentifiedColumn} in ({string.Join(",", ids)})";
         DiscoveredServer server = new DiscoveredServer(ConnectionString.ToString(), FAnsi.DatabaseType.MicrosoftSQLServer);
         using var conn = server.GetConnection();
         conn.Open();
         SqlCommand cmd = new SqlCommand(sql, (SqlConnection)conn);
-        //todo fill a datatable or something
         DataTable t1 = new DataTable();
         using (SqlDataAdapter a = new SqlDataAdapter(cmd))
         {
-            a.Fill(t1);
+            try
+            {
+                a.Fill(t1);
+            }
+            catch (Exception) { }
         }
-        var x = 1 + 1;
+        foreach (DataRow row in t1.Rows)
+        {
+            var mathces = _unitOfWork.RGO_Column.GetAll().Where(c => c.IsIdentifier == 1 && records.Contains(c.RGO_RecordId) && c.Column_Value == row[0].ToString().Trim()).ToList();
+            foreach (var match in mathces)
+            {
+                match.Column_Value = row[1].ToString();
+                _unitOfWork.RGO_Column.Update(match);
+                _unitOfWork.Save();
+            }
+
+        }
     }
 }

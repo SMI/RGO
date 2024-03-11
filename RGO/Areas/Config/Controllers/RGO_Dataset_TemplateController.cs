@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Microsoft.EntityFrameworkCore;
+using NPOI.HPSF;
 using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.Models;
 using RGO.Models.Models;
 using RGO.Models.ViewModels;
+using RGO.Utility;
 
 namespace RGO.Areas.Config.Controllers
 {
@@ -145,7 +150,24 @@ namespace RGO.Areas.Config.Controllers
 
     }
 
+        ///config/rgo_dataset_template/download/${data}
+
+        [HttpGet]
+        public async Task<IActionResult> Download(int? id)
+        {
+            var rgo_dataset_template = _unitOfWork.RGO_Dataset_Template.FirstOrDefault(u => u.Id == id);
+            var generator = new CSVGenerator(rgo_dataset_template, _unitOfWork);
+            var file = generator.CreateCSV();
+            var fileName = System.IO.Path.GetFileName(file);
+            var content = await System.IO.File.ReadAllBytesAsync(file);
+            new FileExtensionContentTypeProvider()
+                .TryGetContentType(fileName, out string contentType);
+            return File(content, contentType, fileName);
+        }
+
         #endregion
 
     }
+
+
 }

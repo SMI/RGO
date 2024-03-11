@@ -160,7 +160,9 @@ public class DataSeeder
                 PK_Column_Order=1,
                 Potentially_Disclosive="N",
                 RGO_Dataset_TemplateId=_unitOfWork.RGO_Dataset_Template.GetAll().First().Id,
-                Type="Int"
+                Type="Int",
+                IsIdentifier=1
+                
             };
             _unitOfWork.RGO_Column_Template.Add(columnTemplate);
             columnTemplate = new RGO_Column_Template()

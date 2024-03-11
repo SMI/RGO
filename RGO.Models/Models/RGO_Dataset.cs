@@ -35,5 +35,9 @@ namespace RGO.Models.Models
         public DateTime? Updated_Date { get; set; }
 
         public string? Notes { get; set; }
+
+        public int RGO_ReIdentificationConfigurationId { get; set; }
+        [ForeignKey("RGO_ReIdentificationConfigurationId")]
+        public RGO_ReIdentificationConfiguration RGO_ReIdentificationConfiguration { get; set; }
     }
 }

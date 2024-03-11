@@ -40,7 +40,7 @@ namespace RGO.Models.Models
         [DisplayName("Column Status")]
         public string Column_Status { get; set; } = "New";
 
-
+        public int IsIdentifier { get; set; } = 0;
 
 
         /* Common Columns that should appear on all tables */

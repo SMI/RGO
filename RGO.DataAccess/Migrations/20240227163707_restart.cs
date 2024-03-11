@@ -1,5 +1,7 @@
 ﻿using System;
+using FAnsi.Discovery.TypeTranslation;
 using Microsoft.EntityFrameworkCore.Migrations;
+using TypeGuesser;
 
 #nullable disable
 
@@ -10,6 +12,7 @@ namespace RGO.DataAccess.Migrations
     /// <inheritdoc />
     public partial class restart : Migration
     {
+        TypeTranslater dbTranslator = DatabaseHelper.Instance.GetTypeTranslator();
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -161,13 +164,14 @@ namespace RGO.DataAccess.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PK_Column_Order = table.Column<int>(type: "int", nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Potentially_Disclosive = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Created_By = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Created_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Updated_By = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Updated_Date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    IsIdentifier = table.Column<bool>(type: "int", nullable: true),
+                    Type = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Potentially_Disclosive = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
+                    Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
+                    Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
+                    Notes = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true)
                 },
                 constraints: table =>
                 {
@@ -187,13 +191,14 @@ namespace RGO.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RGO_Dataset_TemplateId = table.Column<int>(type: "int", nullable: false),
-                    Dataset_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Dataset_Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Created_By = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Created_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Updated_By = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Updated_Date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    RGO_ReIdentificationConfigurationId = table.Column<int>(type: "int", nullable: false),
+                    Dataset_Name = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
+                    Dataset_Status = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
+                    Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
+                    Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
+                    Notes = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true)
                 },
                 constraints: table =>
                 {
@@ -204,6 +209,12 @@ namespace RGO.DataAccess.Migrations
                         principalTable: "RGO_Dataset_Templates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    //table.ForeignKey(
+                    //   name: "FK_RGO_Datasets_RGO_ReIdentificationConfiguration_RGO_ReIdentificationConfigurationId",
+                    //   column: x => x.RGO_ReIdentificationConfigurationId,
+                    //   principalTable: "RGO_ReidentificationConfiguration",
+                    //   principalColumn: "Id"
+
                 });
 
             migrationBuilder.CreateTable(
@@ -240,15 +251,16 @@ namespace RGO.DataAccess.Migrations
                     RGO_RecordId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PK_Column_Order = table.Column<int>(type: "int", nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Potentially_Disclosive = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Column_Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Column_Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Created_By = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Created_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Updated_By = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Updated_Date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Type = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
+                    Potentially_Disclosive = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
+                    Column_Value = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
+                    Column_Status = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    IsIdentifier = table.Column<bool>(type: "int", nullable: true),
+                    Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
+                    Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
+                    Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
+                    Notes = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true)
                 },
                 constraints: table =>
                 {

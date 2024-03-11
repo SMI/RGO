@@ -1,0 +1,136 @@
+﻿@model RGO.Models.Models.RGO_ReIdentificationConfiguration
+
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2"> @(Model.Id != 0 ? "Update" : "Create") RGO Type</h2>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="card-body p-4">
+        <form method="post" class="row" enctype="multipart/form-data">
+            <input asp-for="Id" hidden />
+
+            <div class="row">
+                <div class="col-10">
+                    <div class="border p-3">
+
+                        @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+                        <div class="form-floating py-2 col-12">
+
+
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Name" class="form-control border-0 shadow" />
+                                <label asp-for="Name" class="ms-2"></label>
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Server" class="form-control border-0 shadow" />
+                                <label asp-for="Server" class="ms-2"></label>
+                                <span asp-validation-for="Server" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Database" class="form-control border-0 shadow" />
+                                <label asp-for="Database" class="ms-2"></label>
+                                <span asp-validation-for="Database" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Table" class="form-control border-0 shadow" />
+                                <label asp-for="Table" class="ms-2"></label>
+                                <span asp-validation-for="Table" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="DeIdentifiedColumn" class="form-control border-0 shadow" />
+                                <label asp-for="DeIdentifiedColumn" class="ms-2"></label>
+                                <span asp-validation-for="DeIdentifiedColumn" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="IdentityColumn" class="form-control border-0 shadow" />
+                                <label asp-for="IdentityColumn" class="ms-2"></label>
+                                <span asp-validation-for="IdentityColumn" class="text-danger"></span>
+                            </div>
+                             <div class="form-floating py-2 col-12">
+                                <input asp-for="Username" class="form-control border-0 shadow" />
+                                <label asp-for="Username" class="ms-2"></label>
+                                <span asp-validation-for="Username" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Password" class="form-control border-0 shadow" />
+                                <label asp-for="Password" class="ms-2"></label>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div> 
+                            @* todo make this a dropdown *@
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="DatabaseType" class="form-control border-0 shadow" />
+                                <label asp-for="DatabaseType" class="ms-2"></label>
+                                <span asp-validation-for="DatabaseType" class="text-danger"></span>
+                            </div>
+
+                            @* <div class="py-2 col-12">
+                            <label asp-for="Description" class="ms-2 text-muted"></label>
+                            <textarea asp-for="Description" class="form-control border-0 shadow"></textarea>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                            <input asp-for="Created_By" class="form-control border-0 shadow" />
+                            <label asp-for="Created_By" class="ms-2"></label>
+                            <span asp-validation-for="Created_By" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                            <input asp-for="Created_Date" class="form-control border-0 shadow" />
+                            <label asp-for="Created_Date" class="ms-2"></label>
+                            <span asp-validation-for="Created_Date" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                            <input asp-for="Updated_By" class="form-control border-0 shadow" />
+                            <label asp-for="Updated_By" class="ms-2"></label>
+                            <span asp-validation-for="Updated_By" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                            <input asp-for="Updated_Date" class="form-control border-0 shadow" />
+                            <label asp-for="Updated_Date" class="ms-2"></label>
+                            <span asp-validation-for="Updated_Date" class="text-danger"></span>
+                            </div>
+                            <div class="py-2 col-12">
+                            <label asp-for="Notes" class="ms-2 text-muted"></label>
+                            <textarea asp-for="Notes" class="form-control border-0 shadow"></textarea>
+                            </div> *@
+
+
+                            <div class="row pt-2">
+                                <div>
+                                    <button type="submit" class="btn btn-primary form-control">Create</button>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <a asp-controller="RGO_ReIdentificationConfiguration" asp-action="Index" class="btn btn-outline-primary border  form-control">
+                                        Back to List
+                                    </a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

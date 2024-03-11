@@ -44,6 +44,7 @@ namespace RGO.DataAccess.Data
         public DbSet<RGO_Column> RGO_Columns { get; set; }
 
         public DbSet<RGO_Record_Person> RGO_Record_People { get; set; }
+        public DbSet<RGO_ReIdentificationConfiguration> RGO_ReIdentification_Configurations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

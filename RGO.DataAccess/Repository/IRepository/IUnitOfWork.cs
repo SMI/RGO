@@ -27,6 +27,7 @@ namespace RGO.DataAccess.Repository.IRepository
         IRGO_DatasetRepository RGO_Dataset { get; }
         IRGO_RecordRepository RGO_Record { get; }
         IRGO_ColumnRepository RGO_Column { get; }
+        IReidentificationRepository Reidentification { get;}
 
 
         IRGO_Record_PersonRepository RGO_Record_Person { get; }

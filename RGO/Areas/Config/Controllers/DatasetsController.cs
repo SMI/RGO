@@ -18,8 +18,6 @@ namespace RGO.Areas.Config.Controllers
         public DatasetsController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            var csvgen = new CSVGenerator(_unitOfWork.RGO_Dataset_Template.GetAll().First(), _unitOfWork);
-            csvgen.CreateCSV();
         }
 
         public IActionResult Index()
@@ -41,6 +39,17 @@ namespace RGO.Areas.Config.Controllers
         {
             List<RGO_Dataset> objRGO_DatasetList = _unitOfWork.RGO_Dataset.GetAll().ToList();
             return Json(new { data = objRGO_DatasetList });
+        }
+
+
+        [HttpPatch]
+        public IActionResult SetReIdentificationConfiguration(int datasetId,int reidentificationId)
+        {
+            RGO_Dataset dataset= _unitOfWork.RGO_Dataset.GetAll().Where(ds => ds.Id == datasetId).First();
+            dataset.RGO_ReIdentificationConfigurationId = reidentificationId;
+            _unitOfWork.RGO_Dataset.Update(dataset);
+            _unitOfWork.Save();
+            return Json(new { data = dataset });
         }
 
         public IActionResult Download(int id)

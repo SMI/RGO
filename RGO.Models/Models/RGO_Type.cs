@@ -30,7 +30,7 @@ namespace RGO.Models
         public string? Notes { get; set; }
 
 
-        public ICollection<RGOutput>? RGOutputs { get; set; }
+        public ICollection<RGOutput>? RGOutput { get; set; }
 
 
     }

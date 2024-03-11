@@ -34,22 +34,6 @@ namespace RGO.Areas.Config.Controllers
             return View(objGroup_TypeList);
         }
 
-  /*      public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var group_type = _unitOfWork.Group_Type
-                .FirstOrDefault(m => m.Id == id);
-            if (group_type == null)
-            {
-                return NotFound();
-            }
-
-            return View(group_type);
-        }*/
 
         public IActionResult Upsert(int? id)
         {

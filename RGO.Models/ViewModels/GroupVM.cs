@@ -11,8 +11,8 @@ namespace RGO.Models.ViewModels
 {
     public class GroupVM
     {
-        public required Group Group { get; set; }
+        public Group Group { get; set; }
         [ValidateNever]
-        public IEnumerable<SelectListItem> Group_TypeList { get; set; } 
+        public IEnumerable<SelectListItem> Group_TypeList { get; set; }
     }
 }

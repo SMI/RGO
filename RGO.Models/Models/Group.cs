@@ -21,7 +21,7 @@ namespace RGO.Models.Models
         [DisplayName("Contact Details")]
         public string? ContactInfo { get; set; }
 
-        public ICollection<RGOutput>? RGOutputs { get; set; }
+        public ICollection<RGOutput>? RGOutput { get; set; }
 
 
         /* Common Columns that should appear on all tables */

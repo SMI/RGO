@@ -1,0 +1,119 @@
+﻿@model RGO_Column_TemplateVM
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2"> @(Model.RGO_Column_Template.Id != 0 ? "Update" : "Create") RG Column Template</h2>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="card-body p-4">
+        <form method="post" class="row" enctype="multipart/form-data">
+            <input asp-for="RGO_Column_Template.Id" hidden />
+
+            <div class="row">
+                <div class="col-10">
+                    <div class="border p-3">
+
+                        @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+                        <div class="form-floating py-2 col-12">
+
+
+                            <div class="form-floating py-2 col-12">
+                                <select asp-for="@Model.RGO_Column_Template.RGO_Dataset_TemplateId" asp-items="@Model.RGO_Dataset_TemplateList" class="form-select border-0 shadow">
+                                    <option disabled selected>--Select RGO Dataset Template--</option>
+                                </select>
+                                <label asp-for="RGO_Column_Template.RGO_Dataset_TemplateId" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Column_Template.RGO_Dataset_TemplateId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Column_Template.Name" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Column_Template.Name" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Column_Template.Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Column_Template.Description" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Column_Template.Description" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Column_Template.Description" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Column_Template.PK_Column_Order" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Column_Template.PK_Column_Order" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Column_Template.PK_Column_Order" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Column_Template.Type" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Column_Template.Type" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Column_Template.Type" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Column_Template.Potentially_Disclosive" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Column_Template.Potentially_Disclosive" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Column_Template.Potentially_Disclosive" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Column_Template.Created_By" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Column_Template.Created_By" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Column_Template.Created_By" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Column_Template.Created_Date" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Column_Template.Created_Date" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Column_Template.Created_Date" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Column_Template.Updated_By" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Column_Template.Updated_By" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Column_Template.Updated_By" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Column_Template.Updated_Date" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Column_Template.Updated_Date" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Column_Template.Updated_Date" class="text-danger"></span>
+                            </div>
+                            <div class="py-2 col-12">
+                                <label asp-for="RGO_Column_Template.Notes" class="ms-2 text-muted"></label>
+                                <textarea asp-for="RGO_Column_Template.Notes" class="form-control border-0 shadow"></textarea>
+                            </div>
+
+
+                            <div class="row pt-2">
+                                <div class="col-6 col-md-3">
+                                    @if (Model.RGO_Column_Template.Id != 0)
+                                    {
+                                        <button type="submit" class="btn btn-primary form-control">Update</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-primary form-control">Create</button>
+                                    }
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <a asp-controller="RGO_Column_Template" asp-action="Index" class="btn btn-outline-primary border  form-control">
+                                        Back to List
+                                    </a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

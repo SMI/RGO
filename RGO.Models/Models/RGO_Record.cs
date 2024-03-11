@@ -19,6 +19,8 @@ namespace RGO.Models.Models
         [DisplayName("Record Status")]
         public string Record_Status { get; set; } = "New";
 
+        public ICollection<RGO_Record_Person>? RGO_Record_Person { get; set; }
+
 
         /* Common Columns that should appear on all tables */
 

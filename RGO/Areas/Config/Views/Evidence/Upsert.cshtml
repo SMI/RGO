@@ -1,0 +1,110 @@
+﻿@model EvidenceVM
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2"> @(Model.Evidence.Id != 0 ? "Update" : "Create") Evidence</h2>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="card-body p-4">
+        <form method="post" class="row" enctype="multipart/form-data">
+            <input asp-for="Evidence.Id" hidden />
+
+            <div class="row">
+                <div class="col-10">
+                    <div class="border p-3">
+
+                        @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+                        <div class="form-floating py-2 col-12">
+
+
+                            <div class="form-floating py-2 col-12">
+                                <select asp-for="@Model.Evidence.Evidence_TypeId" asp-items="@Model.Evidence_TypeList" class="form-select border-0 shadow">
+                                    <option disabled selected>--Select Evidence Type--</option>
+                                </select>
+                                <label asp-for="Evidence.Evidence_TypeId" class="ms-2">Evidence Type</label>
+                                <span asp-validation-for="Evidence.Evidence_TypeId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Evidence.Name" class="form-control border-0 shadow" />
+                                <label asp-for="Evidence.Name" class="ms-2"></label>
+                                <span asp-validation-for="Evidence.Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Evidence.EvidenceDetails" class="form-control border-0 shadow" />
+                                <label asp-for="Evidence.EvidenceDetails" class="ms-2"></label>
+                                <span asp-validation-for="Evidence.EvidenceDetails" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Evidence.Doi" class="form-control border-0 shadow" />
+                                <label asp-for="Evidence.Doi" class="ms-2"></label>
+                                <span asp-validation-for="Evidence.Doi" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Evidence.Created_By" class="form-control border-0 shadow" />
+                                <label asp-for="Evidence.Created_By" class="ms-2"></label>
+                                <span asp-validation-for="Evidence.Created_By" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Evidence.Created_Date" class="form-control border-0 shadow" />
+                                <label asp-for="Evidence.Created_Date" class="ms-2"></label>
+                                <span asp-validation-for="Evidence.Created_Date" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Evidence.Updated_By" class="form-control border-0 shadow" />
+                                <label asp-for="Evidence.Updated_By" class="ms-2"></label>
+                                <span asp-validation-for="Evidence.Updated_By" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Evidence.Updated_Date" class="form-control border-0 shadow" />
+                                <label asp-for="Evidence.Updated_Date" class="ms-2"></label>
+                                <span asp-validation-for="Evidence.Updated_Date" class="text-danger"></span>
+                            </div>
+                            <div class="py-2 col-12">
+                                <label asp-for="Evidence.Notes" class="ms-2 text-muted"></label>
+                                <textarea asp-for="Evidence.Notes" class="form-control border-0 shadow"></textarea>
+                            </div>
+
+
+                            <div class="row pt-2">
+                                <div class="col-6 col-md-3">
+                                    @if (Model.Evidence.Id != 0)
+                                    {
+                                        <button type="submit" class="btn btn-primary form-control">Update</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-primary form-control">Create</button>
+                                    }
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <a asp-controller="Evidence" asp-action="Index" class="btn btn-outline-primary border  form-control">
+                                        Back to List
+                                    </a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -10,11 +10,12 @@ namespace RGO.Models.Models
         [Key]
         public int Id { get; set; }
 
-
+        [DisplayName("Which RGO Dataset Template is this part of")]
         public int RGO_Dataset_TemplateId { get; set; }
         [ForeignKey("RGO_Dataset_TemplateId")]
-        [DisplayName("Which RGO Dataset Template is this part of")]
-        public RGO_Dataset_Template? RGO_Dataset_Template { get; set; }
+
+
+        public RGO_Dataset_Template RGO_Dataset_Template { get; set; }
 
         [DisplayName("Column Name")]
         public string Name { get; set; } = "";

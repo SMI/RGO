@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
-namespace RGO.Models.Models
+namespace RGO.Models
 {
     public class Person
     {
@@ -18,6 +18,9 @@ namespace RGO.Models.Models
 
         [DisplayName("ORCID")]
         public string? OrcId { get; set; }
+
+        public ICollection<Models.RGO_Record_Person>? RGO_Record_Person { get; set; }
+
 
         /* Common Columns that should appear on all tables */
 

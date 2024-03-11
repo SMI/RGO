@@ -37,8 +37,8 @@ namespace RGO.Areas.Config.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<RGO_Dataset> objGroupTypeList = _unitOfWork.RGO_Dataset.GetAll().ToList();
-            return Json(new { data = objGroupTypeList });
+            List<RGO_Dataset> objRGO_DatasetList = _unitOfWork.RGO_Dataset.GetAll().ToList();
+            return Json(new { data = objRGO_DatasetList });
         }
 
 

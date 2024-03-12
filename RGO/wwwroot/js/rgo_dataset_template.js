@@ -21,6 +21,7 @@ function loadDataTable() {
                      <a href="/config/rgo_column_template/index?parentId=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Columns</a>
                      <a href="/config/rgo_dataset_template/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
                      <a onClick=Delete('/config/rgo_dataset_template/delete/${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
+                    <a href="/config/rgo_dataset_template/download/${data}" download="proposed_file_name"  class="btn btn-primary mx-2"><i class="bi bi-download"></i>Download</a>
                      </div>`
                 },
                 "width": "20%"

@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace RGO.DataAccess.Repository
 {
-    public class ReidentificationConfigurationRepository: Repository<RGO_ReIdentificationConfiguration>, IReidentificationRepository
+    public class RGO_ReIdentificationConfigurationRepository: Repository<RGO_ReIdentificationConfiguration>, IRGO_ReIdentificationConfigurationRepository
     {
 
         private ApplicationDbContext _db;
-        public ReidentificationConfigurationRepository(ApplicationDbContext db) : base(db)
+        public RGO_ReIdentificationConfigurationRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }

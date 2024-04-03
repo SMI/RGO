@@ -37,6 +37,8 @@ namespace RGO.DataAccess.Data
 
         public DbSet<RGO_Column_Template> RGO_Column_Templates { get; set; }
 
+        public DbSet<RGO_ReIdentificationConfiguration> RGO_ReIdentification_Configurations { get; set; }
+
         public DbSet<RGO_Dataset> RGO_Datasets { get; set; }
 
         public DbSet<RGO_Record> RGO_Records { get; set; }
@@ -44,7 +46,7 @@ namespace RGO.DataAccess.Data
         public DbSet<RGO_Column> RGO_Columns { get; set; }
 
         public DbSet<RGO_Record_Person> RGO_Record_People { get; set; }
-        public DbSet<RGO_ReIdentificationConfiguration> RGO_ReIdentification_Configurations { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -52,60 +54,77 @@ namespace RGO.DataAccess.Data
             // Model the FKs (from the viewpoint of the child table)
 
 
+            //Prevent the deletion of an evidence type, where it is referenced by evidence records
             modelBuilder.Entity<Evidence>()
                 .HasOne(e => e.Evidence_Type)
                 .WithMany(e => e.Evidence)
                 .HasForeignKey("Evidence_TypeId")
                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
+            //Prevent the deletion of an Evidence, where it is referenced by RGO_Evidence records
             modelBuilder.Entity<RGO_Evidence>()
                 .HasOne(e => e.Evidence)
                 .WithMany(e => e.RGO_Evidence)
                 .HasForeignKey("Evidence_Id")
                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
+            //Prevent the deletion of a Person record, where it is referenced by RGO_Record_Person records
             modelBuilder.Entity<RGO_Record_Person>()
                 .HasOne(e => e.Person)
                 .WithMany(e => e.RGO_Record_Person)
                 .HasForeignKey("PersonId")
                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
-            modelBuilder.Entity<RGO_Record_Person>()
-                .HasOne(e => e.RGO_Record)
-                .WithMany(e => e.RGO_Record_Person)
-                .HasForeignKey("RGO_RecordId")
-                .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+            //Prevent the deletion of an RGO_Record record, where it is referenced by RGO_Record_Person records - NO WE WANT TO CASCADE THIS DELETE!
+            //modelBuilder.Entity<RGO_Record_Person>()
+            //    .HasOne(e => e.RGO_Record)
+            //    .WithMany(e => e.RGO_Record_Person)
+            //    .HasForeignKey("RGO_RecordId")
+            //    .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
+            //Prevent the deletion of a Group_type record, where it is referenced by Group records
             modelBuilder.Entity<Group>()
                 .HasOne(e => e.Group_Type)
                 .WithMany(e => e.Group)
                 .HasForeignKey("Group_TypeId")
                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
+            //Prevent the deletion of a Group record, where it is referenced by RGOutput records
             modelBuilder.Entity<RGOutput>()
                 .HasOne(r => r.Group)
                 .WithMany(g => g.RGOutput)
                 .HasForeignKey("Originating_GroupId")
                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
+            //Prevent the deletion of an RGO_Type record, where it is referenced by RGOutput records
             modelBuilder.Entity<RGOutput>()
                 .HasOne(r => r.RGO_Type)
                 .WithMany(t => t.RGOutput)
                 .HasForeignKey("RGO_TypeId")
                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
-
+            //Prevent the deletion of an RGOutput record, where it is referenced by RGO_Dataset_Template records
             modelBuilder.Entity<RGO_Dataset_Template>()
               .HasOne(t => t.RGOutput)
               .WithMany(a => a.RGO_Dataset_Template)
               .HasForeignKey("RGOutput_Id")
               .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
+            //Prevent the deletion of an RGO_Dataset_Template record, where it is referenced by RGO_Column_Template records
             modelBuilder.Entity<RGO_Column_Template>()
                  .HasOne(r => r.RGO_Dataset_Template)
                  .WithMany(t => t.RGO_Column_Template)
                  .HasForeignKey("RGO_Dataset_TemplateId")
                  .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+
+            //Prevent the deletion of an RGO_Dataset_Template record, where it is referenced by RGO_Dataset records
+            modelBuilder.Entity<RGO_Dataset>()
+                 .HasOne(r => r.RGO_Dataset_Template)
+                 .WithMany(t => t.RGO_Dataset)
+                 .HasForeignKey("RGO_Dataset_TemplateId")
+                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+
+
 
 
             modelBuilder.Entity<Group>().Navigation(e => e.Group_Type).AutoInclude();
@@ -161,12 +180,12 @@ namespace RGO.DataAccess.Data
             );
 
             modelBuilder.Entity<RGOutput>().HasData(
-                new RGOutput { Id = 1, Name = "MRI Classification Group Truth", Description = "Brain Scan Classifications", Originating_GroupId = 1, RGO_TypeId = 1, Created_By = "seed", Created_Date = DateTime.UtcNow }
+                new RGOutput { Id = 1, Name = "MRI Classification Ground Truth", Description = "Brain Scan Classifications", Originating_GroupId = 1, RGO_TypeId = 1, Created_By = "seed", Created_Date = DateTime.UtcNow }
              );
 
 
             modelBuilder.Entity<RGO_Dataset_Template>().HasData(
-                new RGO_Dataset_Template { Id = 1, RGOutput_Id = 1, Name = "MRI Classification Group Truth", Description = "Classifying the type of Brain Scans, done by Gerry and Grant", Created_By = "seed", Created_Date = DateTime.UtcNow }
+                new RGO_Dataset_Template { Id = 1, RGOutput_Id = 1, Name = "MRI Classification Ground Truth Template", Description = "Classifying the type of Brain Scans, done by Gerry and Grant", Created_By = "seed", Created_Date = DateTime.UtcNow }
             );
 
             modelBuilder.Entity<RGO_Column_Template>().HasData(

@@ -50,35 +50,42 @@ function Test(obj) {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/config/datasets/getall' },
+        "ajax": {
+            url: '/config/rgo_dataset/getall' },
         "columns": [
-            { data: 'dataset_Name', "width": "15%" },
-            { data: 'dataset_Status', "width": "15%" },
+            { data: 'rgO_Dataset_Template.name', "width": "10%" },
+            { data: 'dataset_Name', "width": "10%" },
+            { data: 'dataset_Status', "width": "10%" },
+            { data: 'doi', "width": "10%" },
+            { data: 'rgO_ReIdentificationConfiguration.name', "width": "10%" },
             { data: 'created_By', "width": "10%" },
             { data: 'created_Date', "width": "10%" },
             { data: 'updated_By', "width": "5%" },
             { data: 'updated_Date', "width": "10%" },
             { data: 'notes', "width": "5%" },
-            {
-                data: 'rgO_ReIdentificationConfigurationId', "render": function (data) {
-                    $.ajax({
-                        url: '/config/rgo_reidentificationconfiguration/getall',
-                        type: 'GET',
-                        success: res => {
-                            handleReIdentificationOptions(res, data)
-                        }
-                    })
-                    return `<div id="reIdentifiyWrapper"><select id="configurationSelection"><option>Unknown</option></select></div>`
-                }, "width": '5%'
-            },
+            //{
+            //    data: 'rgO_ReIdentificationConfigurationId', "render": function (data) {
+            //        $.ajax({
+            //            url: '/config/rgo_reidentificationconfiguration/getall',
+            //            type: 'GET',
+            //            success: res => {
+            //                handleReIdentificationOptions(res, data)
+            //            }
+            //        })
+            //        return `<div id="reIdentifiyWrapper"><select id="configurationSelection"><option>Unknown</option></select></div>`
+            //    }, "width": '5%'
+            //},
             {
                 data: 'id', "render": function (data) {
                     return `<div class="w-75 btn-group" role="group">
                      <a href="/config/datasets/download?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-box-arrow-down"></i>Download</a>               
+                     <a href="/config/rgo_dataset/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
+                     <a onClick=Delete('/config/rgo_dataset/delete/${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
                      </div>`
                 },
-                "width": "20%"
+                "width": "15%"
             }
+
         ]
 
     });
@@ -86,7 +93,7 @@ function loadDataTable() {
 
 function Delete(url) {
     Swal.fire({
-        title: 'Are you sure?',
+        title: 'Are you sure you want to delete this Dataset and all associated records?',
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,

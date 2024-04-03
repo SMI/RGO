@@ -28,28 +28,46 @@ namespace RGO.Areas.Config.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        public IActionResult Index()
+        {
+            List<RGO_Dataset> objRGO_DatasetList = _unitOfWork.RGO_Dataset.GetAll().ToList();
+            return View(objRGO_DatasetList);
+        }
+
         public IActionResult Upsert(int? id)
         {
 
+            RGO_DatasetVM rgo_DatasetVM = new()
+            {
 
-            //if (id == null || id == 0)
-            //{
+                RGO_Dataset_TemplateList = _unitOfWork.RGO_Dataset_Template.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+
+                RGO_ReIdentificationConfigurationList = _unitOfWork.RGO_ReIdentificationConfiguration.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+                RGO_Dataset = new RGO_Dataset()
+            };
+            if (id == null || id == 0)
+            {
                 //Insert
-                return View(new RGO_Dataset());
-            //}
-            //else
-            //{
-            //    //Update
-            //    var group_Type = _unitOfWork.Group_Type.FirstOrDefault(m => m.Id == id);
-            //    if (group_Type == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //    return View(group_Type);
+                return View(rgo_DatasetVM);
+            }
+            else
+            {
+                //Update
+                rgo_DatasetVM.RGO_Dataset = _unitOfWork.RGO_Dataset.FirstOrDefault(m => m.Id == id, includeProperties: "RGO_Dataset_Template,RGO_ReIdentificationConfiguration");
+                return View(rgo_DatasetVM);
 
-            //}
+            }
 
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -65,11 +83,11 @@ namespace RGO.Areas.Config.Controllers
                     _unitOfWork.RGO_Dataset.Add(rgo_Dataset);
                     ActionType = "Create";
                 }
-                //else
-                //{
-                //    _unitOfWork.Group_Type.Update(group_type);
-                //    ActionType = "Update";
-                //}
+                else
+                {
+                    _unitOfWork.RGO_Dataset.Update(rgo_Dataset);
+                    ActionType = "Update";
+                }
 
                 _unitOfWork.Save();
 
@@ -77,10 +95,10 @@ namespace RGO.Areas.Config.Controllers
                 {
                     TempData["success"] = "rgo_Dataset created successfully";
                 }
-                //else
-                //{
-                //    TempData["success"] = "rgo_Dataset_Template updated successfully";
-                //}
+                else
+                {
+                    TempData["success"] = "rgo_Dataset updated successfully";
+                }
 
 
                 return RedirectToAction(nameof(Index));
@@ -91,6 +109,48 @@ namespace RGO.Areas.Config.Controllers
             }
 
         }
+
+        #region API CALLS
+
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<RGO_Dataset> objRGO_DatasetList = _unitOfWork.RGO_Dataset.GetAll(includeProperties: "RGO_Dataset_Template,RGO_ReIdentificationConfiguration").ToList();
+            return Json(new { data = objRGO_DatasetList });
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+
+            var rgo_datasetToBeDeleted = _unitOfWork.RGO_Dataset.FirstOrDefault(u => u.Id == id);
+            if (rgo_datasetToBeDeleted == null)
+            {
+                return Json(new { success = false, message = "Error while deleting RGO_Dataset" });
+            }
+
+            _unitOfWork.RGO_Dataset.Remove(rgo_datasetToBeDeleted);
+
+            try
+            {
+                _unitOfWork.Save();
+
+            }
+            catch (DbUpdateException ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "This RGO_Dataset cannot be deleted as an unexpected " +
+                    $" exception was thrown"
+                });
+            }
+            return Json(new { success = true, message = "RGO_Dataset deleted Successfully" });
+
+        }
+
+        #endregion
 
     }
 }

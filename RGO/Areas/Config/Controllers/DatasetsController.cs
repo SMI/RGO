@@ -43,10 +43,10 @@ namespace RGO.Areas.Config.Controllers
 
 
         [HttpPatch]
-        public IActionResult SetReIdentificationConfiguration(int datasetId,int reidentificationId)
+        public IActionResult SetReIdentificationConfiguration(int datasetId,int reIdentificationId)
         {
             RGO_Dataset dataset= _unitOfWork.RGO_Dataset.GetAll().Where(ds => ds.Id == datasetId).First();
-            dataset.RGO_ReIdentificationConfigurationId = reidentificationId;
+            dataset.RGO_ReIdentificationConfigurationId = reIdentificationId;
             _unitOfWork.RGO_Dataset.Update(dataset);
             _unitOfWork.Save();
             return Json(new { data = dataset });

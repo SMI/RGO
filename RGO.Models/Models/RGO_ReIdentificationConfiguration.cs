@@ -22,5 +22,7 @@ namespace RGO.Models.Models
         public string Username { get; set; }
         public string Password { get; set; }
         public string DatabaseType { get; set; }
+
+        public ICollection<Models.RGO_Dataset>? RGO_Dataset { get; set; }
     }
 }

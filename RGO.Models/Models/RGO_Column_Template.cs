@@ -15,7 +15,7 @@ namespace RGO.Models.Models
         [ForeignKey("RGO_Dataset_TemplateId")]
 
 
-        public RGO_Dataset_Template RGO_Dataset_Template { get; set; }
+        public RGO_Dataset_Template? RGO_Dataset_Template { get; set; }
 
         [DisplayName("Column Name")]
         public string Name { get; set; } = "";

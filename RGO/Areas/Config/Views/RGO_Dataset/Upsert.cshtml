@@ -1,0 +1,125 @@
+﻿@model RGO_DatasetVM
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+               @*  <h2 class="text-white py-2"> @(Model.RGO_Dataset.Id != 0 ? "Update" : "Create") RGO Dataset</h2> *@
+                <h2 class="text-white py-2"> Update RGO Dataset</h2>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="card-body p-4">
+        <form method="post" class="row" enctype="multipart/form-data">
+            <input asp-for="RGO_Dataset.Id" hidden />
+
+            <div class="row">
+                <div class="col-10">
+                    <div class="border p-3">
+
+                        @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+                        <div class="form-floating py-2 col-12">
+
+
+                            <div class="form-floating py-2 col-12">
+                                <select asp-for="@Model.RGO_Dataset.RGO_Dataset_TemplateId" asp-items="@Model.RGO_Dataset_TemplateList" class="form-select border-0 shadow">
+                                    <option disabled selected>--Select RGO Dataset Template--</option>
+                                </select>
+                                <label asp-for="RGO_Dataset.RGO_Dataset_TemplateId" class="ms-2">RGO Dataset Template</label>
+                                <span asp-validation-for="RGO_Dataset.RGO_Dataset_TemplateId" class="text-danger"></span>
+                            </div> 
+
+                            @* <div class="form-floating py-2 col-12">
+                                <input asp-for="@Model.RGO_Dataset.RGO_Dataset_TemplateId" class="form-control border-0 shadow" readonly>
+                                <label asp-for="RGO_Dataset.RGO_Dataset_TemplateId" class="ms-2"></label>
+                                 <span asp-validation-for="RGO_Dataset.RGO_Dataset_TemplateId" class="text-danger"></span> 
+                            </div> *@
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Dataset.Dataset_Name" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Dataset.Dataset_Name" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Dataset.Dataset_Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Dataset.Dataset_Status" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Dataset.Dataset_Status" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Dataset.Dataset_Status" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Dataset.Doi" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Dataset.Doi" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Dataset.Doi" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <select asp-for="@Model.RGO_Dataset.RGO_ReIdentificationConfigurationId" asp-items="@Model.RGO_ReIdentificationConfigurationList" class="form-select border-0 shadow">
+                                    <option disabled selected>--Select RGO ReIdentification Configuration--</option>
+                                </select>
+                                <label asp-for="RGO_Dataset.RGO_ReIdentificationConfigurationId" class="ms-2">RGO ReIdentification Configuration</label>
+                                <span asp-validation-for="RGO_Dataset.RGO_ReIdentificationConfigurationId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Dataset.Created_By" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Dataset.Created_By" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Dataset.Created_By" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Dataset.Created_Date" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Dataset.Created_Date" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Dataset.Created_Date" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Dataset.Updated_By" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Dataset.Updated_By" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Dataset.Updated_By" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Dataset.Updated_Date" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Dataset.Updated_Date" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Dataset.Updated_Date" class="text-danger"></span>
+                            </div>
+                            <div class="py-2 col-12">
+                                <label asp-for="RGO_Dataset.Notes" class="ms-2 text-muted"></label>
+                                <textarea asp-for="RGO_Dataset.Notes" class="form-control border-0 shadow"></textarea>
+                            </div>
+
+
+                            <div class="row pt-2">
+                                <div class="col-6 col-md-3">
+                                    @if (Model.RGO_Dataset.Id != 0)
+                                    {
+                                        <button type="submit" class="btn btn-primary form-control">Update</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-primary form-control">Create</button>
+                                    }
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <a asp-controller="RGO_Dataset" asp-action="Index" class="btn btn-outline-primary border  form-control">
+                                        Back to List
+                                    </a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

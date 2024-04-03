@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RGO.DataAccess.Repository.IRepository
 {
-    public interface IReidentificationRepository : IRepository<RGO_ReIdentificationConfiguration>
+    public interface IRGO_ReIdentificationConfigurationRepository : IRepository<RGO_ReIdentificationConfiguration>
     {
         void Update(RGO_ReIdentificationConfiguration obj);
     }

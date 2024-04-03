@@ -20,10 +20,10 @@ public class ReIdentify
     private RGO_ReIdentificationConfiguration _config;
     private IUnitOfWork _unitOfWork;
 
-    public ReIdentify(RGO_Dataset dataset, RGO_ReIdentificationConfiguration reidentificationConfiguration, IUnitOfWork unitOfWork)
+    public ReIdentify(RGO_Dataset dataset, RGO_ReIdentificationConfiguration reIdentificationConfiguration, IUnitOfWork unitOfWork)
     {
         _dataset = dataset;
-        _config = reidentificationConfiguration;
+        _config = reIdentificationConfiguration;
         _unitOfWork = unitOfWork;
     }
 

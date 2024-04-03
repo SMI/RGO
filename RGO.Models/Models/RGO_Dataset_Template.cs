@@ -24,6 +24,8 @@ namespace RGO.Models.Models
 
         public ICollection<Models.RGO_Column_Template>? RGO_Column_Template { get; set; }
 
+        public ICollection<Models.RGO_Dataset>? RGO_Dataset { get; set; }
+
 
         /* Common Columns that should appear on all tables */
 

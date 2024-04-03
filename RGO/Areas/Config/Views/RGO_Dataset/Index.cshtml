@@ -12,12 +12,21 @@
         <table id="tblData" class="table table-bordered table-striped" style="width:100%">
             <thead>
                 <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RGO_Dataset_Template)
+                    </th>
 
                     <th>
                         @Html.DisplayNameFor(model => model.Dataset_Name)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Dataset_Status)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Doi)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RGO_ReIdentificationConfiguration)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Created_By)
@@ -34,10 +43,6 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Notes)
                     </th>
-                    <th>
-                        ReIdentififcation Configuration
-                        @* @Html.DisplayNameFor(model => model.RGO_ReIdentificationConfigurationId) *@
-                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -47,5 +52,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/rgo_datasets.js"></script>
+    <script src="~/js/rgo_dataset.js"></script>
 }

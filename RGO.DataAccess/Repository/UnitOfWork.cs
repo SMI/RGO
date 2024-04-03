@@ -37,8 +37,7 @@ namespace RGO.DataAccess.Repository
         public IPersonRepository Person { get; private set; }
 
         public IRGO_Record_PersonRepository RGO_Record_Person { get; private set; }
-
-        public IReidentificationRepository Reidentification { get; private set; }
+        public IRGO_ReIdentificationConfigurationRepository RGO_ReIdentificationConfiguration { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -57,7 +56,7 @@ namespace RGO.DataAccess.Repository
             Person = new PersonRepository(_db);
             RGO_Record_Person = new RGO_Record_PersonRepository(_db);
             RGO_Output = new RGO_OutputRepository(_db);
-            Reidentification = new ReidentificationConfigurationRepository(_db);
+            RGO_ReIdentificationConfiguration = new RGO_ReIdentificationConfigurationRepository(_db);
 
         }
 

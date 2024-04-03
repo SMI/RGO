@@ -33,7 +33,7 @@ namespace RGO.Areas.Config.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<RGO_ReIdentificationConfiguration> objRGOTypeList = _unitOfWork.Reidentification.GetAll().ToList();
+            List<RGO_ReIdentificationConfiguration> objRGOTypeList = _unitOfWork.RGO_ReIdentificationConfiguration.GetAll().ToList();
             return Json(new { data = objRGOTypeList });
         }
 
@@ -42,7 +42,7 @@ namespace RGO.Areas.Config.Controllers
         public IActionResult ReIdentify(int datasetId, int reidentificationId)
         {
             RGO_Dataset dataset = _unitOfWork.RGO_Dataset.GetAll().Where(ds => ds.Id == datasetId).First();
-            RGO_ReIdentificationConfiguration config = _unitOfWork.Reidentification.GetAll().Where(re => re.Id == reidentificationId).First();
+            RGO_ReIdentificationConfiguration config = _unitOfWork.RGO_ReIdentificationConfiguration.GetAll().Where(re => re.Id == reidentificationId).First();
             var reidentifier = new ReIdentify(dataset, config, _unitOfWork);
             reidentifier.Execute();
             TempData["success"] = "Successfully ReIdentified the Data";
@@ -60,7 +60,7 @@ namespace RGO.Areas.Config.Controllers
             if (ModelState.IsValid)
             {
             
-                    _unitOfWork.Reidentification.Add(redentificationConfiguration);
+                    _unitOfWork.RGO_ReIdentificationConfiguration.Add(redentificationConfiguration);
                     ActionType = "Create";
              
                 _unitOfWork.Save();

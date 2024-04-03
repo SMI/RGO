@@ -20,9 +20,19 @@ namespace RGO.Models.Models
         public string? Dataset_Name { get; set; }
 
 
+        [DisplayName("Digital Object Id (DOI)")]
+        public string? Doi { get; set; }
+
+
         [DisplayName("Dataset Status")]
         public string Dataset_Status { get; set; } = "New";
 
+        public int? RGO_ReIdentificationConfigurationId { get; set; }
+        [DisplayName("ReIdentification Configuration")]
+        [ForeignKey("RGO_ReIdentificationConfigurationId")]
+        public RGO_ReIdentificationConfiguration? RGO_ReIdentificationConfiguration { get; set; }
+
+        public ICollection<Models.RGO_Record>? RGO_Record { get; set; }    
 
         /* Common Columns that should appear on all tables */
 
@@ -36,8 +46,6 @@ namespace RGO.Models.Models
 
         public string? Notes { get; set; }
 
-        public int RGO_ReIdentificationConfigurationId { get; set; }
-        [ForeignKey("RGO_ReIdentificationConfigurationId")]
-        public RGO_ReIdentificationConfiguration RGO_ReIdentificationConfiguration { get; set; }
+
     }
 }

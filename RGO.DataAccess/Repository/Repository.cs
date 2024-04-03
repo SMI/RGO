@@ -27,6 +27,7 @@ namespace RGO.DataAccess.Repository
             _db.Evidences.Include(u => u.Evidence_Type);
             _db.RGOutputs.Include(u => u.RGO_Type).Include(u => u.Group);
             _db.RGO_Dataset_Templates.Include(u => u.RGOutput);
+            _db.RGO_Dataset_Templates.Include(u => u.RGO_Dataset);
             _db.RGO_Column_Templates.Include(u => u.RGO_Dataset_Template);
 
         }

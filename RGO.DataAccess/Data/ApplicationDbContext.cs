@@ -27,11 +27,13 @@ namespace RGO.DataAccess.Data
 
         public DbSet<Evidence> Evidences { get; set; }
 
-        public DbSet<RGO_Evidence> RGO_Evidences { get; set; }
 
         public DbSet<RGO_Type> RGO_Types { get; set; }
 
         public DbSet<RGOutput> RGOutputs { get; set; }
+
+
+        public DbSet<RGO_Evidence> RGO_Evidences { get; set; }
 
         public DbSet<RGO_Dataset_Template> RGO_Dataset_Templates { get; set; }
 
@@ -75,12 +77,12 @@ namespace RGO.DataAccess.Data
                 .HasForeignKey("PersonId")
                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
-            //Prevent the deletion of an RGO_Record record, where it is referenced by RGO_Record_Person records - NO WE WANT TO CASCADE THIS DELETE!
-            //modelBuilder.Entity<RGO_Record_Person>()
-            //    .HasOne(e => e.RGO_Record)
-            //    .WithMany(e => e.RGO_Record_Person)
-            //    .HasForeignKey("RGO_RecordId")
-            //    .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+            //Prevent the deletion of an RGO_Column_Template record, where it is referenced by RGO_Record_Person records
+            modelBuilder.Entity<RGO_Record_Person>()
+                .HasOne(e => e.RGO_Column_Template)
+                .WithMany(e => e.RGO_Record_Person)
+                .HasForeignKey("RGO_Column_TemplateId")
+                .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
             //Prevent the deletion of a Group_type record, where it is referenced by Group records
             modelBuilder.Entity<Group>()
@@ -124,6 +126,19 @@ namespace RGO.DataAccess.Data
                  .HasForeignKey("RGO_Dataset_TemplateId")
                  .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
+            //Prevent the deletion of an RGO_Column_Template record, where it is referenced by RGO_Column records
+            modelBuilder.Entity<RGO_Column>()
+                 .HasOne(r => r.RGO_Column_Template)
+                 .WithMany(t => t.RGO_Column)
+                 .HasForeignKey("RGO_Column_TemplateId")
+                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+
+            //Prevent the deletion of an RGO_Column_Template record, where it is referenced by RGO_Record_Person records
+            modelBuilder.Entity<RGO_Record_Person>()
+                 .HasOne(r => r.RGO_Column_Template)
+                 .WithMany(t => t.RGO_Record_Person)
+                 .HasForeignKey("RGO_Column_TemplateId")
+                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
 
 

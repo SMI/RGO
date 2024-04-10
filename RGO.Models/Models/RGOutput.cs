@@ -31,6 +31,12 @@ namespace RGO.Models
         
         public Group? Group { get; set; }
 
+        [DisplayName("Digital Object Id (DOI)")]
+        public string? Doi { get; set; }
+
+        [DisplayName("Standard Acknowledgement Text")]
+        public string? StandardAcknowledgement { get; set; }
+
         public ICollection<RGO_Dataset_Template>? RGO_Dataset_Template { get; set; }
 
         /* Common Columns that should appear on all tables */

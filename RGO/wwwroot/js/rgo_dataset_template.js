@@ -29,6 +29,11 @@ function loadDataTable() {
         ]
 
     });
+    dataTable.column(3).visible(false);
+    dataTable.column(4).visible(false);
+    dataTable.column(5).visible(false);
+    dataTable.column(6).visible(false);
+    dataTable.column(7).visible(false);
 }
 
 function Delete(url) {
@@ -47,7 +52,11 @@ function Delete(url) {
                 type: 'DELETE',
                 success: function (data) {
                     dataTable.ajax.reload();
-                    toastr.success(data.message);
+                    if (data.success) {
+                        toastr.success(data.message);
+                    } else {
+                        toastr.error(data.message);
+                    }
                 }
             })
         }

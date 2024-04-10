@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -17,13 +16,12 @@ using RGO.Models.ViewModels;
 namespace RGO.Areas.Config.Controllers
 {
     [Area("Config")]
-    public class RGOutputController : Controller
+    public class RGO_EvidenceController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
 
 
-
-        public RGOutputController(IUnitOfWork unitOfWork)
+        public RGO_EvidenceController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -31,41 +29,38 @@ namespace RGO.Areas.Config.Controllers
 
         public IActionResult Index()
         {
-            List<RGOutput> objRGOutputList = _unitOfWork.RGOutput.GetAll(includeProperties: "RGO_Type,Group").ToList();
-
-            return View(objRGOutputList);
+            List<RGO_Evidence> objRGO_EvidenceList = _unitOfWork.RGO_Evidence.GetAll(includeProperties: "Evidence,RGOutput").ToList();
+            return View(objRGO_EvidenceList);
         }
-
 
         public IActionResult Upsert(int? id)
         {
 
-            RGOutputVM rgoutputVM = new()
+            RGO_EvidenceVM rgo_evidenceVM = new()
             {
 
-                RGO_TypeList = _unitOfWork.RGO_Type.GetAll().Select(u => new SelectListItem
+                EvidenceList = _unitOfWork.Evidence.GetAll().Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.Id.ToString()
                 }),
-                GroupList = _unitOfWork.Group.GetAll().Select(u => new SelectListItem
+                RGOutputList = _unitOfWork.RGOutput.GetAll().Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.Id.ToString()
                 }),
-                RGOutput = new RGOutput()
+                RGO_Evidence = new RGO_Evidence()
             };
             if (id == null || id == 0)
             {
                 //Insert
-                return View(rgoutputVM);
+                return View(rgo_evidenceVM);
             }
             else
             {
                 //Update
-                rgoutputVM.RGOutput = _unitOfWork.RGOutput.FirstOrDefault(m => m.Id == id, includeProperties: "RGO_Type,Group");
-                return View(rgoutputVM);
-
+                rgo_evidenceVM.RGO_Evidence = _unitOfWork.RGO_Evidence.FirstOrDefault(m => m.Id == id,includeProperties: "Evidence,RGOutput");
+                return View(rgo_evidenceVM);
 
             }
 
@@ -74,21 +69,21 @@ namespace RGO.Areas.Config.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(RGOutputVM rgoutputVM)
+        public IActionResult Upsert(RGO_EvidenceVM rgo_evidenceVM)
         {
 
             string ActionType = "";
 
             if (ModelState.IsValid)
             {
-                if (rgoutputVM.RGOutput.Id == 0)
+                if (rgo_evidenceVM.RGO_Evidence.Id == 0)
                 {
-                    _unitOfWork.RGOutput.Add(rgoutputVM.RGOutput);
+                    _unitOfWork.RGO_Evidence.Add(rgo_evidenceVM.RGO_Evidence);
                     ActionType = "Create";
                 }
                 else
                 {
-                    _unitOfWork.RGOutput.Update(rgoutputVM.RGOutput);
+                    _unitOfWork.RGO_Evidence.Update(rgo_evidenceVM.RGO_Evidence);
                     ActionType = "Update";
                 }
 
@@ -96,11 +91,11 @@ namespace RGO.Areas.Config.Controllers
 
                 if (ActionType == "Create")
                 {
-                    TempData["success"] = "RG Output created successfully";
+                    TempData["success"] = "RGO_Evidence created successfully";
                 }
                 else
                 {
-                    TempData["success"] = "RG Output updated successfully";
+                    TempData["success"] = "RGO_Evidence updated successfully";
                 }
 
 
@@ -108,7 +103,7 @@ namespace RGO.Areas.Config.Controllers
             }
             else
             {
-                return View(rgoutputVM);
+                return View(rgo_evidenceVM);
             }
 
         }
@@ -120,22 +115,21 @@ namespace RGO.Areas.Config.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<RGOutput> objRGOutputList = _unitOfWork.RGOutput.GetAll(includeProperties: "RGO_Type,Group").ToList();
-            Console.Write(objRGOutputList);
-            return Json(new { data = objRGOutputList });
+            List<RGO_Evidence> objRGO_EvidenceList = _unitOfWork.RGO_Evidence.GetAll(includeProperties: "Evidence,RGOutput").ToList();
+            return Json(new { data = objRGO_EvidenceList });
         }
 
         [HttpDelete]
         public IActionResult Delete(int? id)
         {
 
-            var rgoutputToBeDeleted = _unitOfWork.RGOutput.FirstOrDefault(u => u.Id == id);
-            if (rgoutputToBeDeleted == null)
+            var rgo_evidenceToBeDeleted = _unitOfWork.RGO_Evidence.FirstOrDefault(u => u.Id == id);
+            if (rgo_evidenceToBeDeleted == null)
             {
-                return Json(new { success = false, message = "Error while deleting RG Output" });
+                return Json(new { success = false, message = "Error while deleting RGO_Evidence" });
             }
 
-            _unitOfWork.RGOutput.Remove(rgoutputToBeDeleted);
+            _unitOfWork.RGO_Evidence.Remove(rgo_evidenceToBeDeleted);
 
             try
             {
@@ -147,11 +141,11 @@ namespace RGO.Areas.Config.Controllers
                 return Json(new
                 {
                     success = false,
-                    message = "This RG Output cannot be deleted as there are RG Data Templates " +
-                    $" that reference it.  If you want to delete this RGOutput, please change this first"
+                    message = "This RGO_Evidence cannot be deleted as there are RG Outputs and/or Evidence Records " +
+                    $" that reference it.  If you want to delete this Evidence, please change this"
                 });
             }
-            return Json(new { success = true, message = "RG Output deleted Successfully" });
+            return Json(new { success = true, message = "RGO_Evidence deleted Successfully" });
 
         }
 

@@ -12,6 +12,8 @@ function loadDataTable() {
             { data: 'rgO_Type.name', "width": "9%" },
             { data: 'description', "width": "14%" },
             { data: 'group.name', "width": "9%" },
+            { data: 'doi', "width": "10%" },
+            { data: 'standardAcknowledgement', "width": "10%" },
             { data: 'created_By', "width": "9%" },
             { data: 'created_Date', "width": "9%" },
             { data: 'updated_By', "width": "9%" },
@@ -29,6 +31,11 @@ function loadDataTable() {
         ]
 
     });
+    dataTable.column(6).visible(false);
+    dataTable.column(7).visible(false);
+    dataTable.column(8).visible(false);
+    dataTable.column(9).visible(false);
+    dataTable.column(10).visible(false);
 }
 
 function Delete(url) {
@@ -47,7 +54,11 @@ function Delete(url) {
                 type: 'DELETE',
                 success: function (data) {
                     dataTable.ajax.reload();
-                    toastr.success(data.message);
+                    if (data.success) {
+                        toastr.success(data.message);
+                    } else {
+                        toastr.error(data.message);
+                    }
                 }
             })
         }

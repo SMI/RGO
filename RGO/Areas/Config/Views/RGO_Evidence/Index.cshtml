@@ -1,10 +1,10 @@
-﻿@model IEnumerable<RGO.Models.Evidence>
+﻿@model IEnumerable<RGO.Models.RGO_Evidence>
 
   <div class="card shadow border-0 my-4">
     <div class="card-header bg-secondary bg-gradient ml-0 py-3">
          <div class="row">
               <div class="col-12 text-center">
-                <h2 class="text-white py-2">Evidence List</h2>
+                <h2 class="text-white py-2">RGOutput Evidence List</h2>
                </div>
           </div>
      </div>
@@ -13,8 +13,8 @@
                <div class="col-6">
                </div>
                <div class="col-6 text-end">
-                <a asp-controller="Evidence" asp-action="Upsert" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i>  Document New Evidence
+                <a asp-controller="RGO_Evidence" asp-action="Upsert" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i>  Associate Evidence with RG Outputs
                     </a>
                 </div>
          </div>
@@ -24,19 +24,10 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Evidence_Type)
+                    @Html.DisplayNameFor(model => model.Evidence)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EvidenceDetails)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Doi)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StandardAcknowledgement)
+                    @Html.DisplayNameFor(model => model.RGOutput)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Created_By)
@@ -62,5 +53,5 @@
 </div>
 
 @section Scripts{
-    <script src="~/js/evidence.js"></script>
+    <script src="~/js/rgo_evidence.js"></script>
 }

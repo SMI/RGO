@@ -34,6 +34,8 @@ namespace RGO.DataAccess.Repository
         public IRGO_RecordRepository RGO_Record { get; private set; }
         public IRGO_ColumnRepository RGO_Column { get; private set; }
 
+        public IRGO_EvidenceRepository RGO_Evidence { get; private set; }
+
         public IPersonRepository Person { get; private set; }
 
         public IRGO_Record_PersonRepository RGO_Record_Person { get; private set; }
@@ -56,6 +58,7 @@ namespace RGO.DataAccess.Repository
             Person = new PersonRepository(_db);
             RGO_Record_Person = new RGO_Record_PersonRepository(_db);
             RGO_Output = new RGO_OutputRepository(_db);
+            RGO_Evidence = new RGO_EvidenceRepository(_db);
             RGO_ReIdentificationConfiguration = new RGO_ReIdentificationConfigurationRepository(_db);
 
         }

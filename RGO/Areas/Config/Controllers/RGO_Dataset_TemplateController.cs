@@ -142,8 +142,8 @@ namespace RGO.Areas.Config.Controllers
             return Json(new
             {
                 success = false,
-                message = "This RGO_Dataset_Template cannot be deleted as there are RG Outputs " +
-                $" that reference it.  If you want to delete this RGO_Dataset_Template, please change the RGOutputs referenced by it first"
+                message = "This RGO_Dataset_Template cannot be deleted as there are RG_Column_Templates " +
+                $" that reference it.  If you want to delete this RGO_Dataset_Template, please change this"
             });
         }
         return Json(new { success = true, message = "RGO_Dataset_Template deleted Successfully" });

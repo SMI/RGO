@@ -6,147 +6,139 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RGO.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class nullFK : Migration
+    public partial class FK5 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_RGO_Datasets_RGO_ReIdentification_Configurations_RGO_ReIdentificationConfigurationId",
-                table: "RGO_Datasets");
-
-            migrationBuilder.AlterColumn<int>(
-                name: "RGO_ReIdentificationConfigurationId",
-                table: "RGO_Datasets",
-                type: "int",
-                nullable: true,
-                oldClrType: typeof(int),
-                oldType: "int");
+                name: "FK_RGO_Record_People_RGO_Column_Templates_RGO_Column_TemplateId",
+                table: "RGO_Record_People");
 
             migrationBuilder.UpdateData(
                 table: "Evidence_Types",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(607));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5293));
 
             migrationBuilder.UpdateData(
                 table: "Evidence_Types",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(609));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5295));
 
             migrationBuilder.UpdateData(
                 table: "Group_Types",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(375));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5099));
 
             migrationBuilder.UpdateData(
                 table: "Group_Types",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(378));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5102));
 
             migrationBuilder.UpdateData(
                 table: "Groups",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(581));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5271));
 
             migrationBuilder.UpdateData(
                 table: "People",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(646));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5321));
 
             migrationBuilder.UpdateData(
                 table: "People",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(649));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5324));
 
             migrationBuilder.UpdateData(
                 table: "People",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(651));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5325));
 
             migrationBuilder.UpdateData(
                 table: "People",
                 keyColumn: "Id",
                 keyValue: 4,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(653));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5327));
 
             migrationBuilder.UpdateData(
                 table: "RGO_Column_Templates",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(764));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5418));
 
             migrationBuilder.UpdateData(
                 table: "RGO_Column_Templates",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(767));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5420));
 
             migrationBuilder.UpdateData(
                 table: "RGO_Column_Templates",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(769));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5422));
 
             migrationBuilder.UpdateData(
                 table: "RGO_Column_Templates",
                 keyColumn: "Id",
                 keyValue: 4,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(771));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5424));
 
             migrationBuilder.UpdateData(
                 table: "RGO_Column_Templates",
                 keyColumn: "Id",
                 keyValue: 5,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(772));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5425));
 
             migrationBuilder.UpdateData(
                 table: "RGO_Dataset_Templates",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(737));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5397));
 
             migrationBuilder.UpdateData(
                 table: "RGO_Types",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(680));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5350));
 
             migrationBuilder.UpdateData(
                 table: "RGOutputs",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 22, 10, 445, DateTimeKind.Utc).AddTicks(714));
+                value: new DateTime(2024, 4, 10, 13, 40, 36, 99, DateTimeKind.Utc).AddTicks(5372));
 
             migrationBuilder.AddForeignKey(
-                name: "FK_RGO_Datasets_RGO_ReIdentification_Configurations_RGO_ReIdentificationConfigurationId",
-                table: "RGO_Datasets",
-                column: "RGO_ReIdentificationConfigurationId",
-                principalTable: "RGO_ReIdentification_Configurations",
+                name: "FK_RGO_Record_People_RGO_Column_Templates_RGO_Column_TemplateId",
+                table: "RGO_Record_People",
+                column: "RGO_Column_TemplateId",
+                principalTable: "RGO_Column_Templates",
                 principalColumn: "Id");
         }
 
@@ -154,143 +146,133 @@ namespace RGO.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_RGO_Datasets_RGO_ReIdentification_Configurations_RGO_ReIdentificationConfigurationId",
-                table: "RGO_Datasets");
-
-            migrationBuilder.AlterColumn<int>(
-                name: "RGO_ReIdentificationConfigurationId",
-                table: "RGO_Datasets",
-                type: "int",
-                nullable: false,
-                defaultValue: 0,
-                oldClrType: typeof(int),
-                oldType: "int",
-                oldNullable: true);
+                name: "FK_RGO_Record_People_RGO_Column_Templates_RGO_Column_TemplateId",
+                table: "RGO_Record_People");
 
             migrationBuilder.UpdateData(
                 table: "Evidence_Types",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(268));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4608));
 
             migrationBuilder.UpdateData(
                 table: "Evidence_Types",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(269));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4610));
 
             migrationBuilder.UpdateData(
                 table: "Group_Types",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(86));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4445));
 
             migrationBuilder.UpdateData(
                 table: "Group_Types",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(89));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4453));
 
             migrationBuilder.UpdateData(
                 table: "Groups",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(242));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4586));
 
             migrationBuilder.UpdateData(
                 table: "People",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(310));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4632));
 
             migrationBuilder.UpdateData(
                 table: "People",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(314));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4634));
 
             migrationBuilder.UpdateData(
                 table: "People",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(318));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4636));
 
             migrationBuilder.UpdateData(
                 table: "People",
                 keyColumn: "Id",
                 keyValue: 4,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(320));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4637));
 
             migrationBuilder.UpdateData(
                 table: "RGO_Column_Templates",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(435));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4720));
 
             migrationBuilder.UpdateData(
                 table: "RGO_Column_Templates",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(437));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4722));
 
             migrationBuilder.UpdateData(
                 table: "RGO_Column_Templates",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(439));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4724));
 
             migrationBuilder.UpdateData(
                 table: "RGO_Column_Templates",
                 keyColumn: "Id",
                 keyValue: 4,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(441));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4726));
 
             migrationBuilder.UpdateData(
                 table: "RGO_Column_Templates",
                 keyColumn: "Id",
                 keyValue: 5,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(443));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4727));
 
             migrationBuilder.UpdateData(
                 table: "RGO_Dataset_Templates",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(407));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4699));
 
             migrationBuilder.UpdateData(
                 table: "RGO_Types",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(348));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4660));
 
             migrationBuilder.UpdateData(
                 table: "RGOutputs",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created_Date",
-                value: new DateTime(2024, 3, 12, 14, 18, 47, 465, DateTimeKind.Utc).AddTicks(379));
+                value: new DateTime(2024, 4, 10, 13, 18, 33, 730, DateTimeKind.Utc).AddTicks(4679));
 
             migrationBuilder.AddForeignKey(
-                name: "FK_RGO_Datasets_RGO_ReIdentification_Configurations_RGO_ReIdentificationConfigurationId",
-                table: "RGO_Datasets",
-                column: "RGO_ReIdentificationConfigurationId",
-                principalTable: "RGO_ReIdentification_Configurations",
+                name: "FK_RGO_Record_People_RGO_Column_Templates_RGO_Column_TemplateId",
+                table: "RGO_Record_People",
+                column: "RGO_Column_TemplateId",
+                principalTable: "RGO_Column_Templates",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }

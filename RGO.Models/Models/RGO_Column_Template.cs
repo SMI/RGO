@@ -26,13 +26,17 @@ namespace RGO.Models.Models
         [DisplayName("If this is a PK column, please indicate the order")]
         public int? PK_Column_Order { get; set; }
 
-        [DisplayName("Column Type")]
+        [DisplayName("Column Type (Int, Char or Date)")]
         public string Type { get; set; } = "";
 
         [DisplayName("Potentially Disclosive? (N or a description)")]
         public string Potentially_Disclosive { get; set; } = "N";
 
         public int IsIdentifier { get; set; } = 0;
+
+        public ICollection<Models.RGO_Column>? RGO_Column { get; set; }
+
+        public ICollection<Models.RGO_Record_Person>? RGO_Record_Person { get; set; }
 
         /* Common Columns that should appear on all tables */
 
@@ -45,6 +49,8 @@ namespace RGO.Models.Models
         public DateTime? Updated_Date { get; set; }
 
         public string? Notes { get; set; }
+
+
 
     }
 }

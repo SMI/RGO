@@ -25,6 +25,9 @@ namespace RGO.Models
         [DisplayName("Digital Object Id (DOI)")]
         public string? Doi { get; set; }
 
+        [DisplayName("Standard Acknowledgement Text")]
+        public string? StandardAcknowledgement { get; set; }
+
         public ICollection<RGO_Evidence>? RGO_Evidence { get; set; }
 
 

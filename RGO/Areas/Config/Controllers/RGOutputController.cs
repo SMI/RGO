@@ -22,6 +22,7 @@ namespace RGO.Areas.Config.Controllers
         private readonly IUnitOfWork _unitOfWork;
 
 
+
         public RGOutputController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -136,20 +137,20 @@ namespace RGO.Areas.Config.Controllers
 
             _unitOfWork.RGOutput.Remove(rgoutputToBeDeleted);
 
-            //try
-            //{
+            try
+            {
                 _unitOfWork.Save();
 
-            //}
-            //catch (DbUpdateException ex)
-            //{
-            //    return Json(new
-            //    {
-            //        success = false,
-            //        message = "This RG Output cannot be deleted as there are RG Ouptuts " +
-            //        $" that reference it.  If you want to delete this Group, please change the Group referenced by these RGOs first"
-            //    });
-            //}
+            }
+            catch (DbUpdateException ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "This RG Output cannot be deleted as there are RG Data Templates " +
+                    $" that reference it.  If you want to delete this RGOutput, please change this first"
+                });
+            }
             return Json(new { success = true, message = "RG Output deleted Successfully" });
 
         }

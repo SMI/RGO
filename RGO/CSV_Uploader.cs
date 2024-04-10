@@ -121,10 +121,15 @@ namespace RGO
 
                 foreach (var line in File.ReadLines(_filePath))
                 {
+                    string line2;
                     if (recordIndex == 0)
                     {
                         //Grab the column headers
-                        line.Split(",").ToList().ForEach(columnHeaders.Add);
+                        line2 = line.Substring(1, line.Length - 2);
+                        line2.Split(",").ToList().ForEach(columnHeaders.Add);
+                        
+
+                        
 
                     }
                     else
@@ -142,15 +147,17 @@ namespace RGO
                         _recordId = recrec.Id;
 
                         // Grab the column values for this record
-                        line.Split(",").ToList().ForEach(columnValues.Add);
+                        line2 = line.Substring(1, line.Length - 2);
+                        line2.Split(",").ToList().ForEach(columnValues.Add);
 
 
 
                         //Loop through the columns in column headers
                         foreach (var header in columnHeaders)
                         {
-
-                            var _columnTemplate = _unitOfWork.RGO_Column_Template.GetAll().Where(r => r.RGO_Dataset_TemplateId.Equals(_datasetTemplateId)).FirstOrDefault();
+                            // find the column template for this dataset_template_id and column_name
+                            //var _columnTemplate = _unitOfWork.RGO_Column_Template.GetAll().Where(r => r.RGO_Dataset_TemplateId.Equals(_datasetTemplateId)).FirstOrDefault();
+                            var _columnTemplate = _unitOfWork.RGO_Column_Template.GetAll().Where(r => r.RGO_Dataset_TemplateId.Equals(_datasetTemplateId) && r.Name == header).FirstOrDefault();
 
                             if (!header.StartsWith("Ground_Truther"))
                             {
@@ -158,6 +165,7 @@ namespace RGO
                                 RGO_Column colrec = new RGO_Column();
 
                                 colrec.RGO_RecordId = recrec.Id;
+                                colrec.RGO_Column_TemplateId= _columnTemplate.Id;
                                 colrec.Name = header;
                                 colrec.PK_Column_Order = _columnTemplate.PK_Column_Order;
                                 colrec.Type = _columnTemplate.Type;
@@ -182,6 +190,7 @@ namespace RGO
 
 
                                 rprec.RGO_RecordId = recrec.Id;
+                                rprec.RGO_Column_TemplateId = _columnTemplate.Id;
                                 rprec.PersonId = _person.Id;
                                 rprec.Person_Record_Role = "Ground Truther";
                                 rprec.Created_By = "RGO_Upload";

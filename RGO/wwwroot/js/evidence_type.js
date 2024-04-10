@@ -6,14 +6,15 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": { url: '/config/evidence_type/getall' },
+ 
         "columns": [
-            { data: 'name', "width": "15%" },
-            { data: 'description', "width": "15%" },
-            { data: 'created_By', "width": "10%" },
-            { data: 'created_Date', "width": "10%" },
-            { data: 'updated_By', "width": "10%" },
-            { data: 'updated_Date', "width": "10%" },
-            { data: 'notes', "width": "10%" },
+            { data: 'name', "width": "35%" },
+            { data: 'description', "width": "35%" },
+            { data: 'created_By'},
+            { data: 'created_Date'},
+            { data: 'updated_By'},
+            { data: 'updated_Date'},
+            { data: 'notes'},
             {
                 data: 'id', "render": function (data) {
                     return `<div class="w-75 btn-group" role="group">
@@ -21,11 +22,17 @@ function loadDataTable() {
                      <a onClick=Delete('/config/evidence_type/delete/${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
                      </div>`
                 },
-                "width": "20%"
+                "width": "40%"
             }
         ]
 
     });
+    dataTable.column(2).visible(false);
+    dataTable.column(3).visible(false);
+    dataTable.column(4).visible(false);
+    dataTable.column(5).visible(false);
+    dataTable.column(6).visible(false);
+    
 }
 
 function Delete(url) {

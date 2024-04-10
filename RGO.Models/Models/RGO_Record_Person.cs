@@ -15,6 +15,11 @@ namespace RGO.Models.Models
         [ForeignKey("PersonId")]
         public Person? Person { get; set; }
 
+        public int RGO_Column_TemplateId { get; set; }
+        [DisplayName("Which RGO Column Template is this based on")]
+        [ForeignKey("RGO_Column_TemplateId")]
+        public RGO_Column_Template? RGO_Column_Template { get; set; }
+
         [DisplayName("RGO Record Id")]
         public int RGO_RecordId { get; set; }
         [ForeignKey("RGO_RecordId")]

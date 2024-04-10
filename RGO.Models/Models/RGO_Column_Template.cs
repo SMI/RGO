@@ -34,6 +34,10 @@ namespace RGO.Models.Models
 
         public int IsIdentifier { get; set; } = 0;
 
+        public ICollection<Models.RGO_Column>? RGO_Column { get; set; }
+
+        public ICollection<Models.RGO_Record_Person>? RGO_Record_Person { get; set; }
+
         /* Common Columns that should appear on all tables */
 
         public string Created_By { get; set; } = "";
@@ -45,6 +49,8 @@ namespace RGO.Models.Models
         public DateTime? Updated_Date { get; set; }
 
         public string? Notes { get; set; }
+
+
 
     }
 }

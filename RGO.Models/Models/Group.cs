@@ -18,7 +18,7 @@ namespace RGO.Models.Models
         [DisplayName("Group Name")]
         public string Name { get; set; } = "";
 
-        [DisplayName("Contact Details")]
+        [DisplayName("Contact Details (for Data Team use only - do not include in any extract)")]
         public string? ContactInfo { get; set; }
 
         public ICollection<RGOutput>? RGOutput { get; set; }

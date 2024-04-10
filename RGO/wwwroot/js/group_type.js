@@ -25,6 +25,11 @@ function loadDataTable() {
         ]
 
     });
+    dataTable.column(1).visible(false);
+    dataTable.column(2).visible(false);
+    dataTable.column(3).visible(false);
+    dataTable.column(4).visible(false);
+    dataTable.column(5).visible(false);
 }
 
 function Delete(url) {

@@ -26,7 +26,7 @@ namespace RGO.Models.Models
         [DisplayName("If this is a PK column, please indicate the order")]
         public int? PK_Column_Order { get; set; }
 
-        [DisplayName("Column Type")]
+        [DisplayName("Column Type (Int, Char or Date)")]
         public string Type { get; set; } = "";
 
         [DisplayName("Potentially Disclosive? (N or a description)")]

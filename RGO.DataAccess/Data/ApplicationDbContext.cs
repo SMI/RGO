@@ -27,11 +27,13 @@ namespace RGO.DataAccess.Data
 
         public DbSet<Evidence> Evidences { get; set; }
 
-        public DbSet<RGO_Evidence> RGO_Evidences { get; set; }
 
         public DbSet<RGO_Type> RGO_Types { get; set; }
 
         public DbSet<RGOutput> RGOutputs { get; set; }
+
+
+        public DbSet<RGO_Evidence> RGO_Evidences { get; set; }
 
         public DbSet<RGO_Dataset_Template> RGO_Dataset_Templates { get; set; }
 

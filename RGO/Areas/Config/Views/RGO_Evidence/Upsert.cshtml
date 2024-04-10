@@ -1,0 +1,98 @@
+﻿@model RGO_EvidenceVM
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2"> @(Model.RGO_Evidence.Id != 0 ? "Update" : "Create") Associate between Evidence and RG Output</h2>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="card-body p-4">
+        <form method="post" class="row" enctype="multipart/form-data">
+            <input asp-for="RGO_Evidence.Id" hidden />
+
+            <div class="row">
+                <div class="col-10">
+                    <div class="border p-3">
+
+                        @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+                        <div class="form-floating py-2 col-12">
+
+
+                            <div class="form-floating py-2 col-12">
+                                <select asp-for="@Model.RGO_Evidence.Evidence_Id" asp-items="@Model.EvidenceList" class="form-select border-0 shadow">
+                                    <option disabled selected>--Select Evidence--</option>
+                                </select>
+                                <label asp-for="RGO_Evidence.Evidence_Id" class="ms-2">Evidence</label>
+                                <span asp-validation-for="RGO_Evidence.Evidence_Id" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <select asp-for="@Model.RGO_Evidence.RGOutput_Id" asp-items="@Model.RGOutputList" class="form-select border-0 shadow">
+                                    <option disabled selected>--Select RG Output--</option>
+                                </select>
+                                <label asp-for="RGO_Evidence.RGOutput_Id" class="ms-2">RG Output</label>
+                                <span asp-validation-for="RGO_Evidence.RGOutput_Id" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Evidence.Created_By" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Evidence.Created_By" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Evidence.Created_By" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Evidence.Created_Date" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Evidence.Created_Date" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Evidence.Created_Date" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Evidence.Updated_By" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Evidence.Updated_By" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Evidence.Updated_By" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Evidence.Updated_Date" class="form-control border-0 shadow" />
+                                <label asp-for="RGO_Evidence.Updated_Date" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Evidence.Updated_Date" class="text-danger"></span>
+                            </div>
+                            <div class="py-2 col-12">
+                                <label asp-for="RGO_Evidence.Notes" class="ms-2 text-muted"></label>
+                                <textarea asp-for="RGO_Evidence.Notes" class="form-control border-0 shadow"></textarea>
+                            </div>
+
+
+                            <div class="row pt-2">
+                                <div class="col-6 col-md-3">
+                                    @if (Model.RGO_Evidence.Id != 0)
+                                    {
+                                        <button type="submit" class="btn btn-primary form-control">Update</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-primary form-control">Create</button>
+                                    }
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <a asp-controller="RGO_Evidence" asp-action="Index" class="btn btn-outline-primary border  form-control">
+                                        Back to List
+                                    </a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

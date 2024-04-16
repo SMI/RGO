@@ -1,8 +1,4 @@
-<picture>
- <source media="(prefers-color-scheme: dark)" srcset="YOUR-DARKMODE-IMAGE">
- <source media="(prefers-color-scheme: light)" srcset="YOUR-LIGHTMODE-IMAGE">
- <img alt="YOUR-ALT-TEXT" src="YOUR-DEFAULT-IMAGE">
-</picture>
+![Jason and the RGOnauts](https://www.greekmyths-greekmythology.com/wp-content/uploads/2010/05/jason-argonauts-argo.jpg)
 # Research-Generated Output System (R-GO)
 R-GO is a tool to...
 

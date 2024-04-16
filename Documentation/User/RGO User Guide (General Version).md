@@ -1,4 +1,4 @@
-## RGO User Guide (eDRIS version)
+## RGO User Guide
 
 Hi this is the user guide
 

@@ -8,6 +8,7 @@ Work with the Research Group to:
 
 - Identify RGO that the project will create
 - Identify any previously captured RGO that the project would like to extract
+- 
 
 It is important to ensure that the Researchers know that it is their responsibility to validate any data that they return.  The RGO tool cannot validate a different dataset for each project.
 

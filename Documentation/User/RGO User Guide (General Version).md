@@ -3,7 +3,7 @@
 Hi this is the user guide
 
 <details>
-<summary>BACKGROUND</summary>
+<summary>Background</summary>
 
 Background information here
 
@@ -17,6 +17,7 @@ Work with the Research Group to:
 - 
 
 It is important to ensure that the Researchers know that it is their responsibility to validate any data that they return.  The RGO tool cannot validate a different dataset for each project.
+</details>
 <details>
 <summary>RGO Setup screens</summary>
 
@@ -41,10 +42,26 @@ It is important to ensure that the Researchers know that it is their responsibil
 Uploading a file with RGO Ground Truth
 
 </details>
+
+<details>
+
+<summary>Maintain Evidence</summary>
+
+Add publications, requests to extract existing RGO etc.  
+
+</details>
+
 <details>
 <summary>Combining RGO with your other clinical and image datasets</summary>
 
 Combining RGO with your other clinical and image datasets
+
+</details>
+<details>
+
+<summary>End of Project review</summary>
+
+How can eDRIS check that the ground truth identified at the start has been successfully gathered
 
 </details>
 <details>
@@ -53,3 +70,16 @@ Combining RGO with your other clinical and image datasets
 Development and Support of RGO
 
 </details>
+
+<details>
+<summary>Letting Researchers know what RGO you hold</summary>
+
+E.g. via Metacat/UKHDRUK Gateway
+
+</details>
+
+
+
+
+
+

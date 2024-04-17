@@ -1,6 +1,6 @@
 ## RGO User Guide
 
-Hi this is the user guide
+Hi this is the Generic RGO User Guide.  TRE teams should maintain their own notes relating to local procedures.
 
 <details>
 <summary>Background</summary>

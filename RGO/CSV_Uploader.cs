@@ -338,7 +338,7 @@ group by rec.""RGO_RecordId"") as mid on mid.""RGO_RecordId"" = rec.""RGO_Record
             group by ""RGO_RecordId""
             ";
             var ConnectionString = _config.GetValue(typeof(object), "ConnectionStrings:DefaultConnection");
-            DiscoveredServer server = new DiscoveredServer(ConnectionString.ToString(), FAnsi.DatabaseType.MicrosoftSQLServer);
+            DiscoveredServer server = new DiscoveredServer(ConnectionString.ToString(), FAnsi.DatabaseType.PostgreSql);
             using var conn = server.GetConnection();
             conn.Open();
             var cmd = server.GetCommand(sql, conn);

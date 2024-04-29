@@ -142,7 +142,7 @@ namespace RGO.Areas.Config.Controllers
                 _unitOfWork.Save();
 
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
                 return Json(new
                 {

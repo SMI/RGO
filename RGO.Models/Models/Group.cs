@@ -9,11 +9,11 @@ namespace RGO.Models.Models
     {
         [Key]
         public int Id { get; set; }
-
         public int Group_TypeId { get; set; }
         [ForeignKey("Group_TypeId")]
 
         public Group_Type? Group_Type { get; set; }
+
 
         [DisplayName("Group Name")]
         public string Name { get; set; } = "";
@@ -21,8 +21,10 @@ namespace RGO.Models.Models
         [DisplayName("Contact Details (for Data Team use only - do not include in any extract)")]
         public string? ContactInfo { get; set; }
 
-        public ICollection<RGOutput>? RGOutput { get; set; }
+        [DisplayName("eDRIS Study_id")]
+        public string? Reference_number { get; set; }
 
+        public ICollection<RGOutput>? RGOutput { get; set; }
 
         /* Common Columns that should appear on all tables */
 
@@ -35,5 +37,6 @@ namespace RGO.Models.Models
         public DateTime? Updated_Date { get; set; }
 
         public string? Notes { get; set; }
+
     }
 }

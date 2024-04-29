@@ -14,5 +14,7 @@ namespace RGO.Models.ViewModels
         public RGO_Column_Template? RGO_Column_Template { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem>? RGO_Dataset_TemplateList { get; set; }
+
+        public IEnumerable<SelectListItem>? RGO_Release_StatusList { get; set; }
     }
 }

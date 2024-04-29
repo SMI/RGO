@@ -1,4 +1,6 @@
-﻿using RGO.DataAccess.Data;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.Models;
 using RGO.Models.Models;
@@ -25,4 +27,6 @@ namespace RGO.DataAccess.Repository
             _db.RGO_ReIdentification_Configurations.Update(obj);
         }
     }
+
+ 
 }

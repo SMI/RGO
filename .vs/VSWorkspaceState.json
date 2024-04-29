@@ -1,12 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\RGO",
-    "\\RGO.DataAccess",
-    "\\RGO.DataAccess\\Data",
-    "\\RGO.DataAccess\\Migrations",
-    "\\RGO\\Properties"
+    ""
   ],
-  "SelectedNode": "\\RGO\\RGO.csproj",
+  "SelectedNode": "\\RGO.sln",
   "PreviewInSolutionExplorer": false
 }

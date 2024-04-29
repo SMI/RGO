@@ -10,11 +10,10 @@ namespace RGO.Models.Models
         [Key]
         public int Id { get; set; }
 
-        [DisplayName("Which RGO Dataset Template is this part of")]
+
         public int RGO_Dataset_TemplateId { get; set; }
+        [DisplayName("Which RGO Dataset Template is this part of")]
         [ForeignKey("RGO_Dataset_TemplateId")]
-
-
         public RGO_Dataset_Template? RGO_Dataset_Template { get; set; }
 
         [DisplayName("Column Name")]
@@ -33,6 +32,11 @@ namespace RGO.Models.Models
         public string Potentially_Disclosive { get; set; } = "N";
 
         public int IsIdentifier { get; set; } = 0;
+
+        public int Release_Status_Id { get; set; }
+        [DisplayName("Is this a releasable column? - applies to all records using this template")]
+        [ForeignKey("Release_Status_Id")]
+        public RGO_Release_Status? RGO_Release_Status { get; set; }
 
         public ICollection<Models.RGO_Column>? RGO_Column { get; set; }
 

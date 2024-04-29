@@ -38,6 +38,12 @@
                             </div>
 
                             <div class="form-floating py-2 col-12">
+                                <input asp-for="Group.Reference_number" class="form-control border-0 shadow" />
+                                <label asp-for="Group.Reference_number" class="ms-2"></label>
+                                <span asp-validation-for="Group.Reference_number" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
                                 <input asp-for="Group.ContactInfo" class="form-control border-0 shadow" />
                                 <label asp-for="Group.ContactInfo" class="ms-2"></label>
                                 <span asp-validation-for="Group.ContactInfo" class="text-danger"></span>

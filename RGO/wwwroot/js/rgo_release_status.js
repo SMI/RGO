@@ -5,10 +5,11 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/config/rgo_evidence/getall'},
+        "ajax": { url: '/config/rgo_release_status/getall' },
         "columns": [
-            { data: 'evidence.name', "width": "10%" },
-            { data: 'rgOutput.name', "width": "10%" },
+            { data: 'name', "width": "30%" },
+            { data: 'description', "width": "30%" },
+            { data: 'available_For_Release', "width": "30%" },
             { data: 'created_By', "width": "10%" },
             { data: 'created_Date', "width": "10%" },
             { data: 'updated_By', "width": "10%" },
@@ -17,20 +18,20 @@ function loadDataTable() {
             {
                 data: 'id', "render": function (data) {
                     return `<div class="w-75 btn-group" role="group">
-                     <a href="/config/rgo_evidence/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>               
-                     <a onClick=Delete('/config/rgo_evidence/delete/${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
+                     <a href="/config/rgo_release_status/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>               
+                     <a onClick=Delete('/config/rgo_release_status/delete/${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
                      </div>`
                 },
-                "width": "10%"
+                "width": "20%"
             }
         ]
 
     });
-    dataTable.column(2).visible(false);
     dataTable.column(3).visible(false);
     dataTable.column(4).visible(false);
     dataTable.column(5).visible(false);
     dataTable.column(6).visible(false);
+    dataTable.column(7).visible(false);
 }
 
 function Delete(url) {
@@ -48,6 +49,14 @@ function Delete(url) {
                 url: url,
                 type: 'DELETE',
                 success: function (data) {
+                    dataTable.ajax.reload();
+                    if (data.success) {
+                        toastr.success(data.message);
+                    } else {
+                        toastr.error(data.message);
+                    }
+                },
+                error: function (data) {
                     dataTable.ajax.reload();
                     if (data.success) {
                         toastr.success(data.message);

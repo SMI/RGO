@@ -121,7 +121,6 @@ namespace RGO.Areas.Config.Controllers
         public IActionResult GetAll()
         {
             List<RGOutput> objRGOutputList = _unitOfWork.RGOutput.GetAll(includeProperties: "RGO_Type,Group").ToList();
-            Console.Write(objRGOutputList);
             return Json(new { data = objRGOutputList });
         }
 
@@ -147,9 +146,10 @@ namespace RGO.Areas.Config.Controllers
                 return Json(new
                 {
                     success = false,
-                    message = "This RG Output cannot be deleted as there are RG Data Templates " +
-                    $" that reference it.  If you want to delete this RGOutput, please change this first"
-                });
+                    message = "This RG Output cannot be deleted as there are RG Data Templates and/or RGO Evidence records " +
+                    $" that reference it.  If you want to delete this RGOutput, please change this first" +
+                                        $" em is " + ex.Source + ex.Message
+            });
             }
             return Json(new { success = true, message = "RG Output deleted Successfully" });
 

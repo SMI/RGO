@@ -11,28 +11,20 @@ namespace RGO.DataAccess.Repository.IRepository
 
         IGroup_TypeRepository Group_Type { get; }
         IGroupRepository Group { get; }
-
         IEvidence_TypeRepository Evidence_Type { get; }
         IEvidenceRepository Evidence { get; }
-
         IPersonRepository Person { get; }
-
         IRGO_TypeRepository RGO_Type { get; }
         IRGOutputRepository RGOutput { get; }
-
         IRGO_Dataset_TemplateRepository RGO_Dataset_Template { get; }
-
         IRGO_Column_TemplateRepository RGO_Column_Template { get; }
-
         IRGO_DatasetRepository RGO_Dataset { get; }
         IRGO_RecordRepository RGO_Record { get; }
         IRGO_ColumnRepository RGO_Column { get; }
-
         IRGO_EvidenceRepository RGO_Evidence { get; }
         IRGO_ReIdentificationConfigurationRepository RGO_ReIdentificationConfiguration { get;}
-
-
         IRGO_Record_PersonRepository RGO_Record_Person { get; }
+        IRGO_Release_StatusRepository RGO_Release_Status { get; }
         void Save();
     }
 }

@@ -1,4 +1,5 @@
-﻿using RGO.DataAccess.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.Models;
 using System;
@@ -21,6 +22,17 @@ namespace RGO.DataAccess.Repository
 
         public void Update(Group_Type obj)
         {
+            
+            //foreach(var tracker in _db.ChangeTracker.Entries<Group_Type>())
+            //{
+            //    Console.WriteLine(tracker.State);
+            //}
+
+            //if (_db.Entry(obj).State != EntityState.Unchanged)
+            //{
+            //    obj.Updated_Date = DateTime.UtcNow;
+            //}
+            obj.Updated_Date = DateTime.UtcNow;
             _db.Group_Types.Update(obj);
         }
     }

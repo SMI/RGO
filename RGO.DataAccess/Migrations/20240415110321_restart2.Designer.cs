@@ -12,8 +12,8 @@ using RGO.DataAccess.Data;
 namespace RGO.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240410104235_NewFKColumns")]
-    partial class NewFKColumns
+    [Migration("20240415110321_restart2")]
+    partial class restart2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -114,7 +114,7 @@ namespace RGO.DataAccess.Migrations
                         {
                             Id = 1,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(5955),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5420),
                             Description = "",
                             Name = "Peer Reviewed Publication"
                         },
@@ -122,7 +122,7 @@ namespace RGO.DataAccess.Migrations
                         {
                             Id = 2,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(5958),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5422),
                             Description = "",
                             Name = "Requested by another Research Project"
                         });
@@ -166,14 +166,14 @@ namespace RGO.DataAccess.Migrations
                         {
                             Id = 1,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(5629),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5259),
                             Name = "Research Group"
                         },
                         new
                         {
                             Id = 2,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(5632),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5261),
                             Name = "Data Team"
                         });
                 });
@@ -223,7 +223,7 @@ namespace RGO.DataAccess.Migrations
                         {
                             Id = 1,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(5880),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5396),
                             Group_TypeId = 1,
                             Name = "Classification of Brain Images"
                         });
@@ -349,7 +349,7 @@ namespace RGO.DataAccess.Migrations
                         {
                             Id = 1,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(6176),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5541),
                             Description = "Identifier of this image",
                             IsIdentifier = 0,
                             Name = "Image_Identifier",
@@ -362,7 +362,7 @@ namespace RGO.DataAccess.Migrations
                         {
                             Id = 2,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(6180),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5544),
                             Description = "The ground truth that classifies the type of MRI this is e.g. T1, T2",
                             IsIdentifier = 0,
                             Name = "MRI_Classification",
@@ -374,7 +374,7 @@ namespace RGO.DataAccess.Migrations
                         {
                             Id = 3,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(6183),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5546),
                             Description = "An expert who generate this ground truth (1)",
                             IsIdentifier = 0,
                             Name = "Ground_Truther_1",
@@ -386,7 +386,7 @@ namespace RGO.DataAccess.Migrations
                         {
                             Id = 4,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(6186),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5548),
                             Description = "An expert who generate this ground truth (2)",
                             IsIdentifier = 0,
                             Name = "Ground_Truther_2",
@@ -398,7 +398,7 @@ namespace RGO.DataAccess.Migrations
                         {
                             Id = 5,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(6189),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5549),
                             Description = "The date on which this Ground Truth was finalised",
                             IsIdentifier = 0,
                             Name = "Date_GT_Recorded",
@@ -502,7 +502,7 @@ namespace RGO.DataAccess.Migrations
                         {
                             Id = 1,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(6134),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5521),
                             Description = "Classifying the type of Brain Scans, done by Gerry and Grant",
                             Name = "MRI Classification Ground Truth Template",
                             RGOutput_Id = 1
@@ -620,6 +620,9 @@ namespace RGO.DataAccess.Migrations
                     b.Property<string>("Person_Record_Role")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("RGO_Column_TemplateId")
+                        .HasColumnType("int");
+
                     b.Property<int>("RGO_RecordId")
                         .HasColumnType("int");
 
@@ -632,6 +635,8 @@ namespace RGO.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PersonId");
+
+                    b.HasIndex("RGO_Column_TemplateId");
 
                     b.HasIndex("RGO_RecordId");
 
@@ -682,7 +687,7 @@ namespace RGO.DataAccess.Migrations
                             Id = 1,
                             ContactInfo = "gerry@yahoo.ac.uk",
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(6000),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5446),
                             Name = "Gerry Thomson",
                             Notes = "Academic Neuroradiologist",
                             OrcId = "123ABC"
@@ -692,7 +697,7 @@ namespace RGO.DataAccess.Migrations
                             Id = 2,
                             ContactInfo = "grant@yahoo.ac.uk",
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(6005),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5449),
                             Name = "Grant Mair",
                             Notes = "Senior Clinical Lecturer in Neuroradiology",
                             OrcId = "456DEF"
@@ -702,7 +707,7 @@ namespace RGO.DataAccess.Migrations
                             Id = 3,
                             ContactInfo = "smarti@yahoo.ac.uk",
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(6008),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5451),
                             Name = "Smarti Reel",
                             Notes = "Postdoctoral Researcher",
                             OrcId = ""
@@ -712,7 +717,7 @@ namespace RGO.DataAccess.Migrations
                             Id = 4,
                             ContactInfo = "kara@yahoo.ac.uk",
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(6010),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5452),
                             Name = "Kara Moraw",
                             Notes = "EPCC Applications Developer",
                             OrcId = ""
@@ -799,7 +804,7 @@ namespace RGO.DataAccess.Migrations
                         {
                             Id = 1,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(6054),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5477),
                             Description = "Annotations that have been manually created or validated by a human expert",
                             Name = "Ground Truth"
                         });
@@ -861,7 +866,7 @@ namespace RGO.DataAccess.Migrations
                         {
                             Id = 1,
                             Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 10, 10, 42, 33, 213, DateTimeKind.Utc).AddTicks(6097),
+                            Created_Date = new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5499),
                             Description = "Brain Scan Classifications",
                             Name = "MRI Classification Ground Truth",
                             Originating_GroupId = 1,
@@ -894,9 +899,9 @@ namespace RGO.DataAccess.Migrations
             modelBuilder.Entity("RGO.Models.Models.RGO_Column", b =>
                 {
                     b.HasOne("RGO.Models.Models.RGO_Column_Template", "RGO_Column_Template")
-                        .WithMany("RGO_Columns")
+                        .WithMany("RGO_Column")
                         .HasForeignKey("RGO_Column_TemplateId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("RGO.Models.Models.RGO_Record", "RGO_Record")
@@ -968,6 +973,12 @@ namespace RGO.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("RGO.Models.Models.RGO_Column_Template", "RGO_Column_Template")
+                        .WithMany("RGO_Record_Person")
+                        .HasForeignKey("RGO_Column_TemplateId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("RGO.Models.Models.RGO_Record", "RGO_Record")
                         .WithMany("RGO_Record_Person")
                         .HasForeignKey("RGO_RecordId")
@@ -975,6 +986,8 @@ namespace RGO.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Person");
+
+                    b.Navigation("RGO_Column_Template");
 
                     b.Navigation("RGO_Record");
                 });
@@ -988,9 +1001,9 @@ namespace RGO.DataAccess.Migrations
                         .IsRequired();
 
                     b.HasOne("RGO.Models.RGOutput", "RGOutput")
-                        .WithMany()
+                        .WithMany("RGO_Evidence")
                         .HasForeignKey("RGOutput_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Evidence");
@@ -1039,7 +1052,9 @@ namespace RGO.DataAccess.Migrations
 
             modelBuilder.Entity("RGO.Models.Models.RGO_Column_Template", b =>
                 {
-                    b.Navigation("RGO_Columns");
+                    b.Navigation("RGO_Column");
+
+                    b.Navigation("RGO_Record_Person");
                 });
 
             modelBuilder.Entity("RGO.Models.Models.RGO_Dataset", b =>
@@ -1077,6 +1092,8 @@ namespace RGO.DataAccess.Migrations
             modelBuilder.Entity("RGO.Models.RGOutput", b =>
                 {
                     b.Navigation("RGO_Dataset_Template");
+
+                    b.Navigation("RGO_Evidence");
                 });
 #pragma warning restore 612, 618
         }

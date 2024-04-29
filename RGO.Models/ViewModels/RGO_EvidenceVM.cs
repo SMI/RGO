@@ -13,7 +13,7 @@ namespace RGO.Models.ViewModels
     {
         public RGO_Evidence RGO_Evidence { get; set; }
         [ValidateNever]
-        public IEnumerable<SelectListItem> EvidenceList { get; set; }
-        public IEnumerable<SelectListItem> RGOutputList { get; set; }
+        public IEnumerable<SelectListItem>? EvidenceList { get; set; }
+        public IEnumerable<SelectListItem>? RGOutputList { get; set; }
     }
 }

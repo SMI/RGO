@@ -70,6 +70,13 @@ namespace RGO.DataAccess.Data
                 .HasForeignKey("Evidence_Id")
                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
+            //Prevent the deletion of an RGOutput, where it is referenced by RGO_Evidence records
+            modelBuilder.Entity<RGO_Evidence>()
+                .HasOne(e => e.RGOutput)
+                .WithMany(e => e.RGO_Evidence)
+                .HasForeignKey("RGOutput_Id")
+                .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+
             //Prevent the deletion of a Person record, where it is referenced by RGO_Record_Person records
             modelBuilder.Entity<RGO_Record_Person>()
                 .HasOne(e => e.Person)

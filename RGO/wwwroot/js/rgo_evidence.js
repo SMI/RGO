@@ -8,7 +8,7 @@ function loadDataTable() {
         "ajax": { url: '/config/rgo_evidence/getall'},
         "columns": [
             { data: 'evidence.name', "width": "10%" },
-            { data: 'rgoutput.name', "width": "10%" },
+            { data: 'rgOutput.name', "width": "10%" },
             { data: 'created_By', "width": "10%" },
             { data: 'created_Date', "width": "10%" },
             { data: 'updated_By', "width": "10%" },

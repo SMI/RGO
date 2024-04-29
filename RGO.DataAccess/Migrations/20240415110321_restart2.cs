@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RGO.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class restart : Migration
+    public partial class restart2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -172,6 +172,8 @@ namespace RGO.DataAccess.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Originating_GroupId = table.Column<int>(type: "int", nullable: false),
+                    Doi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StandardAcknowledgement = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created_By = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Updated_By = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -244,8 +246,7 @@ namespace RGO.DataAccess.Migrations
                         name: "FK_RGO_Evidences_RGOutputs_RGOutput_Id",
                         column: x => x.RGOutput_Id,
                         principalTable: "RGOutputs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -341,6 +342,7 @@ namespace RGO.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RGO_RecordId = table.Column<int>(type: "int", nullable: false),
+                    RGO_Column_TemplateId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PK_Column_Order = table.Column<int>(type: "int", nullable: true),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -358,6 +360,11 @@ namespace RGO.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_RGO_Columns", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_RGO_Columns_RGO_Column_Templates_RGO_Column_TemplateId",
+                        column: x => x.RGO_Column_TemplateId,
+                        principalTable: "RGO_Column_Templates",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_RGO_Columns_RGO_Records_RGO_RecordId",
                         column: x => x.RGO_RecordId,
                         principalTable: "RGO_Records",
@@ -372,6 +379,7 @@ namespace RGO.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PersonId = table.Column<int>(type: "int", nullable: false),
+                    RGO_Column_TemplateId = table.Column<int>(type: "int", nullable: false),
                     RGO_RecordId = table.Column<int>(type: "int", nullable: false),
                     Person_Record_Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created_By = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -389,6 +397,11 @@ namespace RGO.DataAccess.Migrations
                         principalTable: "People",
                         principalColumn: "Id");
                     table.ForeignKey(
+                        name: "FK_RGO_Record_People_RGO_Column_Templates_RGO_Column_TemplateId",
+                        column: x => x.RGO_Column_TemplateId,
+                        principalTable: "RGO_Column_Templates",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_RGO_Record_People_RGO_Records_RGO_RecordId",
                         column: x => x.RGO_RecordId,
                         principalTable: "RGO_Records",
@@ -401,8 +414,8 @@ namespace RGO.DataAccess.Migrations
                 columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "Updated_By", "Updated_Date" },
                 values: new object[,]
                 {
-                    { 1, "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6243), "", "Peer Reviewed Publication", null, null, null },
-                    { 2, "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6245), "", "Requested by another Research Project", null, null, null }
+                    { 1, "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5420), "", "Peer Reviewed Publication", null, null, null },
+                    { 2, "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5422), "", "Requested by another Research Project", null, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -410,8 +423,8 @@ namespace RGO.DataAccess.Migrations
                 columns: new[] { "Id", "Created_By", "Created_Date", "Name", "Notes", "Updated_By", "Updated_Date" },
                 values: new object[,]
                 {
-                    { 1, "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6093), "Research Group", null, null, null },
-                    { 2, "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6095), "Data Team", null, null, null }
+                    { 1, "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5259), "Research Group", null, null, null },
+                    { 2, "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5261), "Data Team", null, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -419,42 +432,42 @@ namespace RGO.DataAccess.Migrations
                 columns: new[] { "Id", "ContactInfo", "Created_By", "Created_Date", "Name", "Notes", "OrcId", "Updated_By", "Updated_Date" },
                 values: new object[,]
                 {
-                    { 1, "gerry@yahoo.ac.uk", "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6271), "Gerry Thomson", "Academic Neuroradiologist", "123ABC", null, null },
-                    { 2, "grant@yahoo.ac.uk", "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6273), "Grant Mair", "Senior Clinical Lecturer in Neuroradiology", "456DEF", null, null },
-                    { 3, "smarti@yahoo.ac.uk", "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6275), "Smarti Reel", "Postdoctoral Researcher", "", null, null },
-                    { 4, "kara@yahoo.ac.uk", "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6276), "Kara Moraw", "EPCC Applications Developer", "", null, null }
+                    { 1, "gerry@yahoo.ac.uk", "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5446), "Gerry Thomson", "Academic Neuroradiologist", "123ABC", null, null },
+                    { 2, "grant@yahoo.ac.uk", "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5449), "Grant Mair", "Senior Clinical Lecturer in Neuroradiology", "456DEF", null, null },
+                    { 3, "smarti@yahoo.ac.uk", "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5451), "Smarti Reel", "Postdoctoral Researcher", "", null, null },
+                    { 4, "kara@yahoo.ac.uk", "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5452), "Kara Moraw", "EPCC Applications Developer", "", null, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "RGO_Types",
                 columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "Updated_By", "Updated_Date" },
-                values: new object[] { 1, "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6295), "Annotations that have been manually created or validated by a human expert", "Ground Truth", null, null, null });
+                values: new object[] { 1, "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5477), "Annotations that have been manually created or validated by a human expert", "Ground Truth", null, null, null });
 
             migrationBuilder.InsertData(
                 table: "Groups",
                 columns: new[] { "Id", "ContactInfo", "Created_By", "Created_Date", "Group_TypeId", "Name", "Notes", "Updated_By", "Updated_Date" },
-                values: new object[] { 1, null, "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6222), 1, "Classification of Brain Images", null, null, null });
+                values: new object[] { 1, null, "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5396), 1, "Classification of Brain Images", null, null, null });
 
             migrationBuilder.InsertData(
                 table: "RGOutputs",
-                columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "Originating_GroupId", "RGO_TypeId", "Updated_By", "Updated_Date" },
-                values: new object[] { 1, "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6314), "Brain Scan Classifications", "MRI Classification Ground Truth", null, 1, 1, null, null });
+                columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Doi", "Name", "Notes", "Originating_GroupId", "RGO_TypeId", "StandardAcknowledgement", "Updated_By", "Updated_Date" },
+                values: new object[] { 1, "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5499), "Brain Scan Classifications", null, "MRI Classification Ground Truth", null, 1, 1, null, null, null });
 
             migrationBuilder.InsertData(
                 table: "RGO_Dataset_Templates",
                 columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "RGOutput_Id", "Updated_By", "Updated_Date" },
-                values: new object[] { 1, "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6332), "Classifying the type of Brain Scans, done by Gerry and Grant", "MRI Classification Ground Truth Template", null, 1, null, null });
+                values: new object[] { 1, "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5521), "Classifying the type of Brain Scans, done by Gerry and Grant", "MRI Classification Ground Truth Template", null, 1, null, null });
 
             migrationBuilder.InsertData(
                 table: "RGO_Column_Templates",
                 columns: new[] { "Id", "Created_By", "Created_Date", "Description", "IsIdentifier", "Name", "Notes", "PK_Column_Order", "Potentially_Disclosive", "RGO_Dataset_TemplateId", "Type", "Updated_By", "Updated_Date" },
                 values: new object[,]
                 {
-                    { 1, "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6351), "Identifier of this image", 0, "Image_Identifier", null, 1, "N", 1, "Int", null, null },
-                    { 2, "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6353), "The ground truth that classifies the type of MRI this is e.g. T1, T2", 0, "MRI_Classification", null, null, "N", 1, "Char", null, null },
-                    { 3, "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6355), "An expert who generate this ground truth (1)", 0, "Ground_Truther_1", null, null, "N", 1, "Int", null, null },
-                    { 4, "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6356), "An expert who generate this ground truth (2)", 0, "Ground_Truther_2", null, null, "N", 1, "Int", null, null },
-                    { 5, "seed", new DateTime(2024, 4, 9, 12, 29, 43, 167, DateTimeKind.Utc).AddTicks(6358), "The date on which this Ground Truth was finalised", 0, "Date_GT_Recorded", null, null, "N", 1, "Date", null, null }
+                    { 1, "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5541), "Identifier of this image", 0, "Image_Identifier", null, 1, "N", 1, "Int", null, null },
+                    { 2, "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5544), "The ground truth that classifies the type of MRI this is e.g. T1, T2", 0, "MRI_Classification", null, null, "N", 1, "Char", null, null },
+                    { 3, "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5546), "An expert who generate this ground truth (1)", 0, "Ground_Truther_1", null, null, "N", 1, "Int", null, null },
+                    { 4, "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5548), "An expert who generate this ground truth (2)", 0, "Ground_Truther_2", null, null, "N", 1, "Int", null, null },
+                    { 5, "seed", new DateTime(2024, 4, 15, 11, 3, 20, 609, DateTimeKind.Utc).AddTicks(5549), "The date on which this Ground Truth was finalised", 0, "Date_GT_Recorded", null, null, "N", 1, "Date", null, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -471,6 +484,11 @@ namespace RGO.DataAccess.Migrations
                 name: "IX_RGO_Column_Templates_RGO_Dataset_TemplateId",
                 table: "RGO_Column_Templates",
                 column: "RGO_Dataset_TemplateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RGO_Columns_RGO_Column_TemplateId",
+                table: "RGO_Columns",
+                column: "RGO_Column_TemplateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RGO_Columns_RGO_RecordId",
@@ -508,6 +526,11 @@ namespace RGO.DataAccess.Migrations
                 column: "PersonId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RGO_Record_People_RGO_Column_TemplateId",
+                table: "RGO_Record_People",
+                column: "RGO_Column_TemplateId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RGO_Record_People_RGO_RecordId",
                 table: "RGO_Record_People",
                 column: "RGO_RecordId");
@@ -532,9 +555,6 @@ namespace RGO.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "RGO_Column_Templates");
-
-            migrationBuilder.DropTable(
                 name: "RGO_Columns");
 
             migrationBuilder.DropTable(
@@ -548,6 +568,9 @@ namespace RGO.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "People");
+
+            migrationBuilder.DropTable(
+                name: "RGO_Column_Templates");
 
             migrationBuilder.DropTable(
                 name: "RGO_Records");

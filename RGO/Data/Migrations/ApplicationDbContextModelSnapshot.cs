@@ -168,11 +168,11 @@ namespace RGO.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType(dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(string), 128)))
                         .HasMaxLength(128);
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType(dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(string), 128)))
                         .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName")
@@ -210,11 +210,11 @@ namespace RGO.Data.Migrations
                         .HasColumnType(dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(string),450)));
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType(dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(string), 128)))
                         .HasMaxLength(128);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType(dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(string), 128)))
                         .HasMaxLength(128);
 
                     b.Property<string>("Value")

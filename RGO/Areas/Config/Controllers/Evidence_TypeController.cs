@@ -125,7 +125,7 @@ namespace RGO.Areas.Config.Controllers
                 _unitOfWork.Save();
 
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
                 return Json(new { success = false, message = "This Evidence Type cannot be deleted as there are Evidences " +
                     $" that reference it.  If you want to delete this Evidence Type, please change the Evidence Type of these Evidences first"

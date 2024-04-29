@@ -1,5 +1,6 @@
 ﻿using FAnsi.Discovery;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using RGO.DataAccess.Repository;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.Models.Models;
@@ -19,12 +20,14 @@ public class ReIdentify
     private RGO_Dataset _dataset;
     private RGO_ReIdentificationConfiguration _config;
     private IUnitOfWork _unitOfWork;
+    private IConfigurationRoot _configRoot;
 
     public ReIdentify(RGO_Dataset dataset, RGO_ReIdentificationConfiguration reIdentificationConfiguration, IUnitOfWork unitOfWork)
     {
         _dataset = dataset;
         _config = reIdentificationConfiguration;
         _unitOfWork = unitOfWork;
+        _configRoot = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
     }
 
     public void Execute()
@@ -35,7 +38,15 @@ public class ReIdentify
         var records = _unitOfWork.RGO_Record.GetAll().Where(r => r.RGO_Dataset.Id == _dataset.Id).Select(r => r.Id).ToList();
         var ids = _unitOfWork.RGO_Column.GetAll().Where(c => c.IsIdentifier == 1 && records.Contains(c.RGO_RecordId)).Select(c => c.Column_Value).ToList();
         var sql = $"select [{_config.DeIdentifiedColumn}], [{_config.IdentityColumn}] from {_config.Table} where {_config.DeIdentifiedColumn} in ({string.Join(",", ids)})";
-        DiscoveredServer server = new DiscoveredServer(ConnectionString.ToString(), FAnsi.DatabaseType.MicrosoftSQLServer);
+        DiscoveredServer server;
+        if (_configRoot.GetValue(typeof(object), "DatabaseType").ToString() == "Postgres")
+        {
+            server = new DiscoveredServer(ConnectionString.ToString(), FAnsi.DatabaseType.PostgreSql);
+        }
+        else
+        {
+            server = new DiscoveredServer(ConnectionString.ToString(), FAnsi.DatabaseType.MicrosoftSQLServer);
+        }
         using var conn = server.GetConnection();
         conn.Open();
         SqlCommand cmd = new SqlCommand(sql, (SqlConnection)conn);

@@ -136,8 +136,8 @@ namespace RGO.Areas.Config.Controllers
                 return Json(new
                 {
                     success = false,
-                    message = "This Evidence cannot be deleted as there are RG Outputs " +
-                    $" that reference it.  If you want to delete this Evidence, please the references from these RGOs first"
+                    message = "This Evidence cannot be deleted as there are RGO Evidence records" +
+                    $" that associate it with RG Outputs.  If you want to delete this Evidence, please fix this first"
                 });
             }
             return Json(new { success = true, message = "Evidence deleted Successfully" });

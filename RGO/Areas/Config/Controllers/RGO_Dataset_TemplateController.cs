@@ -33,7 +33,7 @@ namespace RGO.Areas.Config.Controllers
 
         public IActionResult Index()
         {
-            List<RGO_Dataset_Template> objRGO_Dataset_TemplateList = _unitOfWork.RGO_Dataset_Template.GetAll(includeProperties: "RGOutput").ToList();
+            List<RGO_Dataset_Template> objRGO_Dataset_TemplateList = _unitOfWork.RGO_Dataset_Template.GetAll(includeProperties: "RGOutput,RGO_Release_Status").ToList();
             return View(objRGO_Dataset_TemplateList);
         }
 
@@ -43,6 +43,11 @@ namespace RGO.Areas.Config.Controllers
             RGO_Dataset_TemplateVM rgo_dataset_templateVM = new()
             {
                 RGOutputList = _unitOfWork.RGOutput.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+                RGO_Release_StatusList = _unitOfWork.RGO_Release_Status.GetAll().Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.Id.ToString()
@@ -61,7 +66,7 @@ namespace RGO.Areas.Config.Controllers
             {
                 //Update
 
-                rgo_dataset_templateVM.RGO_Dataset_Template = _unitOfWork.RGO_Dataset_Template.FirstOrDefault(m => m.Id == id, includeProperties: "RGOutput");
+                rgo_dataset_templateVM.RGO_Dataset_Template = _unitOfWork.RGO_Dataset_Template.FirstOrDefault(m => m.Id == id, includeProperties: "RGOutput,RGO_Release_Status");
                 return View(rgo_dataset_templateVM);
 
             }
@@ -116,7 +121,7 @@ namespace RGO.Areas.Config.Controllers
     [HttpGet]
     public IActionResult GetAll()
     {
-        List<RGO_Dataset_Template> objRGO_Dataset_TemplateList = _unitOfWork.RGO_Dataset_Template.GetAll(includeProperties: "RGOutput").ToList();
+        List<RGO_Dataset_Template> objRGO_Dataset_TemplateList = _unitOfWork.RGO_Dataset_Template.GetAll(includeProperties: "RGOutput,RGO_Release_Status").ToList();
         return Json(new { data = objRGO_Dataset_TemplateList });
     }
 

@@ -39,12 +39,12 @@ namespace RGO.Areas.Config.Controllers
 
             if (parentId == null | parentId == 0)
             {
-                objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(includeProperties: "RGO_Dataset_Template").ToList();
+                objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(includeProperties: "RGO_Dataset_Template,RGO_Release_Status").ToList();
                 return View(objRGO_Column_TemplateList);
             }
             else
             {
-                objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(r => r.RGO_Dataset_TemplateId == parentId, includeProperties: "RGO_Dataset_Template").ToList();
+                objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(r => r.RGO_Dataset_TemplateId == parentId, includeProperties: "RGO_Dataset_Template,RGO_Release_Status").ToList();
 
                 return View(objRGO_Column_TemplateList);
             }
@@ -63,6 +63,11 @@ namespace RGO.Areas.Config.Controllers
                     Text = u.Name,
                     Value = u.Id.ToString()
                 }),
+                RGO_Release_StatusList = _unitOfWork.RGO_Release_Status.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
                 RGO_Column_Template = new RGO_Column_Template()
 
             };
@@ -77,7 +82,7 @@ namespace RGO.Areas.Config.Controllers
             {
                 //Update
 
-                rgo_column_templateVM.RGO_Column_Template = _unitOfWork.RGO_Column_Template.FirstOrDefault(m => m.Id == id, includeProperties: "RGO_Dataset_Template");
+                rgo_column_templateVM.RGO_Column_Template = _unitOfWork.RGO_Column_Template.FirstOrDefault(m => m.Id == id, includeProperties: "RGO_Dataset_Template,RGO_Release_Status");
                 return View(rgo_column_templateVM);
 
             }

@@ -5,13 +5,19 @@ using System.Text.RegularExpressions;
 
 namespace RGO.Models
 {
-    public class Group_Type
+    public class RGO_Release_Status
     {
         [Key]
         public int Id { get; set; }
 
-        [DisplayName("Group Type Name")]
+        [MaxLength(20)]
         public string Name { get; set; } = "";
+
+
+        public string Description { get; set; } = "";
+
+        [MaxLength(3)]
+        public String Available_For_Release { get; set; } = "N";
 
 
         /* Common Columns that should appear on all tables */
@@ -26,8 +32,11 @@ namespace RGO.Models
 
         public string? Notes { get; set; }
 
-        public ICollection<Models.Group>? Group { get; set; }
+        public ICollection<Models.RGO_Dataset_Template>? RGO_Dataset_Template { get; set; }
 
+        public ICollection<Models.RGO_Column_Template>? RGO_Column_Template { get; set; }
+
+        public ICollection<Models.RGO_Dataset>? RGO_Dataset { get; set; }
 
     }
 }

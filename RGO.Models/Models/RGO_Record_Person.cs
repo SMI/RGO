@@ -29,7 +29,6 @@ namespace RGO.Models.Models
         [DisplayName("Person Record Role")]
         public string? Person_Record_Role { get; set; }
 
-
         /* Common Columns that should appear on all tables */
 
         public string Created_By { get; set; } = "";

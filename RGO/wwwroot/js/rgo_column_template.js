@@ -34,6 +34,7 @@ function loadDataTable() {
             { data: 'pK_Column_Order', "width": "10%" },
             { data: 'type', "width": "5%" },
             { data: 'potentially_Disclosive', "width": "5%" },
+            { data: 'rgO_Release_Status.name', "width": "10%" },
             { data: 'created_By', "width": "5%" },
             { data: 'created_Date', "width": "5%" },
             { data: 'updated_By', "width": "5%" },
@@ -51,11 +52,12 @@ function loadDataTable() {
         ]
 
     });
-    dataTable.column(6).visible(false);
+
     dataTable.column(7).visible(false);
     dataTable.column(8).visible(false);
     dataTable.column(9).visible(false);
     dataTable.column(10).visible(false);
+    dataTable.column(11).visible(false);
 }
 
 function Delete(url) {

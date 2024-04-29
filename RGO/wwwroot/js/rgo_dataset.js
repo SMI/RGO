@@ -58,6 +58,7 @@ function loadDataTable() {
             { data: 'dataset_Status', "width": "10%" },
             { data: 'doi', "width": "10%" },
             { data: 'rgO_ReIdentificationConfiguration.name', "width": "10%" },
+            { data: 'rgO_Release_Status.name', "width": "10%" },
             { data: 'created_By', "width": "10%" },
             { data: 'created_Date', "width": "10%" },
             { data: 'updated_By', "width": "5%" },
@@ -89,11 +90,12 @@ function loadDataTable() {
         ]
 
     });
-    dataTable.column(5).visible(false);
+
     dataTable.column(6).visible(false);
-    dataTable.column(7).visible(false);
+    //dataTable.column(7).visible(false);
     dataTable.column(8).visible(false);
     dataTable.column(9).visible(false);
+    dataTable.column(10).visible(false);
 }
 
 function Delete(url) {

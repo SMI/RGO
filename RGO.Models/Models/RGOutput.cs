@@ -38,6 +38,7 @@ namespace RGO.Models
         public string? StandardAcknowledgement { get; set; }
 
         public ICollection<RGO_Dataset_Template>? RGO_Dataset_Template { get; set; }
+        public ICollection<RGO_Evidence>? RGO_Evidence { get; set; }
 
         /* Common Columns that should appear on all tables */
 

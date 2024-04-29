@@ -7,30 +7,22 @@ function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": { url: '/config/RGO_ReIdentificationConfiguration/getall'},
         "columns": [
-            //{ data: 'name', "width": "10%" },
             { data: 'name', "width": "10%" },
             { data: 'server', "width": "10%" },
             { data: 'database', "width": "10%" },
             { data: 'table', "width": "10%" },
             { data: 'deIdentifiedColumn', "width": "10%" },
             { data: 'identityColumn', "width": "10%" },
-            //{ data: 'username', "width": "10%" },
-            //{ data: 'password', "width": "10%" },
-            //{ data: 'contactInfo', "width": "10%" },
-            //{ data: 'created_By', "width": "10%" },
-            //{ data: 'created_Date', "width": "10%" },
-            //{ data: 'updated_By', "width": "10%" },
-            //{ data: 'updated_Date', "width": "10%" },
-            //{ data: 'notes', "width": "10%" },
-            //{
-            //    data: 'id', "render": function (data) {
-            //        return `<div class="w-75 btn-group" role="group">
-            //         <a href="/config/group/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>               
-            //         <a onClick=Delete('/config/group/delete/${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
-            //         </div>`
-            //    },
-            //    "width": "20%"
-            //}
+
+            {
+                data: 'id', "render": function (data) {
+                    return `<div class="w-75 btn-group" role="group">
+                     <a href="/config/RGO_ReIdentificationConfiguration/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>               
+                     <a onClick=Delete('/config/RGO_ReIdentificationConfiguration/delete/${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
+                     </div>`
+                },
+                "width": "20%"
+            }
         ]
 
     });

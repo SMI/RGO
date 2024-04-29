@@ -132,7 +132,7 @@ namespace RGO
                     if (recordIndex == 0)
                     {
                         //Grab the column headers
-                        line2 = line.Substring(0, line.Length - 1);
+                        line2 = line.Substring(1, line.Length - 1);
                         line2.Split(",").ToList().ForEach(columnHeaders.Add);
                         
                         

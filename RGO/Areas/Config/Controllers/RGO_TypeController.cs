@@ -125,7 +125,7 @@ namespace RGO.Areas.Config.Controllers
                 _unitOfWork.Save();
 
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
                 return Json(new { success = false, message = "This RGO Type cannot be deleted as there are RG Outputs" +
                     $" that reference it.  If you want to delete this RGO Type, please change the RGO Type of these RG Outputs first"});

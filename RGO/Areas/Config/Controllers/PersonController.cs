@@ -125,7 +125,7 @@ namespace RGO.Areas.Config.Controllers
                 _unitOfWork.Save();
 
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
                 return Json(new { success = false, message = "This Person cannot be deleted as there are Research outputs " +
                     $" that reference it.  If you want to delete this Person, please change the Ground Truthers of these Research Outputs first"

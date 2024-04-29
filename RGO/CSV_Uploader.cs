@@ -2,8 +2,10 @@
 using FAnsi.Implementation;
 using FAnsi.Implementations.MicrosoftSQL;
 using Microsoft.AspNetCore.Mvc.Diagnostics;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualBasic.FileIO;
 using NPOI.HSSF.UserModel;
+using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using RGO.DataAccess;
@@ -32,11 +34,13 @@ namespace RGO
         private IUnitOfWork _unitOfWork;
         private RGO_Dataset_Template _datasetTemplate;
         private IConfigurationRoot _config;
+        private bool isXls = false;
 
 
-
-        public void ExecuteUpload()
+        //public void ExecuteUpload()
+        public bool ExecuteUpload()
         {
+            
 
             if (PreCheck().Equals(true))
             {
@@ -51,6 +55,7 @@ namespace RGO
 
                 if (_filePath.EndsWith(".xlsx"))
                 {
+                    isXls = true;
                     //convert to csv
                     string csvSeparator = ",";
                     var newFilePath = _filePath.Replace(".xlsx", ".csv");
@@ -132,7 +137,15 @@ namespace RGO
                     if (recordIndex == 0)
                     {
                         //Grab the column headers
-                        line2 = line.Substring(1, line.Length - 1);
+                        if (isXls)
+                        {
+                            line2 = line.Substring(0, line.Length - 1);
+                        }
+                        else  //csv
+                        {
+                            line2 = line.Substring(1, line.Length - 2);
+                        }
+                        
                         line2.Split(",").ToList().ForEach(columnHeaders.Add);
                         
                         
@@ -156,8 +169,17 @@ namespace RGO
 
                         // Grab the column values for this record
                         //string[] columnValues = new string[columnHeaders.Count];
-                       //olumnValues  // get rid of any values from the previous row of the file
-                        line2 = line.Substring(0, line.Length - 1);
+                        //olumnValues  // get rid of any values from the previous row of the file
+
+                        if (isXls)
+                        {
+                            line2 = line.Substring(0, line.Length - 1);
+                        }
+                        else //csv
+                        {
+                            line2 = line.Substring(1, line.Length - 2);
+                        }
+                        
                         string[] columnValues = line2.Split(",");
 
 
@@ -214,8 +236,10 @@ namespace RGO
                                     _unitOfWork.Save();
                                 }
                             }
-                            else
-                            { Console.WriteLine("Invalid Header found in input file: "+header); }
+                            else  //It's likely that the headers don't match
+                            { 
+                                return false;
+                            }
                             columnIndex++;
 
                         }
@@ -234,9 +258,13 @@ namespace RGO
                 {
                     CreateView();
                 }
+                
 
-            }
+            } else { return false; }
+            setUploadedStatii();
+            return true;
         }
+        
 
         public CSV_Uploader(string filePath, IUnitOfWork unitOfWork)
         {
@@ -283,6 +311,18 @@ namespace RGO
             _unitOfWork.Save();
 
             _datasetId = dsrec.Id;
+
+            return true;
+        }
+
+
+        public bool setUploadedStatii()
+        {
+            var datasetId = _datasetId;
+            var dataset = _unitOfWork.RGO_Dataset.GetAll().Where(ds => ds.Id == datasetId).FirstOrDefault();
+            dataset.Dataset_Status = "Upload Complete";
+            _unitOfWork.RGO_Dataset.Update(dataset);
+            _unitOfWork.Save();
 
             return true;
         }

@@ -47,16 +47,22 @@ namespace RGO.Areas.Config.Controllers
                 var uploader = new CSV_Uploader(fileName,_unitOfWork);
                 if (!uploader.PreCheck())
                 {
-                    TempData["error"] = "Something went wrong with the Upload. Please try again.";
+                    TempData["error"] = "Something went wrong with the Upload (pre-check stage). Please try again.";
                     return View();
                 }
-                uploader.ExecuteUpload();
+                //uploader.ExecuteUpload();
+                if (!uploader.ExecuteUpload())
+                {
+                    TempData["error"] = "Something went wrong with the Upload. It's possible that the column headers in the input file don't match those in the templates.  Please check this, then try again.";
+                    return View();
+                }
             }
             finally
             {
                 System.IO.File.Delete(fileName);
             }
             TempData["success"] = "CSV Successfully Uploaded";
+
             return View();
         }
 

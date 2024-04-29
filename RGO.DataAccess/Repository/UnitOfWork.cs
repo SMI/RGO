@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage;
 using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.Models.Models;
@@ -40,6 +42,7 @@ namespace RGO.DataAccess.Repository
 
         public IRGO_Record_PersonRepository RGO_Record_Person { get; private set; }
         public IRGO_ReIdentificationConfigurationRepository RGO_ReIdentificationConfiguration { get; private set; }
+        public IRGO_Release_StatusRepository RGO_Release_Status { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -60,13 +63,51 @@ namespace RGO.DataAccess.Repository
             RGO_Output = new RGO_OutputRepository(_db);
             RGO_Evidence = new RGO_EvidenceRepository(_db);
             RGO_ReIdentificationConfiguration = new RGO_ReIdentificationConfigurationRepository(_db);
+            RGO_Release_Status = new RGO_Release_StatusRepository(_db);
 
         }
 
         public void Save() 
         {
+            //ProcessSave();
+            //_db.ChangeTracker.DetectChanges();
+            //if (_db.ChangeTracker.DebugView.LongView == "Modified")
+            //Console.WriteLine(_db.ChangeTracker.DebugView.LongView);
+            //var entries = _db.ChangeTracker.Entries().Where(e => e.Entity is Entity && (
+            //e.State == EntityState.Added || e.State == EntityState.Modified));
+
+            //foreach (var entityEntry in entries)
+            //{
+            //    ((Entity)entityEntry.Entity).Updated_Date = DateTime.UtcNow;
+
+            //    if (entityEntry.State == EntityState.Added)
+            //    {
+            //        ((Entity)entityEntry.Entity).Created_Date = DateTime.UtcNow;
+            //    }
+            //}
 
             _db.SaveChanges();
         }
+
+        //private void ProcessSave()
+        //{
+        //    var thisTime = DateTime.UtcNow;
+        //    foreach (var item in ChangeTracker.Entries()
+        //        .Where(e => e.State == EntityState.Added && e.Entity is Entity))
+        //    {
+        //        var entity = item.Entity as Entity;
+        //        entity.Created_Date = thisTime;
+        //    }
+        //    foreach (var item in ChangeTracker.Entries()
+        //    .Where(e => e.State == EntityState.Modified && e.Entity is Entity))
+        //    {
+        //        var entity = item.Entity as Entity;
+        //        entity.Updated_Date = thisTime;
+        //        item.Property(nameof(entity.Created_Date)).isModified = false;
+        //        //item.Property(nameof(entity.Created_By)).isModified = false;
+
+        //    }
+        //}
+
     }
 }

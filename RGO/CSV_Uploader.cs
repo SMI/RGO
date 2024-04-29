@@ -47,7 +47,7 @@ namespace RGO
                 List<string> columnHeaders = new List<string>();
 
                 int columnIndex = 0;
-                List<string> columnValues = new List<string>();
+                //<string> columnValues = new List<string>();
 
                 if (_filePath.EndsWith(".xlsx"))
                 {
@@ -74,6 +74,8 @@ namespace RGO
 
                         ISheet sheet = wb.GetSheetAt(0);//Start reading at index 0
 
+                        //wb.MissingCellPolicy = MissingCellPolicy.RETURN_NULL_AND_BLANK;
+
                         for (int i = 0; i <= sheet.LastRowNum; i++)//Row
                         {
                             IRow row = sheet.GetRow(i);
@@ -82,8 +84,13 @@ namespace RGO
                             {
                                 ICell cell = row.GetCell(j);
 
+
                                 object cellValue = null;
 
+                                //if (cell == null)
+                                //{
+
+         
                                 #region Check cell type in order to define its value type
                                 switch (cell.CellType)
                                 {
@@ -125,8 +132,9 @@ namespace RGO
                     if (recordIndex == 0)
                     {
                         //Grab the column headers
-                        line2 = line.Substring(1, line.Length - 2);
+                        line2 = line.Substring(0, line.Length - 1);
                         line2.Split(",").ToList().ForEach(columnHeaders.Add);
+                        
                         
 
                         
@@ -147,8 +155,12 @@ namespace RGO
                         _recordId = recrec.Id;
 
                         // Grab the column values for this record
-                        line2 = line.Substring(1, line.Length - 2);
-                        line2.Split(",").ToList().ForEach(columnValues.Add);
+                        //string[] columnValues = new string[columnHeaders.Count];
+                       //olumnValues  // get rid of any values from the previous row of the file
+                        line2 = line.Substring(0, line.Length - 1);
+                        string[] columnValues = line2.Split(",");
+
+
 
 
 
@@ -159,48 +171,56 @@ namespace RGO
                             //var _columnTemplate = _unitOfWork.RGO_Column_Template.GetAll().Where(r => r.RGO_Dataset_TemplateId.Equals(_datasetTemplateId)).FirstOrDefault();
                             var _columnTemplate = _unitOfWork.RGO_Column_Template.GetAll().Where(r => r.RGO_Dataset_TemplateId.Equals(_datasetTemplateId) && r.Name == header).FirstOrDefault();
 
-                            if (!header.StartsWith("Ground_Truther"))
+                            if (_columnTemplate != null)
                             {
-                                // Create a new RGO_Column Record
-                                RGO_Column colrec = new RGO_Column();
 
-                                colrec.RGO_RecordId = recrec.Id;
-                                colrec.RGO_Column_TemplateId= _columnTemplate.Id;
-                                colrec.Name = header;
-                                colrec.PK_Column_Order = _columnTemplate.PK_Column_Order;
-                                colrec.Type = _columnTemplate.Type;
-                                colrec.Potentially_Disclosive = _columnTemplate.Potentially_Disclosive;
-                                colrec.Column_Value = columnValues[columnIndex];
-                                colrec.Column_Status = "Uploading";
-                                colrec.Created_By = "RGO_Upload";
-                                //colrec.Created_Date = DateTime.Now;
 
-                                _unitOfWork.RGO_Column.Add(colrec);
-                                _unitOfWork.Save();
+                                if (!header.StartsWith("Ground_Truther"))
+                                {
+                                    // Create a new RGO_Column Record
+                                    RGO_Column colrec = new RGO_Column();
 
+                                    colrec.RGO_RecordId = recrec.Id;
+                                    colrec.RGO_Column_TemplateId = _columnTemplate.Id;
+                                    colrec.Name = header;
+                                    colrec.PK_Column_Order = _columnTemplate.PK_Column_Order;
+                                    colrec.Type = _columnTemplate.Type;
+                                    colrec.Potentially_Disclosive = _columnTemplate.Potentially_Disclosive;
+                                    colrec.Column_Value = columnValues[columnIndex];
+                                    colrec.Created_By = "RGO_Upload";
+                                    //colrec.Created_Date = DateTime.Now;
+
+                                    _unitOfWork.RGO_Column.Add(colrec);
+                                    _unitOfWork.Save();
+
+                                }
+                                else
+                                {
+                                    //Find the id of the person record with this name
+
+                                    var _person = _unitOfWork.Person.GetAll().Where(pr => pr.Name.Equals(columnValues[columnIndex])).FirstOrDefault();
+
+                                    // Create a new RGO_Person_Record Record
+                                    RGO_Record_Person rprec = new RGO_Record_Person();
+
+
+                                    rprec.RGO_RecordId = recrec.Id;
+                                    rprec.RGO_Column_TemplateId = _columnTemplate.Id;
+                                    rprec.PersonId = _person.Id;
+                                    rprec.Person_Record_Role = "Ground Truther";
+                                    rprec.Created_By = "RGO_Upload";
+
+                                    _unitOfWork.RGO_Record_Person.Add(rprec);
+                                    _unitOfWork.Save();
+                                }
                             }
                             else
-                            {
-                                //Find the id of the person record with this name
-
-                                var _person = _unitOfWork.Person.GetAll().Where(pr => pr.Name.Equals(columnValues[columnIndex])).FirstOrDefault();
-
-                                // Create a new RGO_Person_Record Record
-                                RGO_Record_Person rprec = new RGO_Record_Person();
-
-
-                                rprec.RGO_RecordId = recrec.Id;
-                                rprec.RGO_Column_TemplateId = _columnTemplate.Id;
-                                rprec.PersonId = _person.Id;
-                                rprec.Person_Record_Role = "Ground Truther";
-                                rprec.Created_By = "RGO_Upload";
-
-                                _unitOfWork.RGO_Record_Person.Add(rprec);
-                                _unitOfWork.Save();
-                            }
+                            { Console.WriteLine("Invalid Header found in input file: "+header); }
                             columnIndex++;
 
                         }
+
+                        columnIndex = 0;
 
                     }
 
@@ -228,17 +248,22 @@ namespace RGO
 
         public bool PreCheck()
         {
+
+            // Check that the file exists
             if (!File.Exists(_filePath)) return false;
             var _fileInfo = new FileInfo(_filePath);
             var _fileName = _fileInfo.FullName;
             var _fileNameNoExt = Path.GetFileNameWithoutExtension(_fileName);
+
+            // CHeck that the filename starts with RGO_
             if (!_fileNameNoExt.StartsWith("RGO_")) return false;
             var datasetTemplateId = _fileNameNoExt.Split("_").Reverse().First();
 
             _datasetTemplateId = int.Parse(datasetTemplateId);
             _datasetTemplate = _unitOfWork.RGO_Dataset_Template.GetAll().Where(r => r.Id.Equals(_datasetTemplateId)).FirstOrDefault();
 
-            if (_datasetTemplate == null) { return false; }
+            //Check that the filename ends with a valid datasetTemplateId
+            if (_datasetTemplate == null)  { return false; } 
 
             return true;
         }
@@ -248,9 +273,11 @@ namespace RGO
             RGO_Dataset dsrec = new RGO_Dataset();
 
             dsrec.RGO_Dataset_TemplateId = _datasetTemplateId;
-            dsrec.Dataset_Name = _datasetTemplate.Name;
+            //dsrec.Dataset_Name = _datasetTemplate.Name;
+            dsrec.Dataset_Name = "Describe this particular dataset";
             dsrec.Dataset_Status = "Uploading";
             dsrec.Created_By = "RGO_Upload";
+            dsrec.Release_Status_Id = _datasetTemplate.Release_Status_Id;
 
             _unitOfWork.RGO_Dataset.Add(dsrec);
             _unitOfWork.Save();

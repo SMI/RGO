@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.Models;
@@ -81,6 +82,36 @@ namespace RGO.Areas.Config.Controllers
             {
                 return View(redentificationConfiguration);
             }
+
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+
+            var rgo_reidentificationconfigToBeDeleted = _unitOfWork.RGO_ReIdentificationConfiguration.FirstOrDefault(u => u.Id == id);
+            if (rgo_reidentificationconfigToBeDeleted == null)
+            {
+                return Json(new { success = false, message = "Error while deleting RGO ReIdentification Configuration" });
+            }
+
+            _unitOfWork.RGO_ReIdentificationConfiguration.Remove(rgo_reidentificationconfigToBeDeleted);
+
+            try
+            {
+                _unitOfWork.Save();
+
+            }
+            catch (DbUpdateException ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "This RGO ReIdentification Configuration cannot be deleted as there are RGO Datasets " +
+                    $" that reference it.  If you want to delete this RGO ReIdentification Configuration, please change this"
+                });
+            }
+            return Json(new { success = true, message = "RGO ReIdentification Configuration Deleted Successfully" });
 
         }
     }

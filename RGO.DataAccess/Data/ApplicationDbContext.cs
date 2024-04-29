@@ -49,6 +49,8 @@ namespace RGO.DataAccess.Data
 
         public DbSet<RGO_Record_Person> RGO_Record_People { get; set; }
 
+        public DbSet<RGO_Release_Status> RGO_Release_Statii { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -133,6 +135,13 @@ namespace RGO.DataAccess.Data
                  .HasForeignKey("RGO_Dataset_TemplateId")
                  .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
+            //Prevent the deletion of an RGO_ReIdentificationConfiguration record, where it is referenced by RGO_Dataset records
+            modelBuilder.Entity<RGO_Dataset>()
+                 .HasOne(r => r.RGO_ReIdentificationConfiguration)
+                 .WithMany(t => t.RGO_Dataset)
+                 .HasForeignKey("RGO_ReIdentificationConfigurationId")
+                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+
             //Prevent the deletion of an RGO_Column_Template record, where it is referenced by RGO_Column records
             modelBuilder.Entity<RGO_Column>()
                  .HasOne(r => r.RGO_Column_Template)
@@ -140,12 +149,41 @@ namespace RGO.DataAccess.Data
                  .HasForeignKey("RGO_Column_TemplateId")
                  .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
-            //Prevent the deletion of an RGO_Column_Template record, where it is referenced by RGO_Record_Person records
-            modelBuilder.Entity<RGO_Record_Person>()
-                 .HasOne(r => r.RGO_Column_Template)
-                 .WithMany(t => t.RGO_Record_Person)
-                 .HasForeignKey("RGO_Column_TemplateId")
-                 .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+            //Prevent the deletion of a Release Status, where it is referenced by an RGO_Dataset_Template record
+            modelBuilder.Entity<RGO_Dataset_Template>()
+                .HasOne(r => r.RGO_Release_Status)
+                .WithMany(t => t.RGO_Dataset_Template)
+                .HasForeignKey("Release_Status_Id")
+                .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+
+            //Prevent the deletion of a Release Status, where it is referenced by an RGO_Column_Template record
+            modelBuilder.Entity<RGO_Column_Template>()
+                .HasOne(r => r.RGO_Release_Status)
+                .WithMany(t => t.RGO_Column_Template)
+                .HasForeignKey("Release_Status_Id")
+                .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+
+            //Prevent the deletion of a Release Status, where it is referenced by an RGO_Dataset record
+            modelBuilder.Entity<RGO_Dataset>()
+                .HasOne(r => r.RGO_Release_Status)
+                .WithMany(t => t.RGO_Dataset)
+                .HasForeignKey("Release_Status_Id")
+                .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+
+            ////Prevent the deletion of a Release Status, where it is referenced by an RGO_Column record
+            //modelBuilder.Entity<RGO_Column>()
+            //    .HasOne(r => r.RGO_Release_Status)
+            //    .WithMany(t => t.RGO_Column)
+            //    .HasForeignKey("Release_Status_Id")
+            //    .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
+
+
+            ////Prevent the deletion of a Release Status, where it is referenced by an RGO_Record_Person record
+            //modelBuilder.Entity<RGO_Record_Person>()
+            //    .HasOne(r => r.RGO_Release_Status)
+            //    .WithMany(t => t.RGO_Record_Person)
+            //    .HasForeignKey("Release_Status_Id")
+            //    .OnDelete(DeleteBehavior.NoAction); //this should cause a db exception to be propogated
 
 
 
@@ -153,12 +191,14 @@ namespace RGO.DataAccess.Data
             modelBuilder.Entity<RGOutput>().Navigation(e => e.RGO_Type).AutoInclude();
             modelBuilder.Entity<RGOutput>().Navigation(e => e.Group).AutoInclude();
             modelBuilder.Entity<RGO_Dataset_Template>().Navigation(e => e.RGOutput).AutoInclude();
+            modelBuilder.Entity<RGO_Dataset_Template>().Navigation(e => e.RGO_Release_Status).AutoInclude();
             modelBuilder.Entity<RGO_Column_Template>().Navigation(e => e.RGO_Dataset_Template).AutoInclude();
+            modelBuilder.Entity<RGO_Column_Template>().Navigation(e => e.RGO_Release_Status).AutoInclude();
 
 
 
-  
- 
+
+
 
             // Add in the seed data
             modelBuilder.Entity<Group_Type>().HasData(
@@ -177,25 +217,12 @@ namespace RGO.DataAccess.Data
 
 
             modelBuilder.Entity<Person>().HasData(
-                new Person { Id = 1, Name = "Gerry Thomson", ContactInfo = "gerry@yahoo.ac.uk", OrcId = "123ABC", Created_By = "seed", Created_Date = DateTime.UtcNow, Notes= "Academic Neuroradiologist" },
-                new Person { Id = 2, Name = "Grant Mair", ContactInfo = "grant@yahoo.ac.uk", OrcId = "456DEF", Created_By = "seed", Created_Date = DateTime.UtcNow, Notes = "Senior Clinical Lecturer in Neuroradiology" },
-                new Person { Id = 3, Name = "Smarti Reel", ContactInfo = "smarti@yahoo.ac.uk", OrcId = "", Created_By = "seed", Created_Date = DateTime.UtcNow, Notes = "Postdoctoral Researcher" },
-                new Person { Id = 4, Name = "Kara Moraw", ContactInfo = "kara@yahoo.ac.uk", OrcId = "", Created_By = "seed", Created_Date = DateTime.UtcNow, Notes = "EPCC Applications Developer" }
+                new Person { Id = 1, Name = "Gerry Thomson",  OrcId = "123ABC", Created_By = "seed", Created_Date = DateTime.UtcNow, Notes= "Academic Neuroradiologist" },
+                new Person { Id = 2, Name = "Grant Mair",  OrcId = "456DEF", Created_By = "seed", Created_Date = DateTime.UtcNow, Notes = "Senior Clinical Lecturer in Neuroradiology" },
+                new Person { Id = 3, Name = "Smarti Reel",  OrcId = "", Created_By = "seed", Created_Date = DateTime.UtcNow, Notes = "Postdoctoral Researcher" },
+                new Person { Id = 4, Name = "Kara Moraw",  OrcId = "", Created_By = "seed", Created_Date = DateTime.UtcNow, Notes = "EPCC Applications Developer" }
                );
 
-            //modelBuilder.Entity<Group_Role>().HasData(
-            //    new Group_Role { Id = 1, Name = "PI", Description = "Principal Investigator", Created_By = "seed", Created_Date = DateTime.UtcNow },
-            //    new Group_Role { Id = 2, Name = "RA", Description = "Research Assistant", Created_By = "seed", Created_Date = DateTime.UtcNow },
-            //    new Group_Role { Id = 3, Name = "GT", Description = "Ground Truther", Created_By = "seed", Created_Date = DateTime.UtcNow }
-            //    );
-
-
-            //modelBuilder.Entity<Person_Group_Role>().HasData(
-            //new Person_Group_Role { Id = 1, Group_Id = 1, Person_Id = 1, Group_Role_Id = 3, Created_By = "seed", Created_Date = DateTime.UtcNow },
-            //new Person_Group_Role { Id = 2, Group_Id = 1, Person_Id = 2, Group_Role_Id = 3, Created_By = "seed", Created_Date = DateTime.UtcNow },
-            //new Person_Group_Role { Id = 3, Group_Id = 1, Person_Id = 3, Group_Role_Id = 1, Created_By = "seed", Created_Date = DateTime.UtcNow },
-            //new Person_Group_Role { Id = 4, Group_Id = 1, Person_Id = 4, Group_Role_Id = 2, Created_By = "seed", Created_Date = DateTime.UtcNow }
-            //);
 
             modelBuilder.Entity<RGO_Type>().HasData(
                 new RGO_Type { Id = 1, Name = "Ground Truth", Description = "Annotations that have been manually created or validated by a human expert", Created_By = "seed", Created_Date = DateTime.UtcNow }
@@ -207,18 +234,20 @@ namespace RGO.DataAccess.Data
 
 
             modelBuilder.Entity<RGO_Dataset_Template>().HasData(
-                new RGO_Dataset_Template { Id = 1, RGOutput_Id = 1, Name = "MRI Classification Ground Truth Template", Description = "Classifying the type of Brain Scans, done by Gerry and Grant", Created_By = "seed", Created_Date = DateTime.UtcNow }
+                new RGO_Dataset_Template { Id = 1, RGOutput_Id = 1, Name = "MRI Classification Ground Truth Template", Description = "Classifying the type of Brain Scans, done by Gerry and Grant", Created_By = "seed", Created_Date = DateTime.UtcNow, Release_Status_Id = 1 }
             );
 
             modelBuilder.Entity<RGO_Column_Template>().HasData(
-                //new RGO_Column_Template { Id = 1, RGO_Dataset_TemplateId = 1, Name = "Study_Identifier", Description = "Identifier of the study that this image is part of", PK_Column_Order = 1, Type = "Int", Potentially_Disclosive = "N", Created_By = "seed", Created_Date = DateTime.UtcNow },
-                //new RGO_Column_Template { Id = 2, RGO_Dataset_TemplateId = 1, Name = "Series_Identifier", Description = "Identifier of the series that this image is part of", PK_Column_Order = 2, Type = "Int", Potentially_Disclosive = "N", Created_By = "seed", Created_Date = DateTime.UtcNow },
-                new RGO_Column_Template { Id = 1, RGO_Dataset_TemplateId = 1, Name = "Image_Identifier", Description = "Identifier of this image", PK_Column_Order = 1, Type = "Int", Potentially_Disclosive = "N", Created_By = "seed", Created_Date = DateTime.UtcNow },
-                new RGO_Column_Template { Id = 2, RGO_Dataset_TemplateId = 1, Name = "MRI_Classification", Description = "The ground truth that classifies the type of MRI this is e.g. T1, T2",  Type = "Char", Potentially_Disclosive = "N", Created_By = "seed", Created_Date = DateTime.UtcNow },
-                new RGO_Column_Template { Id = 3, RGO_Dataset_TemplateId = 1, Name = "Ground_Truther_1", Description = "An expert who generate this ground truth (1)",  Type = "Int", Potentially_Disclosive = "N", Created_By = "seed", Created_Date = DateTime.UtcNow },
-                new RGO_Column_Template { Id = 4, RGO_Dataset_TemplateId = 1, Name = "Ground_Truther_2", Description = "An expert who generate this ground truth (2)", Type = "Int", Potentially_Disclosive = "N", Created_By = "seed", Created_Date = DateTime.UtcNow },
-                new RGO_Column_Template { Id = 5, RGO_Dataset_TemplateId = 1, Name = "Date_GT_Recorded", Description = "The date on which this Ground Truth was finalised", Type = "Date", Potentially_Disclosive = "N", Created_By = "seed", Created_Date = DateTime.UtcNow }
+                new RGO_Column_Template { Id = 1, RGO_Dataset_TemplateId = 1, Name = "Image_Identifier", Description = "Identifier of this image", PK_Column_Order = 1, Type = "Int", Potentially_Disclosive = "N", Created_By = "seed", Created_Date = DateTime.UtcNow, Release_Status_Id = 1 },
+                new RGO_Column_Template { Id = 2, RGO_Dataset_TemplateId = 1, Name = "MRI_Classification_Ground_Truther_1", Description = "The first ground truther's label",  Type = "Char", Potentially_Disclosive = "N", Created_By = "seed", Created_Date = DateTime.UtcNow, Release_Status_Id = 1 },
+                new RGO_Column_Template { Id = 3, RGO_Dataset_TemplateId = 1, Name = "MRI_Classification_Ground_Truther_2", Description = "The second ground truther's label", Type = "Char", Potentially_Disclosive = "N", Created_By = "seed", Created_Date = DateTime.UtcNow, Release_Status_Id = 1 },
+                new RGO_Column_Template { Id = 4, RGO_Dataset_TemplateId = 1, Name = "MRI_Classification_Consensus", Description = "This holds labels where both ground truthers agreed", Type = "Char", Potentially_Disclosive = "N", Created_By = "seed", Created_Date = DateTime.UtcNow, Release_Status_Id = 1 }
 
+            );
+
+            modelBuilder.Entity<RGO_Release_Status>().HasData(
+                new RGO_Release_Status { Id = 1, Name = "Held", Description = "See Notes for reasons", Created_By = "seed"},
+                new RGO_Release_Status { Id = 2, Name = "Released", Description = "Available for other researchers", Available_For_Release = "Y", Created_By = "seed" }
             );
         }
 

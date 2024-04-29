@@ -11,12 +11,12 @@ namespace RGO.Models.Models
         public int Id { get; set; }
 
         public int RGO_Dataset_TemplateId { get; set; }
-        [DisplayName("Which RGO Dataset Template is this based on")]
+        [DisplayName("Based on RGO Dataset Template")]
         [ForeignKey("RGO_Dataset_TemplateId")]
         public RGO_Dataset_Template? RGO_Dataset_Template { get; set; }
 
 
-        [DisplayName("Dataset Name")]
+        [DisplayName("Dataset Name (to distinguish instances of the same dataset)")]
         public string? Dataset_Name { get; set; }
 
 
@@ -32,12 +32,18 @@ namespace RGO.Models.Models
         [ForeignKey("RGO_ReIdentificationConfigurationId")]
         public RGO_ReIdentificationConfiguration? RGO_ReIdentificationConfiguration { get; set; }
 
+        public int Release_Status_Id { get; set; }
+        [DisplayName("Release Status")]
+        [ForeignKey("Release_Status_Id")]
+        public RGO_Release_Status? RGO_Release_Status { get; set; }
+
         public ICollection<Models.RGO_Record>? RGO_Record { get; set; }    
 
         /* Common Columns that should appear on all tables */
 
         public string Created_By { get; set; } = "";
 
+        [DisplayName("Date loaded into RGO")]
         public DateTime Created_Date { get; set; } = DateTime.UtcNow;
 
         public string? Updated_By { get; set; }

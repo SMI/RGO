@@ -16,11 +16,16 @@ namespace RGO.Models.Models
         public RGOutput? RGOutput { get; set; }
 
 
-        [DisplayName("RGO Dataset Name")]
+        [DisplayName("Template Name")]
         public string Name { get; set; } = "";
 
         [DisplayName("RGO Dataset Description")]
         public string? Description { get; set; }
+
+        public int Release_Status_Id { get; set; }
+        [DisplayName("Initial Release Status (can be overriden for individual datasets)")]
+        [ForeignKey("Release_Status_Id")]
+        public RGO_Release_Status? RGO_Release_Status { get; set; }
 
         public ICollection<Models.RGO_Column_Template>? RGO_Column_Template { get; set; }
 

@@ -51,6 +51,11 @@ namespace RGO.Areas.Config.Controllers
                     Text = u.Name,
                     Value = u.Id.ToString()
                 }),
+                RGO_Release_StatusList = _unitOfWork.RGO_Release_Status.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
                 RGO_Dataset = new RGO_Dataset()
             };
             if (id == null || id == 0)
@@ -61,7 +66,7 @@ namespace RGO.Areas.Config.Controllers
             else
             {
                 //Update
-                rgo_DatasetVM.RGO_Dataset = _unitOfWork.RGO_Dataset.FirstOrDefault(m => m.Id == id, includeProperties: "RGO_Dataset_Template,RGO_ReIdentificationConfiguration");
+                rgo_DatasetVM.RGO_Dataset = _unitOfWork.RGO_Dataset.FirstOrDefault(m => m.Id == id, includeProperties: "RGO_Dataset_Template,RGO_ReIdentificationConfiguration,RGO_Release_Status");
                 return View(rgo_DatasetVM);
 
             }
@@ -116,7 +121,7 @@ namespace RGO.Areas.Config.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<RGO_Dataset> objRGO_DatasetList = _unitOfWork.RGO_Dataset.GetAll(includeProperties: "RGO_Dataset_Template,RGO_ReIdentificationConfiguration").ToList();
+            List<RGO_Dataset> objRGO_DatasetList = _unitOfWork.RGO_Dataset.GetAll(includeProperties: "RGO_Dataset_Template,RGO_ReIdentificationConfiguration,RGO_Release_Status").ToList();
             return Json(new { data = objRGO_DatasetList });
         }
 

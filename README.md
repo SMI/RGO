@@ -1,3 +1,4 @@
+![Jason and the RGOnauts](https://www.greekmyths-greekmythology.com/wp-content/uploads/2010/05/jason-argonauts-argo.jpg)
 # Research-Generated Output System (R-GO)
 R-GO is a tool to...
 

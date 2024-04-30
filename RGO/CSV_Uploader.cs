@@ -26,7 +26,7 @@ namespace RGO
 {
     public class CSV_Uploader
     {
-        private string _filePath; 
+        private string _filePath;
         private int _datasetTemplateId;
         private int _datasetId;
         private int _recordId;
@@ -92,10 +92,13 @@ namespace RGO
 
                                 object cellValue = null;
 
-                                //if (cell == null)
-                                //{
+                                if (cell == null)
+                                {
+                                    //It's an empty cell
+                                    sw.Write(csvSeparator);//Add the CSV separator
+                                    continue;
+                                }
 
-         
                                 #region Check cell type in order to define its value type
                                 switch (cell.CellType)
                                 {
@@ -137,21 +140,8 @@ namespace RGO
                     if (recordIndex == 0)
                     {
                         //Grab the column headers
-                        if (isXls)
-                        {
-                            line2 = line.Substring(0, line.Length - 1);
-                        }
-                        else  //csv
-                        {
-                            line2 = line.Substring(1, line.Length - 2);
-                        }
-                        
+                        line2 = line.Substring(0, line.Length - 1);
                         line2.Split(",").ToList().ForEach(columnHeaders.Add);
-                        
-                        
-
-                        
-
                     }
                     else
                     {
@@ -168,23 +158,8 @@ namespace RGO
                         _recordId = recrec.Id;
 
                         // Grab the column values for this record
-                        //string[] columnValues = new string[columnHeaders.Count];
-                        //olumnValues  // get rid of any values from the previous row of the file
-
-                        if (isXls)
-                        {
-                            line2 = line.Substring(0, line.Length - 1);
-                        }
-                        else //csv
-                        {
-                            line2 = line.Substring(1, line.Length - 2);
-                        }
-                        
+                        line2 = line.Substring(0, line.Length - 1);
                         string[] columnValues = line2.Split(",");
-
-
-
-
 
                         //Loop through the columns in column headers
                         foreach (var header in columnHeaders)
@@ -208,7 +183,8 @@ namespace RGO
                                     colrec.PK_Column_Order = _columnTemplate.PK_Column_Order;
                                     colrec.Type = _columnTemplate.Type;
                                     colrec.Potentially_Disclosive = _columnTemplate.Potentially_Disclosive;
-                                    colrec.Column_Value = columnValues[columnIndex];
+                                    colrec.Column_Value = columnIndex >= columnValues.Length ? null : columnValues[columnIndex];
+                                    if (colrec.Column_Value == "") colrec.Column_Value = null;
                                     colrec.Created_By = "RGO_Upload";
                                     //colrec.Created_Date = DateTime.Now;
 
@@ -291,7 +267,7 @@ namespace RGO
             _datasetTemplate = _unitOfWork.RGO_Dataset_Template.GetAll().Where(r => r.Id.Equals(_datasetTemplateId)).FirstOrDefault();
 
             //Check that the filename ends with a valid datasetTemplateId
-            if (_datasetTemplate == null)  { return false; } 
+            if (_datasetTemplate == null) { return false; }
 
             return true;
         }

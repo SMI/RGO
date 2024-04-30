@@ -588,10 +588,6 @@ namespace RGO.DataAccess.Migrations
                     b.Property<int>("RGO_DatasetId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Record_Status")
-                        .IsRequired()
-                        .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
-
                     b.Property<string>("Updated_By")
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 

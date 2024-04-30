@@ -161,7 +161,7 @@ namespace RGO
 
                         recrec.RGO_DatasetId = _datasetId;
                         recrec.Created_By = "RGO_Upload";
-                        recrec.Record_Status = "Uploading";
+                        //recrec.Record_Status = "Uploading";
                         _unitOfWork.RGO_Record.Add(recrec);
 
                         _unitOfWork.Save();

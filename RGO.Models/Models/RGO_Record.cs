@@ -16,8 +16,8 @@ namespace RGO.Models.Models
         public RGO_Dataset? RGO_Dataset { get; set; }
 
 
-        [DisplayName("Record Status")]
-        public string Record_Status { get; set; } = "New";
+        //[DisplayName("Record Status")]
+        //public string Record_Status { get; set; } = "New";
 
         public ICollection<RGO_Record_Person>? RGO_Record_Person { get; set; }
 

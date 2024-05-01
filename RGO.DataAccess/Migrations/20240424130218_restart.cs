@@ -466,74 +466,74 @@ namespace RGO.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Evidence_Types",
-                columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "Updated_By", "Updated_Date" },
-                values: new object[,]
-                {
-                    { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4035), "", "Peer Reviewed Publication", null, null, null },
-                    { 2, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4043), "", "Requested by another Research Project", null, null, null }
-                });
+            //migrationBuilder.InsertData(
+            //    table: "Evidence_Types",
+            //    columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "Updated_By", "Updated_Date" },
+            //    values: new object[,]
+            //    {
+            //        { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4035), "", "Peer Reviewed Publication", null, null, null },
+            //        { 2, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4043), "", "Requested by another Research Project", null, null, null }
+            //    });
 
-            migrationBuilder.InsertData(
-                table: "Group_Types",
-                columns: new[] { "Id", "Created_By", "Created_Date", "Name", "Notes", "Updated_By", "Updated_Date" },
-                values: new object[,]
-                {
-                    { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(3860), "Research Group", null, null, null },
-                    { 2, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(3863), "Data Team", null, null, null }
-                });
+            //migrationBuilder.InsertData(
+            //    table: "Group_Types",
+            //    columns: new[] { "Id", "Created_By", "Created_Date", "Name", "Notes", "Updated_By", "Updated_Date" },
+            //    values: new object[,]
+            //    {
+            //        { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(3860), "Research Group", null, null, null },
+            //        { 2, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(3863), "Data Team", null, null, null }
+            //    });
 
-            migrationBuilder.InsertData(
-                table: "People",
-                columns: new[] { "Id", "ContactInfo", "Created_By", "Created_Date", "Name", "Notes", "OrcId", "Updated_By", "Updated_Date" },
-                values: new object[,]
-                {
-                    { 1, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4068), "Gerry Thomson", "Academic Neuroradiologist", "123ABC", null, null },
-                    { 2, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4070), "Grant Mair", "Senior Clinical Lecturer in Neuroradiology", "456DEF", null, null },
-                    { 3, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4072), "Smarti Reel", "Postdoctoral Researcher", "", null, null },
-                    { 4, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4074), "Kara Moraw", "EPCC Applications Developer", "", null, null }
-                });
+            //migrationBuilder.InsertData(
+            //    table: "People",
+            //    columns: new[] { "Id", "ContactInfo", "Created_By", "Created_Date", "Name", "Notes", "OrcId", "Updated_By", "Updated_Date" },
+            //    values: new object[,]
+            //    {
+            //        { 1, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4068), "Gerry Thomson", "Academic Neuroradiologist", "123ABC", null, null },
+            //        { 2, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4070), "Grant Mair", "Senior Clinical Lecturer in Neuroradiology", "456DEF", null, null },
+            //        { 3, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4072), "Smarti Reel", "Postdoctoral Researcher", "", null, null },
+            //        { 4, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4074), "Kara Moraw", "EPCC Applications Developer", "", null, null }
+            //    });
 
-            migrationBuilder.InsertData(
-                table: "RGO_Release_Statii",
-                columns: new[] { "Id", "Available_For_Release", "Created_By", "Created_Date", "Description", "Name", "Notes", "Updated_By", "Updated_Date" },
-                values: new object[,]
-                {
-                    { 1, "N", "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4232), "See Notes for reasons", "Held", null, null, null },
-                    { 2, "Y", "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4235), "Available for other researchers", "Released", null, null, null }
-                });
+            //migrationBuilder.InsertData(
+            //    table: "RGO_Release_Statii",
+            //    columns: new[] { "Id", "Available_For_Release", "Created_By", "Created_Date", "Description", "Name", "Notes", "Updated_By", "Updated_Date" },
+            //    values: new object[,]
+            //    {
+            //        { 1, "N", "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4232), "See Notes for reasons", "Held", null, null, null },
+            //        { 2, "Y", "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4235), "Available for other researchers", "Released", null, null, null }
+            //    });
 
-            migrationBuilder.InsertData(
-                table: "RGO_Types",
-                columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "Updated_By", "Updated_Date" },
-                values: new object[] { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4107), "Annotations that have been manually created or validated by a human expert", "Ground Truth", null, null, null });
+            //migrationBuilder.InsertData(
+            //    table: "RGO_Types",
+            //    columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "Updated_By", "Updated_Date" },
+            //    values: new object[] { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4107), "Annotations that have been manually created or validated by a human expert", "Ground Truth", null, null, null });
 
-            migrationBuilder.InsertData(
-                table: "Groups",
-                columns: new[] { "Id", "ContactInfo", "Created_By", "Created_Date", "Group_TypeId", "Name", "Notes", "Reference_number", "Updated_By", "Updated_Date" },
-                values: new object[] { 1, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4010), 1, "Classification of Brain Images", null, null, null, null });
+            //migrationBuilder.InsertData(
+            //    table: "Groups",
+            //    columns: new[] { "Id", "ContactInfo", "Created_By", "Created_Date", "Group_TypeId", "Name", "Notes", "Reference_number", "Updated_By", "Updated_Date" },
+            //    values: new object[] { 1, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4010), 1, "Classification of Brain Images", null, null, null, null });
 
-            migrationBuilder.InsertData(
-                table: "RGOutputs",
-                columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Doi", "Name", "Notes", "Originating_GroupId", "RGO_TypeId", "StandardAcknowledgement", "Updated_By", "Updated_Date" },
-                values: new object[] { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4143), "Brain Scan Classifications", null, "MRI Classification Ground Truth", null, 1, 1, null, null, null });
+            //migrationBuilder.InsertData(
+            //    table: "RGOutputs",
+            //    columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Doi", "Name", "Notes", "Originating_GroupId", "RGO_TypeId", "StandardAcknowledgement", "Updated_By", "Updated_Date" },
+            //    values: new object[] { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4143), "Brain Scan Classifications", null, "MRI Classification Ground Truth", null, 1, 1, null, null, null });
 
-            migrationBuilder.InsertData(
-                table: "RGO_Dataset_Templates",
-                columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "RGOutput_Id", "Release_Status_Id", "Updated_By", "Updated_Date" },
-                values: new object[] { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4177), "Classifying the type of Brain Scans, done by Gerry and Grant", "MRI Classification Ground Truth Template", null, 1, 1, null, null });
+            //migrationBuilder.InsertData(
+            //    table: "RGO_Dataset_Templates",
+            //    columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "RGOutput_Id", "Release_Status_Id", "Updated_By", "Updated_Date" },
+            //    values: new object[] { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4177), "Classifying the type of Brain Scans, done by Gerry and Grant", "MRI Classification Ground Truth Template", null, 1, 1, null, null });
 
-            migrationBuilder.InsertData(
-                table: "RGO_Column_Templates",
-                columns: new[] { "Id", "Created_By", "Created_Date", "Description", "IsIdentifier", "Name", "Notes", "PK_Column_Order", "Potentially_Disclosive", "RGO_Dataset_TemplateId", "Release_Status_Id", "Type", "Updated_By", "Updated_Date" },
-                values: new object[,]
-                {
-                    { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4201), "Identifier of this image", 0, "Image_Identifier", null, 1, "N", 1, 1, "Int", null, null },
-                    { 2, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4205), "The first ground truther's label", 0, "MRI_Classification_Ground_Truther_1", null, null, "N", 1, 1, "Char", null, null },
-                    { 3, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4207), "The second ground truther's label", 0, "MRI_Classification_Ground_Truther_2", null, null, "N", 1, 1, "Char", null, null },
-                    { 4, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4209), "This holds labels where both ground truthers agreed", 0, "MRI_Classification_Consensus", null, null, "N", 1, 1, "Char", null, null }
-                });
+            //migrationBuilder.InsertData(
+            //    table: "RGO_Column_Templates",
+            //    columns: new[] { "Id", "Created_By", "Created_Date", "Description", "IsIdentifier", "Name", "Notes", "PK_Column_Order", "Potentially_Disclosive", "RGO_Dataset_TemplateId", "Release_Status_Id", "Type", "Updated_By", "Updated_Date" },
+            //    values: new object[,]
+            //    {
+            //        { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4201), "Identifier of this image", 0, "Image_Identifier", null, 1, "N", 1, 1, "Int", null, null },
+            //        { 2, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4205), "The first ground truther's label", 0, "MRI_Classification_Ground_Truther_1", null, null, "N", 1, 1, "Char", null, null },
+            //        { 3, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4207), "The second ground truther's label", 0, "MRI_Classification_Ground_Truther_2", null, null, "N", 1, 1, "Char", null, null },
+            //        { 4, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4209), "This holds labels where both ground truthers agreed", 0, "MRI_Classification_Consensus", null, null, "N", 1, 1, "Char", null, null }
+            //    });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Evidences_Evidence_TypeId",

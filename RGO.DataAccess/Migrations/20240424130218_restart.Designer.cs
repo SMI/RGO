@@ -686,43 +686,43 @@ namespace RGO.DataAccess.Migrations
 
                     b.ToTable("People");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4068),
-                            Name = "Gerry Thomson",
-                            Notes = "Academic Neuroradiologist",
-                            OrcId = "123ABC"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4070),
-                            Name = "Grant Mair",
-                            Notes = "Senior Clinical Lecturer in Neuroradiology",
-                            OrcId = "456DEF"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4072),
-                            Name = "Smarti Reel",
-                            Notes = "Postdoctoral Researcher",
-                            OrcId = ""
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Created_By = "seed",
-                            Created_Date = new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4074),
-                            Name = "Kara Moraw",
-                            Notes = "EPCC Applications Developer",
-                            OrcId = ""
-                        });
+                    //b.HasData(
+                    //    new
+                    //    {
+                    //        Id = 1,
+                    //        Created_By = "seed",
+                    //        Created_Date = new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4068),
+                    //        Name = "Gerry Thomson",
+                    //        Notes = "Academic Neuroradiologist",
+                    //        OrcId = "123ABC"
+                    //    },
+                    //    new
+                    //    {
+                    //        Id = 2,
+                    //        Created_By = "seed",
+                    //        Created_Date = new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4070),
+                    //        Name = "Grant Mair",
+                    //        Notes = "Senior Clinical Lecturer in Neuroradiology",
+                    //        OrcId = "456DEF"
+                    //    },
+                    //    new
+                    //    {
+                    //        Id = 3,
+                    //        Created_By = "seed",
+                    //        Created_Date = new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4072),
+                    //        Name = "Smarti Reel",
+                    //        Notes = "Postdoctoral Researcher",
+                    //        OrcId = ""
+                    //    },
+                    //    new
+                    //    {
+                    //        Id = 4,
+                    //        Created_By = "seed",
+                    //        Created_Date = new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4074),
+                    //        Name = "Kara Moraw",
+                    //        Notes = "EPCC Applications Developer",
+                    //        OrcId = ""
+                    //    });
                 });
 
             modelBuilder.Entity("RGO.Models.RGO_Evidence", b =>

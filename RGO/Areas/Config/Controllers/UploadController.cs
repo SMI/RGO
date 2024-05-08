@@ -1,75 +1,87 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using RGO.DataAccess.Repository;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.Models;
-using RGO.Models.Models;
-using System.Diagnostics;
 
-namespace RGO.Areas.Config.Controllers
+namespace RGO.Areas.Config.Controllers;
+
+[Area("Config")]
+public class UploadController : Controller
 {
-    [Area("Config")]
-    public class UploadController : Controller
-    {
-        private IUnitOfWork _unitOfWork;
-        public UploadController(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+    private readonly IUnitOfWork _unitOfWork;
 
-        public IActionResult Upload()
+    public UploadController(IUnitOfWork unitOfWork)
+    {
+        _unitOfWork = unitOfWork;
+    }
+
+    public IActionResult Upload()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Upload(int? id)
+    {
+        IFormFile csvToUpload;
+        try
         {
+            csvToUpload = Request.Form.Files.First();
+        }
+        catch (Exception)
+        {
+            TempData["error"] = "No CSV file selected";
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Upload(int? id) {
-            IFormFile csvToUpload;
-            try
+        var stream = csvToUpload.OpenReadStream();
+        var fileName = Path.GetTempPath() + csvToUpload.FileName;
+
+
+        try
+        {
+            using (var fs = System.IO.File.OpenWrite(fileName))
             {
-               csvToUpload = Request.Form.Files.First();
+                stream.CopyTo(fs);
             }
-            catch (Exception)
+
+            var uploader = new CSV_Uploader(fileName, _unitOfWork);
+            if (!uploader.PreCheck())
             {
-                TempData["error"] = "No CSV file selected";
+                TempData["error"] = "Something went wrong with the Upload (pre-check stage). Please try again.";
                 return View();
             }
-            var stream = csvToUpload.OpenReadStream();
-            string fileName = Path.GetTempPath() + csvToUpload.FileName;
 
-
-            try
+            if (!uploader.ExecuteUpload())
             {
-                using (FileStream fs = System.IO.File.OpenWrite(fileName))
+                //set status to failed
+                var foundDataset = _unitOfWork.RGO_Dataset.GetAll().Where(ds => ds.Dataset_Status == "Uploading")
+                    .OrderByDescending(ds => ds.Id).First();
+                if (foundDataset is not null)
                 {
-                    stream.CopyTo(fs);
+                    foundDataset.Dataset_Status = "Failed";
+                    _unitOfWork.Save();
                 }
-                var uploader = new CSV_Uploader(fileName,_unitOfWork);
-                if (!uploader.PreCheck())
-                {
-                    TempData["error"] = "Something went wrong with the Upload (pre-check stage). Please try again.";
-                    return View();
-                }
-                //uploader.ExecuteUpload();
-                if (!uploader.ExecuteUpload())
-                {
-                    TempData["error"] = "Something went wrong with the Upload. It's possible that the column headers in the input file don't match those in the templates.  Please check this, then try again.";
-                    return View();
-                }
-            }
-            finally
-            {
-                System.IO.File.Delete(fileName);
-            }
-            TempData["success"] = "CSV Successfully Uploaded";
 
-            return View();
+                TempData["error"] =
+                    "Something went wrong with the Upload. It's possible that the column headers in the input file don't match those in the templates.  Please check this, then try again.";
+                return View();
+            }
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        finally
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            System.IO.File.Delete(fileName);
         }
+
+        TempData["success"] = "CSV Successfully Uploaded";
+
+        return View();
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

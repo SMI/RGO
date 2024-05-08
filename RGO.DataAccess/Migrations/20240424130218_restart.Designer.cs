@@ -37,7 +37,6 @@ namespace RGO.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Created_By")
-                        .IsRequired()
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<DateTime>("Created_Date")
@@ -84,14 +83,12 @@ namespace RGO.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Created_By")
-                        .IsRequired()
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<DateTime>("Created_Date")
                         .HasColumnType(dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<string>("Name")
@@ -140,7 +137,6 @@ namespace RGO.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Created_By")
-                        .IsRequired()
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<DateTime>("Created_Date")
@@ -192,7 +188,6 @@ namespace RGO.DataAccess.Migrations
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<string>("Created_By")
-                        .IsRequired()
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<DateTime>("Created_Date")
@@ -246,7 +241,6 @@ namespace RGO.DataAccess.Migrations
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<string>("Created_By")
-                        .IsRequired()
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<DateTime>("Created_Date")
@@ -300,7 +294,6 @@ namespace RGO.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Created_By")
-                        .IsRequired()
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<DateTime>("Created_Date")
@@ -415,7 +408,6 @@ namespace RGO.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Created_By")
-                        .IsRequired()
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<DateTime>("Created_Date")
@@ -469,7 +461,6 @@ namespace RGO.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Created_By")
-                        .IsRequired()
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<DateTime>("Created_Date")
@@ -576,7 +567,6 @@ namespace RGO.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Created_By")
-                        .IsRequired()
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<DateTime>("Created_Date")
@@ -610,7 +600,6 @@ namespace RGO.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Created_By")
-                        .IsRequired()
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<DateTime>("Created_Date")
@@ -660,7 +649,6 @@ namespace RGO.DataAccess.Migrations
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<string>("Created_By")
-                        .IsRequired()
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<DateTime>("Created_Date")
@@ -734,7 +722,6 @@ namespace RGO.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Created_By")
-                        .IsRequired()
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<DateTime>("Created_Date")
@@ -778,7 +765,6 @@ namespace RGO.DataAccess.Migrations
                         .HasColumnType(dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(string), 3)));
 
                     b.Property<string>("Created_By")
-                        .IsRequired()
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<DateTime>("Created_Date")
@@ -836,7 +822,6 @@ namespace RGO.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Created_By")
-                        .IsRequired()
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<DateTime>("Created_Date")
@@ -883,7 +868,6 @@ namespace RGO.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Created_By")
-                        .IsRequired()
                         .HasColumnType( dbTranslator.GetStringDataTypeWithUnlimitedWidth());
 
                     b.Property<DateTime>("Created_Date")

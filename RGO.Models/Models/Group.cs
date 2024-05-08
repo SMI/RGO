@@ -13,7 +13,7 @@ public class Group
 
     [DisplayName("Group Name")] public string Name { get; set; } = "";
 
-    [DisplayName("Load Author (If supplied)")]
+    [DisplayName("Lead Author (If supplied)")]
     public string? ContactInfo { get; set; }
 
     [DisplayName("Reference Number")] public string? Reference_number { get; set; }

@@ -53,7 +53,7 @@ public class CSVGenerator
         var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
         //string xlsxPath = Path.Combine(path, $"RGO_{ReplaceWhitespace(_datasetTemplate.Name, "_")}_{_datasetTemplate.Id}.xlsx");
         var xlsxPath = Path.Combine(path,
-            $"RGO_{ReplaceWhitespace(ref_no, "_")}_{ReplaceWhitespace(rgoutput.Name, "_")}_{_datasetTemplate.Id}.xlsx");
+            $"RGO_{ReplaceWhitespace(ref_no.Trim(), "_")}_{ReplaceWhitespace(rgoutput.Name.Trim(), "_")}_{_datasetTemplate.Id}.xlsx");
 
 
         using var fileStream = new FileStream(xlsxPath, FileMode.Create, FileAccess.Write);

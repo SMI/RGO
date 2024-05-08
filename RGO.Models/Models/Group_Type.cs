@@ -1,33 +1,27 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using RGO.Models.Models;
-using System.Text.RegularExpressions;
 
-namespace RGO.Models
+namespace RGO.Models;
+
+public class Group_Type
 {
-    public class Group_Type
-    {
-        [Key]
-        public int Id { get; set; }
+    [Key] public int Id { get; set; }
 
-        [DisplayName("Group Type Name")]
-        public string Name { get; set; } = "";
+    [DisplayName("Group Type Name")] public string Name { get; set; } = "";
 
 
-        /* Common Columns that should appear on all tables */
+    /* Common Columns that should appear on all tables */
 
-        public string Created_By { get; set; } = "";
+    [DisplayName("Input By")] public string Created_By { get; set; } = "";
 
-        public DateTime Created_Date { get; set; } = DateTime.UtcNow;
+    public DateTime Created_Date { get; set; } = DateTime.UtcNow;
 
-        public string? Updated_By { get; set; }
+    public string? Updated_By { get; set; }
 
-        public DateTime? Updated_Date { get; set; }
+    public DateTime? Updated_Date { get; set; }
 
-        public string? Notes { get; set; }
+    public string? Notes { get; set; }
 
-        public ICollection<Models.Group>? Group { get; set; }
-
-
-    }
+    public ICollection<Group>? Group { get; set; }
 }

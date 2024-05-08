@@ -1,42 +1,38 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using RGO.Models.Models;
-using System.Text.RegularExpressions;
 
-namespace RGO.Models
+namespace RGO.Models;
+
+public class RGO_Release_Status
 {
-    public class RGO_Release_Status
-    {
-        [Key]
-        public int Id { get; set; }
+    [Key] public int Id { get; set; }
 
-        [MaxLength(20)]
-        public string Name { get; set; } = "";
+    [MaxLength(20)] public string Name { get; set; } = "";
 
 
-        public string Description { get; set; } = "";
+    public string Description { get; set; } = "";
 
-        [MaxLength(3)]
-        public String Available_For_Release { get; set; } = "N";
+    [MaxLength(3)]
+    [DisplayName("Available for researchers")]
+    public string Available_For_Release { get; set; } = "N";
 
 
-        /* Common Columns that should appear on all tables */
+    /* Common Columns that should appear on all tables */
 
-        public string Created_By { get; set; } = "";
+    [DisplayName("Input By")] public string Created_By { get; set; } = "";
 
-        public DateTime Created_Date { get; set; } = DateTime.UtcNow;
+    public DateTime Created_Date { get; set; } = DateTime.UtcNow;
 
-        public string? Updated_By { get; set; }
+    public string? Updated_By { get; set; }
 
-        public DateTime? Updated_Date { get; set; }
+    public DateTime? Updated_Date { get; set; }
 
-        public string? Notes { get; set; }
+    public string? Notes { get; set; }
 
-        public ICollection<Models.RGO_Dataset_Template>? RGO_Dataset_Template { get; set; }
+    public ICollection<RGO_Dataset_Template>? RGO_Dataset_Template { get; set; }
 
-        public ICollection<Models.RGO_Column_Template>? RGO_Column_Template { get; set; }
+    public ICollection<RGO_Column_Template>? RGO_Column_Template { get; set; }
 
-        public ICollection<Models.RGO_Dataset>? RGO_Dataset { get; set; }
-
-    }
+    public ICollection<RGO_Dataset>? RGO_Dataset { get; set; }
 }

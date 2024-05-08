@@ -13,7 +13,6 @@ public class RGO_Release_Status
 
     public string Description { get; set; } = "";
 
-    [MaxLength(3)]
     [DisplayName("Available for researchers")]
     public string Available_For_Release { get; set; } = "N";
 

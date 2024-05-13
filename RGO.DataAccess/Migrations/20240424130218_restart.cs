@@ -25,8 +25,8 @@ namespace RGO.DataAccess.Migrations
                       .Annotation("SqlServer.Identity", "1, 1")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(string), 50)), maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
-                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Description = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
                     Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
@@ -45,7 +45,7 @@ namespace RGO.DataAccess.Migrations
                        .Annotation("SqlServer.Identity", "1, 1")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
-                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
                     Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
@@ -66,7 +66,7 @@ namespace RGO.DataAccess.Migrations
                     Name = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
                     ContactInfo = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     OrcId = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
-                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
                     Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
@@ -100,16 +100,16 @@ namespace RGO.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RGO_Release_Statii",
+                name: "RGO_Release_Statuses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                        .Annotation("SqlServer.Identity", "1, 1")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(string), 20)), maxLength: 20, nullable: false),
-                    Description = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
-                    Available_For_Release = table.Column<string>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(string), 3)), maxLength: 3, nullable: false),
-                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Description = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
+                    Available_For_Release = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
                     Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
@@ -117,7 +117,7 @@ namespace RGO.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RGO_Release_Statii", x => x.Id);
+                    table.PrimaryKey("PK_RGO_Release_Statuses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -129,7 +129,7 @@ namespace RGO.DataAccess.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(string), 20)), maxLength: 20, nullable: false),
                     Description = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
-                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
                     Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
@@ -152,7 +152,7 @@ namespace RGO.DataAccess.Migrations
                     EvidenceDetails = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Doi = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     StandardAcknowledgement = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
-                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
                     Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
@@ -179,7 +179,7 @@ namespace RGO.DataAccess.Migrations
                     Name = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
                     ContactInfo = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Reference_number = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
-                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
                     Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
@@ -208,7 +208,7 @@ namespace RGO.DataAccess.Migrations
                     Originating_GroupId = table.Column<int>(type: "int", nullable: false),
                     Doi = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     StandardAcknowledgement = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
-                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
                     Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
@@ -240,7 +240,7 @@ namespace RGO.DataAccess.Migrations
                     Name = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
                     Description = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Release_Status_Id = table.Column<int>(type: "int", nullable: false),
-                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
                     Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
@@ -250,9 +250,9 @@ namespace RGO.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_RGO_Dataset_Templates", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RGO_Dataset_Templates_RGO_Release_Statii_Release_Status_Id",
+                        name: "FK_RGO_Dataset_Templates_RGO_Release_Statuses_Release_Status_Id",
                         column: x => x.Release_Status_Id,
-                        principalTable: "RGO_Release_Statii",
+                        principalTable: "RGO_Release_Statuses",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_RGO_Dataset_Templates_RGOutputs_RGOutput_Id",
@@ -270,7 +270,7 @@ namespace RGO.DataAccess.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Evidence_Id = table.Column<int>(type: "int", nullable: false),
                     RGOutput_Id = table.Column<int>(type: "int", nullable: false),
-                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
                     Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
@@ -306,7 +306,7 @@ namespace RGO.DataAccess.Migrations
                     Potentially_Disclosive = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
                     IsIdentifier = table.Column<int>(type: "int", nullable: false),
                     Release_Status_Id = table.Column<int>(type: "int", nullable: false),
-                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
                     Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
@@ -321,9 +321,9 @@ namespace RGO.DataAccess.Migrations
                         principalTable: "RGO_Dataset_Templates",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_RGO_Column_Templates_RGO_Release_Statii_Release_Status_Id",
+                        name: "FK_RGO_Column_Templates_RGO_Release_Statuses_Release_Status_Id",
                         column: x => x.Release_Status_Id,
-                        principalTable: "RGO_Release_Statii",
+                        principalTable: "RGO_Release_Statuses",
                         principalColumn: "Id");
                 });
 
@@ -340,7 +340,7 @@ namespace RGO.DataAccess.Migrations
                     Dataset_Status = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
                     RGO_ReIdentificationConfigurationId = table.Column<int>(type: "int", nullable: true),
                     Release_Status_Id = table.Column<int>(type: "int", nullable: false),
-                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
                     Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
@@ -360,9 +360,9 @@ namespace RGO.DataAccess.Migrations
                         principalTable: "RGO_ReIdentification_Configurations",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_RGO_Datasets_RGO_Release_Statii_Release_Status_Id",
+                        name: "FK_RGO_Datasets_RGO_Release_Statuses_Release_Status_Id",
                         column: x => x.Release_Status_Id,
-                        principalTable: "RGO_Release_Statii",
+                        principalTable: "RGO_Release_Statuses",
                         principalColumn: "Id");
                 });
 
@@ -374,7 +374,7 @@ namespace RGO.DataAccess.Migrations
                       .Annotation("SqlServer.Identity", "1, 1")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     RGO_DatasetId = table.Column<int>(type: "int", nullable: false),
-                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
                     Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
@@ -406,7 +406,7 @@ namespace RGO.DataAccess.Migrations
                     Potentially_Disclosive = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Column_Value = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     IsIdentifier = table.Column<int>(type: "int", nullable: false),
-                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
                     Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
@@ -439,7 +439,7 @@ namespace RGO.DataAccess.Migrations
                     RGO_Column_TemplateId = table.Column<int>(type: "int", nullable: false),
                     RGO_RecordId = table.Column<int>(type: "int", nullable: false),
                     Person_Record_Role = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
-                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: false),
+                    Created_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Created_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: false),
                     Updated_By = table.Column<string>(type: dbTranslator.GetStringDataTypeWithUnlimitedWidth(), nullable: true),
                     Updated_Date = table.Column<DateTime>(type: dbTranslator.GetSQLDBTypeForCSharpType(new DatabaseTypeRequest(typeof(DateTime))), nullable: true),
@@ -466,74 +466,74 @@ namespace RGO.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Evidence_Types",
-                columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "Updated_By", "Updated_Date" },
-                values: new object[,]
-                {
-                    { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4035), "", "Peer Reviewed Publication", null, null, null },
-                    { 2, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4043), "", "Requested by another Research Project", null, null, null }
-                });
+            //migrationBuilder.InsertData(
+            //    table: "Evidence_Types",
+            //    columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "Updated_By", "Updated_Date" },
+            //    values: new object[,]
+            //    {
+            //        { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4035), "", "Peer Reviewed Publication", null, null, null },
+            //        { 2, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4043), "", "Requested by another Research Project", null, null, null }
+            //    });
 
-            migrationBuilder.InsertData(
-                table: "Group_Types",
-                columns: new[] { "Id", "Created_By", "Created_Date", "Name", "Notes", "Updated_By", "Updated_Date" },
-                values: new object[,]
-                {
-                    { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(3860), "Research Group", null, null, null },
-                    { 2, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(3863), "Data Team", null, null, null }
-                });
+            //migrationBuilder.InsertData(
+            //    table: "Group_Types",
+            //    columns: new[] { "Id", "Created_By", "Created_Date", "Name", "Notes", "Updated_By", "Updated_Date" },
+            //    values: new object[,]
+            //    {
+            //        { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(3860), "Research Group", null, null, null },
+            //        { 2, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(3863), "Data Team", null, null, null }
+            //    });
 
-            migrationBuilder.InsertData(
-                table: "People",
-                columns: new[] { "Id", "ContactInfo", "Created_By", "Created_Date", "Name", "Notes", "OrcId", "Updated_By", "Updated_Date" },
-                values: new object[,]
-                {
-                    { 1, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4068), "Gerry Thomson", "Academic Neuroradiologist", "123ABC", null, null },
-                    { 2, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4070), "Grant Mair", "Senior Clinical Lecturer in Neuroradiology", "456DEF", null, null },
-                    { 3, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4072), "Smarti Reel", "Postdoctoral Researcher", "", null, null },
-                    { 4, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4074), "Kara Moraw", "EPCC Applications Developer", "", null, null }
-                });
+            //migrationBuilder.InsertData(
+            //    table: "People",
+            //    columns: new[] { "Id", "ContactInfo", "Created_By", "Created_Date", "Name", "Notes", "OrcId", "Updated_By", "Updated_Date" },
+            //    values: new object[,]
+            //    {
+            //        { 1, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4068), "Gerry Thomson", "Academic Neuroradiologist", "123ABC", null, null },
+            //        { 2, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4070), "Grant Mair", "Senior Clinical Lecturer in Neuroradiology", "456DEF", null, null },
+            //        { 3, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4072), "Smarti Reel", "Postdoctoral Researcher", "", null, null },
+            //        { 4, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4074), "Kara Moraw", "EPCC Applications Developer", "", null, null }
+            //    });
 
-            migrationBuilder.InsertData(
-                table: "RGO_Release_Statii",
-                columns: new[] { "Id", "Available_For_Release", "Created_By", "Created_Date", "Description", "Name", "Notes", "Updated_By", "Updated_Date" },
-                values: new object[,]
-                {
-                    { 1, "N", "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4232), "See Notes for reasons", "Held", null, null, null },
-                    { 2, "Y", "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4235), "Available for other researchers", "Released", null, null, null }
-                });
+            //migrationBuilder.InsertData(
+            //    table: "RGO_Release_Statuses",
+            //    columns: new[] { "Id", "Available_For_Release", "Created_By", "Created_Date", "Description", "Name", "Notes", "Updated_By", "Updated_Date" },
+            //    values: new object[,]
+            //    {
+            //        { 1, "N", "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4232), "See Notes for reasons", "Held", null, null, null },
+            //        { 2, "Y", "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4235), "Available for other researchers", "Released", null, null, null }
+            //    });
 
-            migrationBuilder.InsertData(
-                table: "RGO_Types",
-                columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "Updated_By", "Updated_Date" },
-                values: new object[] { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4107), "Annotations that have been manually created or validated by a human expert", "Ground Truth", null, null, null });
+            //migrationBuilder.InsertData(
+            //    table: "RGO_Types",
+            //    columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "Updated_By", "Updated_Date" },
+            //    values: new object[] { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4107), "Annotations that have been manually created or validated by a human expert", "Ground Truth", null, null, null });
 
-            migrationBuilder.InsertData(
-                table: "Groups",
-                columns: new[] { "Id", "ContactInfo", "Created_By", "Created_Date", "Group_TypeId", "Name", "Notes", "Reference_number", "Updated_By", "Updated_Date" },
-                values: new object[] { 1, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4010), 1, "Classification of Brain Images", null, null, null, null });
+            //migrationBuilder.InsertData(
+            //    table: "Groups",
+            //    columns: new[] { "Id", "ContactInfo", "Created_By", "Created_Date", "Group_TypeId", "Name", "Notes", "Reference_number", "Updated_By", "Updated_Date" },
+            //    values: new object[] { 1, null, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4010), 1, "Classification of Brain Images", null, null, null, null });
 
-            migrationBuilder.InsertData(
-                table: "RGOutputs",
-                columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Doi", "Name", "Notes", "Originating_GroupId", "RGO_TypeId", "StandardAcknowledgement", "Updated_By", "Updated_Date" },
-                values: new object[] { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4143), "Brain Scan Classifications", null, "MRI Classification Ground Truth", null, 1, 1, null, null, null });
+            //migrationBuilder.InsertData(
+            //    table: "RGOutputs",
+            //    columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Doi", "Name", "Notes", "Originating_GroupId", "RGO_TypeId", "StandardAcknowledgement", "Updated_By", "Updated_Date" },
+            //    values: new object[] { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4143), "Brain Scan Classifications", null, "MRI Classification Ground Truth", null, 1, 1, null, null, null });
 
-            migrationBuilder.InsertData(
-                table: "RGO_Dataset_Templates",
-                columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "RGOutput_Id", "Release_Status_Id", "Updated_By", "Updated_Date" },
-                values: new object[] { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4177), "Classifying the type of Brain Scans, done by Gerry and Grant", "MRI Classification Ground Truth Template", null, 1, 1, null, null });
+            //migrationBuilder.InsertData(
+            //    table: "RGO_Dataset_Templates",
+            //    columns: new[] { "Id", "Created_By", "Created_Date", "Description", "Name", "Notes", "RGOutput_Id", "Release_Status_Id", "Updated_By", "Updated_Date" },
+            //    values: new object[] { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4177), "Classifying the type of Brain Scans, done by Gerry and Grant", "MRI Classification Ground Truth Template", null, 1, 1, null, null });
 
-            migrationBuilder.InsertData(
-                table: "RGO_Column_Templates",
-                columns: new[] { "Id", "Created_By", "Created_Date", "Description", "IsIdentifier", "Name", "Notes", "PK_Column_Order", "Potentially_Disclosive", "RGO_Dataset_TemplateId", "Release_Status_Id", "Type", "Updated_By", "Updated_Date" },
-                values: new object[,]
-                {
-                    { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4201), "Identifier of this image", 0, "Image_Identifier", null, 1, "N", 1, 1, "Int", null, null },
-                    { 2, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4205), "The first ground truther's label", 0, "MRI_Classification_Ground_Truther_1", null, null, "N", 1, 1, "Char", null, null },
-                    { 3, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4207), "The second ground truther's label", 0, "MRI_Classification_Ground_Truther_2", null, null, "N", 1, 1, "Char", null, null },
-                    { 4, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4209), "This holds labels where both ground truthers agreed", 0, "MRI_Classification_Consensus", null, null, "N", 1, 1, "Char", null, null }
-                });
+            //migrationBuilder.InsertData(
+            //    table: "RGO_Column_Templates",
+            //    columns: new[] { "Id", "Created_By", "Created_Date", "Description", "IsIdentifier", "Name", "Notes", "PK_Column_Order", "Potentially_Disclosive", "RGO_Dataset_TemplateId", "Release_Status_Id", "Type", "Updated_By", "Updated_Date" },
+            //    values: new object[,]
+            //    {
+            //        { 1, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4201), "Identifier of this image", 0, "Image_Identifier", null, 1, "N", 1, 1, "Int", null, null },
+            //        { 2, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4205), "The first ground truther's label", 0, "MRI_Classification_Ground_Truther_1", null, null, "N", 1, 1, "Char", null, null },
+            //        { 3, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4207), "The second ground truther's label", 0, "MRI_Classification_Ground_Truther_2", null, null, "N", 1, 1, "Char", null, null },
+            //        { 4, "seed", new DateTime(2024, 4, 24, 13, 2, 17, 373, DateTimeKind.Utc).AddTicks(4209), "This holds labels where both ground truthers agreed", 0, "MRI_Classification_Consensus", null, null, "N", 1, 1, "Char", null, null }
+            //    });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Evidences_Evidence_TypeId",
@@ -668,7 +668,7 @@ namespace RGO.DataAccess.Migrations
                 name: "RGO_ReIdentification_Configurations");
 
             migrationBuilder.DropTable(
-                name: "RGO_Release_Statii");
+                name: "RGO_Release_Statuses");
 
             migrationBuilder.DropTable(
                 name: "RGOutputs");

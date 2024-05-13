@@ -24,7 +24,7 @@ namespace RGO.Models.Models
 
         /* Common Columns that should appear on all tables */
 
-        public string Created_By { get; set; } = "";
+        [DisplayName("Input By")] public string? Created_By { get; set; } = "";
 
         public DateTime Created_Date { get; set; } = DateTime.UtcNow;
 

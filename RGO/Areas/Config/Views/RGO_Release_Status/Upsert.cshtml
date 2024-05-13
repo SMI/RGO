@@ -37,8 +37,12 @@
                                 <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
                             <div class="form-floating py-2 col-12">
-                                <input asp-for="Available_For_Release" class="form-control border-0 shadow" />
-                                <label asp-for="Available_For_Release" class="ms-2"></label>
+                                <select asp-for="Available_For_Release" class="form-control border-0 shadow">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="Yes, with conditions">Yes, with conditions.</option>
+                                </select>
+                                <label asp-for="Available_For_Release" class="ms-2">Available to researchers</label>
                                 <span asp-validation-for="Available_For_Release" class="text-danger"></span>
                             </div>
 

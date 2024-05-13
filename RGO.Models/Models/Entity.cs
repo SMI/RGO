@@ -12,7 +12,7 @@ namespace RGO.Models.Models
 
         [Key] 
         public int Id { get; set; }
-        public string Created_By { get; set; }
+        public string? Created_By { get; set; }
 
         public DateTime Created_Date { get; set; } 
 

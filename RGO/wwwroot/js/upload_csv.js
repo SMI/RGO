@@ -21,26 +21,3 @@
         }
     });
 });
-
-function doUpload() {
-    var form = new FormData();
-    var e = document.getElementById("dataset_template_select_list");
-    var value = e.value;
-    form.append("datasetTemplateID", value)
-
-    var reader = new FileReader(),
-        file = $('#csv_picker')[0];
-
-    //form.append("file", document.getElementById("csv_picker").files[0])
-    //console.log(form);
-    //$.ajax({
-    //    type: "POST",
-    //    url: "/config/upload/upload",
-    //    data: form, // serializes the form's elements.
-    //    contentType: false,
-    //    processData: false,
-    //    success: function (data) {
-    //        alert(data); // show response from the php script.
-    //    }
-    //});
-}

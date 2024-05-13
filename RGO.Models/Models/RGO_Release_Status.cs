@@ -11,7 +11,7 @@ public class RGO_Release_Status
     [MaxLength(20)] public string Name { get; set; } = "";
 
 
-    public string Description { get; set; } = "";
+    public string? Description { get; set; } = "";
 
     [DisplayName("Available for researchers")]
     public string Available_For_Release { get; set; } = "N";
@@ -19,7 +19,7 @@ public class RGO_Release_Status
 
     /* Common Columns that should appear on all tables */
 
-    [DisplayName("Input By")] public string Created_By { get; set; } = "";
+    [DisplayName("Input By")] public string? Created_By { get; set; } = "";
 
     public DateTime Created_Date { get; set; } = DateTime.UtcNow;
 

@@ -25,7 +25,7 @@ public class UploadController : Controller
     public IActionResult Upload(int? id)
     {
         IFormFile csvToUpload;
-        int datasetTemplateId;
+        int datasetTemplateId = 0;
         try
         {
             foreach (string key in Request.Form.Keys)
@@ -63,7 +63,7 @@ public class UploadController : Controller
                 stream.CopyTo(fs);
             }
 
-            var uploader = new CSV_Uploader(fileName, _unitOfWork);
+            var uploader = new CSV_Uploader(fileName, datasetTemplateId, _unitOfWork);
             if (!uploader.PreCheck())
             {
                 TempData["error"] = "Something went wrong with the Upload (pre-check stage). Please try again.";

@@ -6,6 +6,14 @@
 
 <p>Upload your completed R-GO form for use in future research.</p>
 <form method="post" class="row" enctype="multipart/form-data">
+    @* action="javascript:doUpload()" *@
+    <select id="dataset_template_select_list" class="form-select border-0 shadow">
+        <option disabled selected>--Select Dataset Template--</option>
+    </select>
     <input type="file" id="csv_picker" name="csv_picker" accept=".csv,.xlsx" style="margin-bottom:8px;"/>
     <button type="submit" class="btn btn-primary">Upload Results</button>
 </form>
+
+@section Scripts {
+    <script src="~/js/upload_csv.js"></script>
+}

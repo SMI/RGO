@@ -23,7 +23,7 @@ namespace RGO.DataAccess.Repository
         public void Update(RGO_Release_Status obj)
         {
             obj.Updated_Date = DateTime.UtcNow;
-            _db.RGO_Release_Statii.Update(obj);
+            _db.RGO_Release_Statuses.Update(obj);
         }
     }
 }

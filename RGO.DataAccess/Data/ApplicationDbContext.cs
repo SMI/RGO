@@ -49,7 +49,7 @@ namespace RGO.DataAccess.Data
 
         public DbSet<RGO_Record_Person> RGO_Record_People { get; set; }
 
-        public DbSet<RGO_Release_Status> RGO_Release_Statii { get; set; }
+        public DbSet<RGO_Release_Status> RGO_Release_Statuses { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

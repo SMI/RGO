@@ -223,7 +223,7 @@ public class CSV_Uploader
             return false;
         }
 
-        setUploadedStatii();
+        setUploadedStatuses();
         return true;
     }
 
@@ -277,7 +277,7 @@ public class CSV_Uploader
     }
 
 
-    public bool setUploadedStatii()
+    public bool setUploadedStatuses()
     {
         var datasetId = _datasetId;
         var dataset = _unitOfWork.RGO_Dataset.GetAll().Where(ds => ds.Id == datasetId).FirstOrDefault();

@@ -790,7 +790,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RGO_Release_Statii");
+                    b.ToTable("RGO_Release_Statuses");
 
                     b.HasData(
                         new

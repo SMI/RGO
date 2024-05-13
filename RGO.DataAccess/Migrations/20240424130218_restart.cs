@@ -100,7 +100,7 @@ namespace RGO.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RGO_Release_Statii",
+                name: "RGO_Release_Statuses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -117,7 +117,7 @@ namespace RGO.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RGO_Release_Statii", x => x.Id);
+                    table.PrimaryKey("PK_RGO_Release_Statuses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -250,9 +250,9 @@ namespace RGO.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_RGO_Dataset_Templates", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RGO_Dataset_Templates_RGO_Release_Statii_Release_Status_Id",
+                        name: "FK_RGO_Dataset_Templates_RGO_Release_Statuses_Release_Status_Id",
                         column: x => x.Release_Status_Id,
-                        principalTable: "RGO_Release_Statii",
+                        principalTable: "RGO_Release_Statuses",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_RGO_Dataset_Templates_RGOutputs_RGOutput_Id",
@@ -321,9 +321,9 @@ namespace RGO.DataAccess.Migrations
                         principalTable: "RGO_Dataset_Templates",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_RGO_Column_Templates_RGO_Release_Statii_Release_Status_Id",
+                        name: "FK_RGO_Column_Templates_RGO_Release_Statuses_Release_Status_Id",
                         column: x => x.Release_Status_Id,
-                        principalTable: "RGO_Release_Statii",
+                        principalTable: "RGO_Release_Statuses",
                         principalColumn: "Id");
                 });
 
@@ -360,9 +360,9 @@ namespace RGO.DataAccess.Migrations
                         principalTable: "RGO_ReIdentification_Configurations",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_RGO_Datasets_RGO_Release_Statii_Release_Status_Id",
+                        name: "FK_RGO_Datasets_RGO_Release_Statuses_Release_Status_Id",
                         column: x => x.Release_Status_Id,
-                        principalTable: "RGO_Release_Statii",
+                        principalTable: "RGO_Release_Statuses",
                         principalColumn: "Id");
                 });
 
@@ -496,7 +496,7 @@ namespace RGO.DataAccess.Migrations
             //    });
 
             //migrationBuilder.InsertData(
-            //    table: "RGO_Release_Statii",
+            //    table: "RGO_Release_Statuses",
             //    columns: new[] { "Id", "Available_For_Release", "Created_By", "Created_Date", "Description", "Name", "Notes", "Updated_By", "Updated_Date" },
             //    values: new object[,]
             //    {
@@ -668,7 +668,7 @@ namespace RGO.DataAccess.Migrations
                 name: "RGO_ReIdentification_Configurations");
 
             migrationBuilder.DropTable(
-                name: "RGO_Release_Statii");
+                name: "RGO_Release_Statuses");
 
             migrationBuilder.DropTable(
                 name: "RGOutputs");

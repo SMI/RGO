@@ -14,24 +14,24 @@ function handleReIdentificationOptions(jsonData, selectedValue) {
     $("#configurationSelection").append(options);
     if (selectedValue) {
         $("#configurationSelection").val(parseInt(selectedValue));
-        if (!$("#reidentifyClick").length) {
-            $("#reIdentifiyWrapper").append(
-                `<div class="w-75 btn-group" role="group">
-                     <a id="reidentifyClick" class="btn btn-primary mx-2"> <i class="bi bi-search"  ></i>ReIdentify</a>               
-                     </div>`
-            )
-            $("#reidentifyClick").on('click', function () {
-                var row = dataTable.rows(this.parentNode.parentNode.parentNode).data()[0];
-                $.ajax({
-                    url: '/config/RGO_ReIdentificationConfiguration/reidentify',
-                    data: {
-                        datasetId: row.id, reidentificationId: row.rgO_ReIdentificationConfigurationId
-                    },
-                    type: 'POST',
-                    success: res => toastr.success(res.success)
-                })
-            })
-        }
+        //if (!$("#reidentifyClick").length) {
+        //    $("#reIdentifiyWrapper").append(
+        //        `<div class="w-75 btn-group" role="group">
+        //             <a id="reidentifyClick" class="btn btn-primary mx-2"> <i class="bi bi-search"  ></i>ReIdentify</a>               
+        //             </div>`
+        //    )
+        //    $("#reidentifyClick").on('click', function () {
+        //        var row = dataTable.rows(this.parentNode.parentNode.parentNode).data()[0];
+        //        $.ajax({
+        //            url: '/config/RGO_ReIdentificationConfiguration/reidentify',
+        //            data: {
+        //                datasetId: row.id, reidentificationId: row.rgO_ReIdentificationConfigurationId
+        //            },
+        //            type: 'POST',
+        //            success: res => toastr.success(res.success)
+        //        })
+        //    })
+        //}
     }
     $("#configurationSelection").on('change', function () {
         var val = this.value;
@@ -51,13 +51,14 @@ function Test(obj) {
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            url: '/config/rgo_dataset/getall' },
+            url: '/config/rgo_dataset/getall'
+        },
         "columns": [
             { data: 'rgO_Dataset_Template.name', "width": "10%" },
             { data: 'dataset_Name', "width": "10%" },
             { data: 'dataset_Status', "width": "10%" },
             { data: 'doi', "width": "10%" },
-            { data: 'rgO_ReIdentificationConfiguration.name', "width": "10%" },
+            //{ data: 'rgO_ReIdentificationConfiguration.name', "width": "0%" },
             { data: 'rgO_Release_Status.name', "width": "10%" },
             { data: 'created_By', "width": "10%" },
             { data: 'created_Date', "width": "10%" },
@@ -90,9 +91,8 @@ function loadDataTable() {
         ]
 
     });
-
     dataTable.column(6).visible(false);
-    //dataTable.column(7).visible(false);
+    dataTable.column(7).visible(false);
     dataTable.column(8).visible(false);
     dataTable.column(9).visible(false);
     dataTable.column(10).visible(false);

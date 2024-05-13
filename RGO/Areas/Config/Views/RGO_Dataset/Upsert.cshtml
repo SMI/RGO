@@ -56,13 +56,13 @@
                                 <span asp-validation-for="RGO_Dataset.Doi" class="text-danger"></span>
                             </div>
 
-                            <div class="form-floating py-2 col-12">
+                          @*   <div class="form-floating py-2 col-12">
                                 <select asp-for="@Model.RGO_Dataset.RGO_ReIdentificationConfigurationId" asp-items="@Model.RGO_ReIdentificationConfigurationList" class="form-select border-0 shadow">
                                     <option disabled selected>--Select RGO ReIdentification Configuration--</option>
                                 </select>
                                 <label asp-for="RGO_Dataset.RGO_ReIdentificationConfigurationId" class="ms-2">RGO ReIdentification Configuration</label>
                                 <span asp-validation-for="RGO_Dataset.RGO_ReIdentificationConfigurationId" class="text-danger"></span>
-                            </div>
+                            </div> *@
 
                             <div class="form-floating py-2 col-12">
                                 <select asp-for="@Model.RGO_Dataset.Release_Status_Id" asp-items="@Model.RGO_Release_StatusList" class="form-select border-0 shadow">

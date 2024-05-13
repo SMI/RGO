@@ -14,13 +14,13 @@ namespace RGO.Models
         [DisplayName("Evidence Type Name")]
         public string Name { get; set; } = "";
 
-        public string Description { get; set; } = "";
+        public string? Description { get; set; } = "";
 
         public ICollection<Evidence>? Evidence { get; set; }
 
         /* Common Columns that should appear on all tables */
 
-        [DisplayName("Input By")] public string Created_By { get; set; } = "";
+        [DisplayName("Input By")] public string? Created_By { get; set; } = "";
 
         public DateTime Created_Date { get; set; } = DateTime.UtcNow;
 

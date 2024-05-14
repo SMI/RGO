@@ -18,6 +18,7 @@ function loadDataTable() {
             { data: 'notes', "width": "10%" },
             {
                 data: 'id', "render": function (data) {
+                    console.log(data)
                     return `<div class="w-75 btn-group" role="group">
                      <a href="/config/rgo_column_template/index?parentId=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Columns</a>
                      <a href="/config/rgo_dataset_template/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>

@@ -25,6 +25,23 @@ public class UploadController : Controller
     public IActionResult Upload(int? id)
     {
         IFormFile csvToUpload;
+        int datasetTemplateId = 0;
+        try
+        {
+            foreach (string key in Request.Form.Keys)
+            {
+                if (key.StartsWith("selected_dataset_template"))
+                {
+                    datasetTemplateId = Convert.ToInt32(Request.Form[key]);
+                }
+
+            }
+        }
+        catch (Exception)
+        {
+            TempData["error"] = "No Dataset Template selected";
+            return View();
+        }
         try
         {
             csvToUpload = Request.Form.Files.First();
@@ -46,7 +63,7 @@ public class UploadController : Controller
                 stream.CopyTo(fs);
             }
 
-            var uploader = new CSV_Uploader(fileName, _unitOfWork);
+            var uploader = new CSV_Uploader(fileName, datasetTemplateId, _unitOfWork);
             if (!uploader.PreCheck())
             {
                 TempData["error"] = "Something went wrong with the Upload (pre-check stage). Please try again.";

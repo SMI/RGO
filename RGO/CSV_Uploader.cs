@@ -22,7 +22,6 @@ public class CSV_Uploader
     private readonly IConfigurationRoot _config;
     private bool isXls;
 
-
     //public void ExecuteUpload()
     public bool ExecuteUpload()
     {
@@ -228,11 +227,12 @@ public class CSV_Uploader
     }
 
 
-    public CSV_Uploader(string filePath, IUnitOfWork unitOfWork)
+    public CSV_Uploader(string filePath, int datasetTemplateId, IUnitOfWork unitOfWork)
     {
         _filePath = filePath;
         _unitOfWork = unitOfWork;
         _config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        _datasetTemplateId = datasetTemplateId;
     }
 
     public bool PreCheck()
@@ -244,10 +244,7 @@ public class CSV_Uploader
         var _fileNameNoExt = Path.GetFileNameWithoutExtension(_fileName);
 
         // CHeck that the filename starts with RGO_
-        if (!_fileNameNoExt.StartsWith("RGO_")) return false;
-        var datasetTemplateId = _fileNameNoExt.Split("_").Reverse().First();
-
-        _datasetTemplateId = int.Parse(datasetTemplateId);
+        //if (!_fileNameNoExt.StartsWith("RGO_")) return false
         _datasetTemplate = _unitOfWork.RGO_Dataset_Template.GetAll().Where(r => r.Id.Equals(_datasetTemplateId))
             .FirstOrDefault();
 
@@ -311,7 +308,7 @@ public class CSV_Uploader
         foreach (var column in columns)
         {
             var str =
-                $"  MIN(CASE WHEN LOWER(rc.\"Name\") = LOWER('{column}') THEN rc.\"Column_Value\" END) AS {column}";
+                $"  MIN(CASE WHEN LOWER(rc.\"Name\") = LOWER('{column}') THEN rc.\"Column_Value\" END) AS \"{column}\"";
             columnStrings.Add(str);
         }
 

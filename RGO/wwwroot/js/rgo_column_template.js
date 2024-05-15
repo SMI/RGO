@@ -38,7 +38,6 @@ function getParentIdIfExists() {
 
 
 function generateUpsertURL() {
-    //    href = "/config/rgo_column_template/upsert?id=${data}${getParentIdIfExists()}
     var href =`/config/rgo_column_template/upsert?id=0${getParentIdIfExists()}`
     return href;
 

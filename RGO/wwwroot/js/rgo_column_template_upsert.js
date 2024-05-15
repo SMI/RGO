@@ -4,8 +4,6 @@ $(document).ready(function () {
     if (options.length == 2) {
 
         $("#columnTemplateParentSelect").val(options[1].value).trigger("change")
-        console.log("selected parent")
-        console.log(options)
     }
     $("#indexColumnsThisParentOnly").attr("href", generateIndexURL())
 
@@ -44,7 +42,6 @@ function getParentIdIfExists() {
 
 
 function generateIndexURL() {
-    //    href = "/config/rgo_column_template/index?id=${data}${getParentIdIfExists()}
     var href = `/config/rgo_column_template/index?id=0${getParentIdIfExists()}`
     return href;
 

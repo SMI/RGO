@@ -7,7 +7,7 @@ $(document).ready(function () {
         console.log("selected parent")
         console.log(options)
     }
-    $("#createColumnTemplateAnchor").attr("href", generateIndexURL())
+    $("#indexColumnsThisParentOnly").attr("href", generateIndexURL())
 
 
 });

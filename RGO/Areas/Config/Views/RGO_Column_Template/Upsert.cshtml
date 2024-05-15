@@ -104,9 +104,13 @@
                                     }
                                 </div>
                                 <div class="col-6 col-md-3">
-                                    <a asp-controller="RGO_Column_Template"
+@*                                     <a asp-controller="RGO_Column_Template"
                                        asp-action="Index"
                                        asp-route-parentId="@Model.RGO_Column_Template.RGO_Dataset_TemplateId"
+                                       class="btn btn-outline-primary border  form-control">
+                                        Back to List
+                                    </a> *@
+                                    <a id="indexColumnsThisParentOnly"
                                        class="btn btn-outline-primary border  form-control">
                                         Back to List
                                     </a>

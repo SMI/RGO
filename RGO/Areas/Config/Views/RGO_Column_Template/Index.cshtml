@@ -13,7 +13,11 @@
                <div class="col-6">
                </div>
                <div class="col-6 text-end">
-                <a asp-controller="RGO_Column_Template" asp-action="Upsert" class="btn btn-primary">
+                <a id="createColumnTemplateAnchor" @* asp-controller="RGO_Column_Template" 
+                    asp-action="Upsert"
+                    asp-route-parentId="@Model.RGO_Dataset_TemplateId" *@
+
+                    class="btn btn-primary">
                     <i class="bi bi-plus-circle"></i>  Create New RGO Column Template
                     </a>
                 </div>

@@ -35,19 +35,22 @@ public class RGO_Column_TemplateController : Controller
                 .GetAll(includeProperties: "RGO_Dataset_Template,RGO_Release_Status").ToList();
             return View(objRGO_Column_TemplateList);
         }
-
-        objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(r => r.RGO_Dataset_TemplateId == parentId,
+        else
+        {
+            objRGO_Column_TemplateList = _unitOfWork.RGO_Column_Template.GetAll(r => r.RGO_Dataset_TemplateId == parentId,
             "RGO_Dataset_Template,RGO_Release_Status").ToList();
+        }
+
 
         return View(objRGO_Column_TemplateList);
     }
 
 
-    public IActionResult Upsert(int? id)
+    public IActionResult Upsert(int? id, int? parentId)
     {
         RGO_Column_TemplateVM rgo_column_templateVM = new()
         {
-            RGO_Dataset_TemplateList = _unitOfWork.RGO_Dataset_Template.GetAll().Select(u => new SelectListItem
+            RGO_Dataset_TemplateList = _unitOfWork.RGO_Dataset_Template.GetAll().Where(u=>parentId==null?true:u.Id==parentId).Select(u => new SelectListItem
             {
                 Text = u.Name,
                 Value = u.Id.ToString()

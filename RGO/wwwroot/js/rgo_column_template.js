@@ -2,6 +2,7 @@
 $(document).ready(function () {
 
     loadDataTable();
+    $("#createColumnTemplateAnchor").attr("href", generateUpsertURL())
 });
 
 
@@ -24,6 +25,24 @@ function mapURLParameters() {
     return "";
 
 }
+
+function getParentIdIfExists() {
+    var parentId = GetURLParameter("parentId");
+    if (parentId) {
+        return "&parentId=" + parentId;
+    }
+    console.log("HGello")
+    return "";
+
+}
+
+
+function generateUpsertURL() {
+    var href =`/config/rgo_column_template/upsert?id=0${getParentIdIfExists()}`
+    return href;
+
+}
+
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": { url: '/config/rgo_column_template/getall' + mapURLParameters() },
@@ -40,10 +59,10 @@ function loadDataTable() {
             { data: 'updated_By', "width": "5%" },
             { data: 'updated_Date', "width": "5%" },
             { data: 'notes', "width": "5%" },
-            {
+            { 
                 data: 'id', "render": function (data) {
                     return `<div class="w-75 btn-group" role="group">
-                     <a href="/config/rgo_column_template/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>               
+                     <a href="/config/rgo_column_template/upsert?id=${data}${getParentIdIfExists()}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>               
                      <a onClick=Delete('/config/rgo_column_template/delete/${data}') class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
                      </div>`
                 },

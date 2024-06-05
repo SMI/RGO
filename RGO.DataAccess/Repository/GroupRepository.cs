@@ -22,6 +22,7 @@ namespace RGO.DataAccess.Repository
 
         public void Update(Group obj)
         {
+            obj.Updated_Date = DateTime.Now;
             _db.Groups.Update(obj);
         }
     }

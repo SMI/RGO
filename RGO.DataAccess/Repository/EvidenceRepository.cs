@@ -21,6 +21,7 @@ namespace RGO.DataAccess.Repository
 
         public void Update(Evidence obj)
         {
+            obj.Updated_Date = DateTime.Now;
             _db.Evidences.Update(obj);
         }
     }

@@ -22,6 +22,7 @@ namespace RGO.DataAccess.Repository
 
         public void Update(RGO_Column obj)
         {
+            obj.Updated_Date = DateTime.Now;
             _db.RGO_Columns.Update(obj);
         }
     }

@@ -25,8 +25,9 @@ namespace RGO.Models
         [DisplayName("Digital Object Id (DOI)")]
         public string? Doi { get; set; }
 
-        [DisplayName("Standard Acknowledgement Text")]
-        public string? StandardAcknowledgement { get; set; }
+        // Standard Acknowledgement Text moved to RGO_Evidence at JK's instruction (SL 17/06/2024)
+        //[DisplayName("Standard Acknowledgement Text")]
+        //public string? StandardAcknowledgement { get; set; }
 
         public ICollection<RGO_Evidence>? RGO_Evidence { get; set; }
 

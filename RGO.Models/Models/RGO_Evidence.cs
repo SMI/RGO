@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace RGO.Models
 {
@@ -19,6 +20,10 @@ namespace RGO.Models
         [ForeignKey("RGOutput_Id")]
 
         public RGOutput? RGOutput { get; set; }
+
+        //Standard Acknowledgement Text moved from Evidence at JK's instruction (SL 17/06/2024)
+        [DisplayName("Standard Acknowledgement Text")]
+        public string? StandardAcknowledgement { get; set; }
 
         /* Common Columns that should appear on all tables */
 

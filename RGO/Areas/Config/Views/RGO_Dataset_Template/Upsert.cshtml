@@ -25,9 +25,9 @@
 
                             <div class="form-floating py-2 col-12">
                                 <select asp-for="@Model.RGO_Dataset_Template.RGOutput_Id" asp-items="@Model.RGOutputList" class="form-select border-0 shadow">
-                                    <option disabled selected>--Select RG Output Type--</option>
+                                    <option disabled selected>--Select RG Output--</option>
                                 </select>
-                                <label asp-for="RGO_Dataset_Template.RGOutput_Id" class="ms-2"></label>
+                                <label asp-for="RGO_Dataset_Template.RGOutput_Id" class="ms-2">Parent RG Output</label>
                                 <span asp-validation-for="RGO_Dataset_Template.RGOutput_Id" class="text-danger"></span>
                             </div>
 

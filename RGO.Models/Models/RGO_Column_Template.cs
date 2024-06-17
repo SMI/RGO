@@ -34,7 +34,7 @@ namespace RGO.Models.Models
         public int IsIdentifier { get; set; } = 0;
 
         public int Release_Status_Id { get; set; }
-        [DisplayName("Is this a releasable column? - applies to all records using this template")]
+        [DisplayName("Is this a releasable column? - applies to all records based on this template")]
         [ForeignKey("Release_Status_Id")]
         public RGO_Release_Status? RGO_Release_Status { get; set; }
 

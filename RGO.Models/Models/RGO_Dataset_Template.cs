@@ -16,10 +16,10 @@ namespace RGO.Models.Models
         public RGOutput? RGOutput { get; set; }
 
 
-        [DisplayName("Template Name")]
+        [DisplayName("Dataset Template Name")]
         public string Name { get; set; } = "";
 
-        [DisplayName("RGO Dataset Description")]
+        [DisplayName("Dataset Template Description")]
         public string? Description { get; set; }
 
         public int Release_Status_Id { get; set; }

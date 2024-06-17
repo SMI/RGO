@@ -91,11 +91,11 @@ function loadDataTable() {
         ]
 
     });
+    dataTable.column(5).visible(false);
     dataTable.column(6).visible(false);
     dataTable.column(7).visible(false);
     dataTable.column(8).visible(false);
     dataTable.column(9).visible(false);
-    dataTable.column(10).visible(false);
 }
 
 function Delete(url) {

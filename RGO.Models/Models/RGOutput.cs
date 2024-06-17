@@ -14,8 +14,9 @@ namespace RGO.Models
         public int Id { get; set; }
 
 
-        [ForeignKey("RGO_TypeId")] 
+        
         public int RGO_TypeId { get; set; }
+        [ForeignKey("RGO_TypeId")]
         public RGO_Type? RGO_Type { get; set; }
 
 

@@ -26,7 +26,7 @@
                                 <select id = "columnTemplateParentSelect" asp-for="@Model.RGO_Column_Template.RGO_Dataset_TemplateId" asp-items="@Model.RGO_Dataset_TemplateList" class="form-select border-0 shadow">
                                     <option disabled selected>--Select RGO Dataset Template--</option>
                                 </select>
-                                <label asp-for="RGO_Column_Template.RGO_Dataset_TemplateId" class="ms-2"></label>
+                                <label asp-for="RGO_Column_Template.RGO_Dataset_TemplateId" class="ms-2">Which RGO Dataset Template is this part of</label>
                                 <span asp-validation-for="RGO_Column_Template.RGO_Dataset_TemplateId" class="text-danger"></span>
                             </div>
 
@@ -61,7 +61,7 @@
                                 <select asp-for="@Model.RGO_Column_Template.Release_Status_Id" asp-items="@Model.RGO_Release_StatusList" class="form-select border-0 shadow">
                                     <option disabled selected>--Select RGO Release Status--</option>
                                 </select>
-                                <label asp-for="RGO_Column_Template.Release_Status_Id" class="ms-2"></label>
+                                <label asp-for="RGO_Column_Template.Release_Status_Id" class="ms-2">Is this a releasable column? - applies to all records based on this template</label>
                                 <span asp-validation-for="RGO_Column_Template.Release_Status_Id" class="text-danger"></span>
                             </div>
 

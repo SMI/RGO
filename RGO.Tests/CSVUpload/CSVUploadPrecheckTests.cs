@@ -41,7 +41,7 @@ namespace RGO.Tests.CSVUpload
 
             try
             {
-                var uploader = new CSV_Uploader("RGO_1.csv", _UnitOfWork);
+                var uploader = new CSV_Uploader("RGO_1.csv", 0, _UnitOfWork);
 
                 Assert.That(uploader.PreCheck(), Is.EqualTo(true));
                 Console.WriteLine("PASS - Good file uploaded successfully");
@@ -64,7 +64,7 @@ namespace RGO.Tests.CSVUpload
             //var myCsv = File.Create("RGX_2.csv");
             try
             {
-                var uploader = new CSV_Uploader("RGX_2.csv", _UnitOfWork);
+                var uploader = new CSV_Uploader("RGX_2.csv", 0, _UnitOfWork);
 
                 Assert.That(uploader.PreCheck(), Is.EqualTo(false));
                 

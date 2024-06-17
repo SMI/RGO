@@ -40,7 +40,7 @@ namespace RGO.Tests.CSVUpload
 
 
 
-            var uploader = new CSV_Uploader(@"C:/Temp/RGO_1.csv", _UnitOfWork);
+            var uploader = new CSV_Uploader(@"C:/Temp/RGO_1.csv", 0, _UnitOfWork);
 
             Assert.That(uploader.PreCheck(), Is.EqualTo(true));  // check that the input file exists, and there is a matching RGO_Dataset_Template in the db
 
@@ -53,7 +53,7 @@ namespace RGO.Tests.CSVUpload
         public void ExecuteUpload()
         {
 
-            var uploader = new CSV_Uploader(@"C:/Temp/RGO_1.csv", _UnitOfWork);
+            var uploader = new CSV_Uploader(@"C:/Temp/RGO_1.csv", 0, _UnitOfWork);
 
             uploader.ExecuteUpload();
 

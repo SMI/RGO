@@ -5,13 +5,12 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        "ajax": { url: '/config/evidence/getall'},
+        "ajax": { url: '/config/evidence/getall' },
         "columns": [
             { data: 'evidence_Type.name', "width": "10%" },
             { data: 'name', "width": "10%" },
             { data: 'evidenceDetails', "width": "10%" },
             { data: 'doi', "width": "10%" },
-            { data: 'standardAcknowledgement', "width": "10%" },
             { data: 'created_By', "width": "10%" },
             { data: 'created_Date', "width": "10%" },
             { data: 'updated_By', "width": "10%" },
@@ -29,11 +28,11 @@ function loadDataTable() {
         ]
 
     });
+    dataTable.column(4).visible(false);
     dataTable.column(5).visible(false);
     dataTable.column(6).visible(false);
     dataTable.column(7).visible(false);
     dataTable.column(8).visible(false);
-    dataTable.column(9).visible(false);
 }
 
 function Delete(url) {

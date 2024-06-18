@@ -7,8 +7,9 @@ function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": { url: '/config/rgo_evidence/getall'},
         "columns": [
-            { data: 'evidence.name', "width": "10%" },
             { data: 'rgOutput.name', "width": "10%" },
+            { data: 'evidence.name', "width": "10%" },
+            { data: 'standardAcknowledgement', "width": "10%" },
             { data: 'created_By', "width": "10%" },
             { data: 'created_Date', "width": "10%" },
             { data: 'updated_By', "width": "10%" },
@@ -26,11 +27,11 @@ function loadDataTable() {
         ]
 
     });
-    dataTable.column(2).visible(false);
     dataTable.column(3).visible(false);
     dataTable.column(4).visible(false);
     dataTable.column(5).visible(false);
     dataTable.column(6).visible(false);
+    dataTable.column(7).visible(false);
 }
 
 function Delete(url) {

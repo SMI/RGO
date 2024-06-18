@@ -28,11 +28,11 @@ function loadDataTable() {
         ]
 
     });
-    //dataTable.column(4).visible(false);
-    //dataTable.column(5).visible(false);
-    //dataTable.column(6).visible(false);
-    //dataTable.column(7).visible(false);
-    //dataTable.column(8).visible(false);
+    dataTable.column(4).visible(false);
+    dataTable.column(5).visible(false);
+    dataTable.column(6).visible(false);
+    dataTable.column(7).visible(false);
+    dataTable.column(8).visible(false);
 }
 
 function Delete(url) {

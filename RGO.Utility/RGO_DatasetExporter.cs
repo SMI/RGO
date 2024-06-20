@@ -27,7 +27,9 @@ public class RGO_DatasetExporter
     {
         var datasetTemplate = _unitOfWork.RGO_Dataset_Template.GetAll().Where(t => t.Id == _dataset.RGO_Dataset_TemplateId).First();
         var records = _unitOfWork.RGO_Record.GetAll().Where(r => r.RGO_DatasetId == _dataset.Id);
-        var columns = _unitOfWork.RGO_Column.GetAll().Where(c => records.Select(s => s.Id).Contains(c.RGO_RecordId));
+        var recordIds = records.Select (r => r.Id).ToList();
+        //var columns = _unitOfWork.RGO_Column.GetAll().Where(c => records.Select(s => s.Id).Contains(c.RGO_RecordId));
+        var columns = _unitOfWork.RGO_Column.GetAll().Where(c => recordIds.Contains(c.RGO_RecordId)).DistinctBy(c => c.Id).ToList();
         var columnNames = columns.Select(c => c.Name).Distinct();
 
         var orderedRecords = new Dictionary<int, Dictionary<string, string>>();

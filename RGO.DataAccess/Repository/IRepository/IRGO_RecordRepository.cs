@@ -10,6 +10,8 @@ namespace RGO.DataAccess.Repository.IRepository
     public interface IRGO_RecordRepository : IRepository<RGO_Record>
     {
         void Update(RGO_Record obj);
+
+        void AddRange(IEnumerable<RGO_Record> records);
     }
 }
 

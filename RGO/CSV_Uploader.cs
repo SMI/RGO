@@ -139,13 +139,9 @@ public class CSV_Uploader
 
                     recrec.RGO_DatasetId = _datasetId;
                     recrec.Created_By = "RGO_Upload";
-                    //recrec.Record_Status = "Uploading";
-                    //_unitOfWork.RGO_Record.Add(recrec);
+
                     _recordsToSave.Add(recrec);
 
-
-                    //_unitOfWork.Save();
-                    //_recordId = recrec.Id;
 
                     // Grab the column values for this record
                     line2 = line.Substring(0, line.Length - 1);
@@ -179,10 +175,7 @@ public class CSV_Uploader
                                     : columnValues[columnIndex];
                                 if (colrec.Column_Value == "") colrec.Column_Value = null;
                                 colrec.Created_By = "RGO_Upload";
-                                //colrec.Created_Date = DateTime.Now;
 
-                                //_unitOfWork.RGO_Column.Add(colrec);
-                                //_unitOfWork.Save();
                                 _columnsToSave.Add(colrec);
 
                             }
@@ -203,8 +196,6 @@ public class CSV_Uploader
                                 rprec.Person_Record_Role = "Ground Truther";
                                 rprec.Created_By = "RGO_Upload";
 
-                                //_unitOfWork.RGO_Record_Person.Add(rprec);
-                                //_unitOfWork.Save();
                                 _peopleToSave.Add(rprec);
                             }
                         }
@@ -221,38 +212,23 @@ public class CSV_Uploader
 
                 recordIndex++;
             }
-            foreach (var rec in _recordsToSave)
-            {
-                _unitOfWork.RGO_Record.Add(rec);
-            }
+            _unitOfWork.RGO_Record.AddRange(_recordsToSave);
             _unitOfWork.Save();
             foreach (var col in _columnsToSave)
             {
 
                 col.RGO_RecordId = _recordsToSave[col.RGO_RecordId].Id;
-                _unitOfWork.RGO_Column.Add(col);
             }
+            _unitOfWork.RGO_Column.AddRange(_columnsToSave);
             _unitOfWork.Save();
             foreach (var col in _peopleToSave)
             {
 
                 col.RGO_RecordId = _recordsToSave[col.RGO_RecordId].Id;
-                _unitOfWork.RGO_Record_Person.Add(col);
             }
+            _unitOfWork.RGO_Record_Person.AddRange(_peopleToSave);
             _unitOfWork.Save();
-            //foreach (var item in _recordsToSave.Select((value, i) => new { i, value }))
-            //{
-            //    var index = item.i;
-            //    var headersLength = columnHeaders.Count;
-            //    for (int i = 0; i < headersLength; i++)
-            //    {
-            //        _columnsToSave[index + i].RGO_RecordId = item.value.Id;
-            //        _unitOfWork.RGO_Column.Add(_columnsToSave[index + i]);
-            //    }
-
-            //}
-            //_unitOfWork.Save();
-
+         
             if (_config.GetValue(typeof(object), "DatabaseType").ToString() == "Postgres")
                 CreatePostgresView();
             else

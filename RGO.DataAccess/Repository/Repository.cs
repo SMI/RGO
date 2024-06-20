@@ -38,6 +38,11 @@ namespace RGO.DataAccess.Repository
             dbSet.Add(entity);
         }
 
+        public void AddRange(IEnumerable<TEntity> entity)
+        {
+            dbSet.AddRange(entity);
+        }
+
         public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>>? filter, string? includeProperties = null)
         {
             IQueryable<TEntity> query = dbSet;
@@ -49,7 +54,7 @@ namespace RGO.DataAccess.Repository
 
             if (!string.IsNullOrEmpty(includeProperties))
             {
-                foreach(var includeProp in includeProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(includeProp);
                 }
@@ -73,7 +78,7 @@ namespace RGO.DataAccess.Repository
 
         public void Remove(TEntity entity)
         {
-                dbSet.Remove(entity);
+            dbSet.Remove(entity);
 
         }
 

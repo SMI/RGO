@@ -2,6 +2,7 @@
 using FAnsi;
 using FAnsi.Discovery;
 using NPOI.HSSF.UserModel;
+using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using RGO.DataAccess.Data;
@@ -15,7 +16,6 @@ public class CSV_Uploader
     private string _filePath;
     private int _datasetTemplateId;
     private int _datasetId;
-    private int _recordId;
     private ApplicationDbContext _context;
     private readonly IUnitOfWork _unitOfWork;
     private RGO_Dataset_Template _datasetTemplate;
@@ -115,8 +115,12 @@ public class CSV_Uploader
                     _filePath = newFilePath;
                 }
             }
+            var _recordsToSave = new List<RGO_Record>();
+            var _columnsToSave = new List<RGO_Column>();
+            var _peopleToSave = new List<RGO_Record_Person>();
 
-
+            var colTemples = _unitOfWork.RGO_Column_Template.GetAll().Where(r => r.RGO_Dataset_TemplateId.Equals(_datasetTemplateId));
+            var people = _unitOfWork.Person.GetAll();
             foreach (var line in File.ReadLines(_filePath))
             {
                 if (line.Length == 0) break;
@@ -136,22 +140,25 @@ public class CSV_Uploader
                     recrec.RGO_DatasetId = _datasetId;
                     recrec.Created_By = "RGO_Upload";
                     //recrec.Record_Status = "Uploading";
-                    _unitOfWork.RGO_Record.Add(recrec);
+                    //_unitOfWork.RGO_Record.Add(recrec);
+                    _recordsToSave.Add(recrec);
 
-                    _unitOfWork.Save();
-                    _recordId = recrec.Id;
+
+                    //_unitOfWork.Save();
+                    //_recordId = recrec.Id;
 
                     // Grab the column values for this record
                     line2 = line.Substring(0, line.Length - 1);
                     var columnValues = line2.Split(",");
 
                     //Loop through the columns in column headers
+
                     foreach (var header in columnHeaders)
                     {
                         // find the column template for this dataset_template_id and column_name
                         //var _columnTemplate = _unitOfWork.RGO_Column_Template.GetAll().Where(r => r.RGO_Dataset_TemplateId.Equals(_datasetTemplateId)).FirstOrDefault();
-                        var _columnTemplate = _unitOfWork.RGO_Column_Template.GetAll()
-                            .Where(r => r.RGO_Dataset_TemplateId.Equals(_datasetTemplateId) && r.Name == header)
+                        var _columnTemplate = colTemples
+                            .Where(r => r.Name == header)
                             .FirstOrDefault();
 
                         if (_columnTemplate != null)
@@ -161,7 +168,7 @@ public class CSV_Uploader
                                 // Create a new RGO_Column Record
                                 var colrec = new RGO_Column();
 
-                                colrec.RGO_RecordId = recrec.Id;
+                                colrec.RGO_RecordId = _recordsToSave.Count - 1; // recrec.Id;
                                 colrec.RGO_Column_TemplateId = _columnTemplate.Id;
                                 colrec.Name = header;
                                 colrec.PK_Column_Order = _columnTemplate.PK_Column_Order;
@@ -174,28 +181,31 @@ public class CSV_Uploader
                                 colrec.Created_By = "RGO_Upload";
                                 //colrec.Created_Date = DateTime.Now;
 
-                                _unitOfWork.RGO_Column.Add(colrec);
-                                _unitOfWork.Save();
+                                //_unitOfWork.RGO_Column.Add(colrec);
+                                //_unitOfWork.Save();
+                                _columnsToSave.Add(colrec);
+
                             }
                             else
                             {
                                 //Find the id of the person record with this name
 
-                                var _person = _unitOfWork.Person.GetAll()
+                                var _person = people
                                     .Where(pr => pr.Name.Equals(columnValues[columnIndex])).FirstOrDefault();
 
                                 // Create a new RGO_Person_Record Record
                                 var rprec = new RGO_Record_Person();
 
 
-                                rprec.RGO_RecordId = recrec.Id;
+                                rprec.RGO_RecordId = _recordsToSave.Count - 1; ;// recrec.Id;
                                 rprec.RGO_Column_TemplateId = _columnTemplate.Id;
                                 rprec.PersonId = _person.Id;
                                 rprec.Person_Record_Role = "Ground Truther";
                                 rprec.Created_By = "RGO_Upload";
 
-                                _unitOfWork.RGO_Record_Person.Add(rprec);
-                                _unitOfWork.Save();
+                                //_unitOfWork.RGO_Record_Person.Add(rprec);
+                                //_unitOfWork.Save();
+                                _peopleToSave.Add(rprec);
                             }
                         }
                         else //It's likely that the headers don't match
@@ -211,6 +221,37 @@ public class CSV_Uploader
 
                 recordIndex++;
             }
+            foreach (var rec in _recordsToSave)
+            {
+                _unitOfWork.RGO_Record.Add(rec);
+            }
+            _unitOfWork.Save();
+            foreach (var col in _columnsToSave)
+            {
+
+                col.RGO_RecordId = _recordsToSave[col.RGO_RecordId].Id;
+                _unitOfWork.RGO_Column.Add(col);
+            }
+            _unitOfWork.Save();
+            foreach (var col in _peopleToSave)
+            {
+
+                col.RGO_RecordId = _recordsToSave[col.RGO_RecordId].Id;
+                _unitOfWork.RGO_Record_Person.Add(col);
+            }
+            _unitOfWork.Save();
+            //foreach (var item in _recordsToSave.Select((value, i) => new { i, value }))
+            //{
+            //    var index = item.i;
+            //    var headersLength = columnHeaders.Count;
+            //    for (int i = 0; i < headersLength; i++)
+            //    {
+            //        _columnsToSave[index + i].RGO_RecordId = item.value.Id;
+            //        _unitOfWork.RGO_Column.Add(_columnsToSave[index + i]);
+            //    }
+
+            //}
+            //_unitOfWork.Save();
 
             if (_config.GetValue(typeof(object), "DatabaseType").ToString() == "Postgres")
                 CreatePostgresView();

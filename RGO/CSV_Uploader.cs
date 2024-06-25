@@ -128,8 +128,8 @@ public class CSV_Uploader
                 if (recordIndex == 0)
                 {
                     //Grab the column headers
-                    line2 = line.Substring(0, line.Length - 1);
-                    line2.Split(",").ToList().ForEach(columnHeaders.Add);
+                    line2 = line.Substring(0, line.Length);// this used ot have -1 on the end
+                    line2.Split(",").Where(x => x != "").ToList().ForEach(columnHeaders.Add);
                 }
                 else
                 {
@@ -228,7 +228,7 @@ public class CSV_Uploader
             }
             _unitOfWork.RGO_Record_Person.AddRange(_peopleToSave);
             _unitOfWork.Save();
-         
+
             if (_config.GetValue(typeof(object), "DatabaseType").ToString() == "Postgres")
                 CreatePostgresView();
             else
@@ -319,7 +319,7 @@ public class CSV_Uploader
             .Where(t => t.Id == dataset.RGO_Dataset_TemplateId).FirstOrDefault();
         var columns = _unitOfWork.RGO_Column_Template.GetAll()
             .Where(c => c.RGO_Dataset_TemplateId == datasetTemplate.Id).Select(c => c.Name).ToList();
-        var viewName = $"{_datasetTemplate.Name}_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+        var viewName = $"{dataset.Dataset_Name}_{dataset.Id}_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
         viewName = ReplaceWhitespace(viewName, "_");
         var columnStrings = new List<string>();
         foreach (var column in columns)
@@ -376,7 +376,7 @@ group by rec.""RGO_RecordId"") as mid on mid.""RGO_RecordId"" = rec.""RGO_Record
         var columns = string.Join(',',
             _unitOfWork.RGO_Column_Template.GetAll().Where(c => c.RGO_Dataset_TemplateId == datasetTemplate.Id)
                 .Select(c => c.Name).ToList());
-        var viewName = $"{_datasetTemplate.Name}_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+        var viewName = $"{dataset.Dataset_Name}_{dataset.Id}_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
         viewName = ReplaceWhitespace(viewName, "_");
         var sql = @$"
                 create view {viewName} as

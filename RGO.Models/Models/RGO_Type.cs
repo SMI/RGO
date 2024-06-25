@@ -11,7 +11,7 @@ namespace RGO.Models
         public int Id { get; set; }
 
         [MaxLength(20)]
-        [DisplayName("RGO Type Name")]
+        [DisplayName("RGO Type")]
         public string Name { get; set; } = "";
 
         [DisplayName("RGO Type Description")]
@@ -21,13 +21,14 @@ namespace RGO.Models
 
         [DisplayName("Input By")] public string? Created_By { get; set; } = "";
 
-        public DateTime Created_Date { get; set; } = DateTime.UtcNow;
+        [DisplayName("Created Date")] public DateTime Created_Date { get; set; } = DateTime.Now;
 
-        public string? Updated_By { get; set; }
+        [DisplayName("Updated By")] public string? Updated_By { get; set; }
 
-        public DateTime? Updated_Date { get; set; }
+        [DisplayName("Updated Date")] public DateTime? Updated_Date { get; set; }
 
         public string? Notes { get; set; }
+
 
 
         public ICollection<RGOutput>? RGOutput { get; set; }

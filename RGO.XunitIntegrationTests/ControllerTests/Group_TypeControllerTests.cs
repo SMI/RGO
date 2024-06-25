@@ -30,8 +30,8 @@ namespace RGO.XunitIntegrationTests.ControllerTests
 
             var mockGroup_Types = new Group_Type[]
             {
-                new(){ Id = 1, Name = "Research Group X", Created_By = "seed", Created_Date = DateTime.UtcNow },
-                new(){ Id = 2, Name = "Data Team X", Created_By = "seed", Created_Date = DateTime.UtcNow }
+                new(){ Id = 1, Name = "Research Group X", Created_By = "seed", Created_Date = DateTime.Now },
+                new(){ Id = 2, Name = "Data Team X", Created_By = "seed", Created_Date = DateTime.Now }
             }.AsQueryable();
 
         //    _factory.Group_TypeRepositoryMock.Setup(r => r.GetAll).Returns(mockGroup_Types);

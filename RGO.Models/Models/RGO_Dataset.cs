@@ -37,20 +37,20 @@ namespace RGO.Models.Models
         [ForeignKey("Release_Status_Id")]
         public RGO_Release_Status? RGO_Release_Status { get; set; }
 
-        public ICollection<Models.RGO_Record>? RGO_Record { get; set; }    
+        public ICollection<Models.RGO_Record>? RGO_Record { get; set; }
 
         /* Common Columns that should appear on all tables */
 
         [DisplayName("Input By")] public string? Created_By { get; set; } = "";
 
-        [DisplayName("Date loaded into RGO")]
-        public DateTime Created_Date { get; set; } = DateTime.UtcNow;
+        [DisplayName("Created Date")] public DateTime Created_Date { get; set; } = DateTime.Now;
 
-        public string? Updated_By { get; set; }
+        [DisplayName("Updated By")] public string? Updated_By { get; set; }
 
-        public DateTime? Updated_Date { get; set; }
+        [DisplayName("Updated Date")] public DateTime? Updated_Date { get; set; }
 
         public string? Notes { get; set; }
+
 
 
     }

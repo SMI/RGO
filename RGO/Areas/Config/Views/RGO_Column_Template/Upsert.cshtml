@@ -70,25 +70,31 @@
                                 <label asp-for="RGO_Column_Template.Created_By" class="ms-2"></label>
                                 <span asp-validation-for="RGO_Column_Template.Created_By" class="text-danger"></span>
                             </div>
-                            <div class="form-floating py-2 col-12">
-                                <input asp-for="RGO_Column_Template.Created_Date" class="form-control border-0 shadow" />
-                                <label asp-for="RGO_Column_Template.Created_Date" class="ms-2"></label>
-                                <span asp-validation-for="RGO_Column_Template.Created_Date" class="text-danger"></span>
-                            </div>
+
+
                             <div class="form-floating py-2 col-12">
                                 <input asp-for="RGO_Column_Template.Updated_By" class="form-control border-0 shadow" />
                                 <label asp-for="RGO_Column_Template.Updated_By" class="ms-2"></label>
                                 <span asp-validation-for="RGO_Column_Template.Updated_By" class="text-danger"></span>
                             </div>
-                            <div class="form-floating py-2 col-12">
-                                <input asp-for="RGO_Column_Template.Updated_Date" class="form-control border-0 shadow" />
-                                <label asp-for="RGO_Column_Template.Updated_Date" class="ms-2"></label>
-                                <span asp-validation-for="RGO_Column_Template.Updated_Date" class="text-danger"></span>
-                            </div>
+
                             <div class="py-2 col-12">
                                 <label asp-for="RGO_Column_Template.Notes" class="ms-2 text-muted"></label>
                                 <textarea asp-for="RGO_Column_Template.Notes" class="form-control border-0 shadow"></textarea>
                             </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Column_Template.Created_Date" class="form-control border-0 shadow" readonly="readonly" />
+                                <label asp-for="RGO_Column_Template.Created_Date" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Column_Template.Created_Date" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGO_Column_Template.Updated_Date" class="form-control border-0 shadow" readonly="readonly" />
+                                <label asp-for="RGO_Column_Template.Updated_Date" class="ms-2"></label>
+                                <span asp-validation-for="RGO_Column_Template.Updated_Date" class="text-danger"></span>
+                            </div>
+
 
 
                             <div class="row pt-2">

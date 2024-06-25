@@ -2,6 +2,7 @@
 using RGO.DataAccess.Data;
 using RGO.DataAccess.Repository.IRepository;
 using RGO.Models;
+using RGO.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace RGO.DataAccess.Repository
             _db = db;
         }
 
+
         public void Update(Group_Type obj)
         {
             
@@ -30,9 +32,9 @@ namespace RGO.DataAccess.Repository
 
             //if (_db.Entry(obj).State != EntityState.Unchanged)
             //{
-            //    obj.Updated_Date = DateTime.UtcNow;
+            //    obj.Updated_Date = DateTime.Now;
             //}
-            obj.Updated_Date = DateTime.UtcNow;
+            obj.Updated_Date = DateTime.Now;
             _db.Group_Types.Update(obj);
         }
     }

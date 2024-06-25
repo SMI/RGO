@@ -8,7 +8,8 @@ public class Group
 {
     [Key] public int Id { get; set; }
     public int Group_TypeId { get; set; }
-    [ForeignKey("Group_TypeId")] public Group_Type? Group_Type { get; set; }
+    [ForeignKey("Group_TypeId")] 
+    [DisplayName("Group Type")]public Group_Type? Group_Type { get; set; }
 
 
     [DisplayName("Group Name")] public string Name { get; set; } = "";
@@ -24,11 +25,11 @@ public class Group
 
     [DisplayName("Input By")] public string? Created_By { get; set; } = "";
 
-    public DateTime Created_Date { get; set; } = DateTime.UtcNow;
+    [DisplayName("Created Date")] public DateTime Created_Date { get; set; } = DateTime.Now;
 
-    public string? Updated_By { get; set; }
+    [DisplayName("Updated By")] public string? Updated_By { get; set; }
 
-    public DateTime? Updated_Date { get; set; }
+    [DisplayName("Updated Date")] public DateTime? Updated_Date { get; set; }
 
     public string? Notes { get; set; }
 }

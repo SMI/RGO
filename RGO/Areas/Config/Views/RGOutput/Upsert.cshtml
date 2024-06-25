@@ -29,7 +29,7 @@
                                 <select asp-for="@Model.RGOutput.RGO_TypeId" asp-items="@Model.RGO_TypeList" class="form-select border-0 shadow">
                                     <option disabled selected>--Select RG Output Type--</option>
                                 </select>
-                                <label asp-for="RGOutput.RGO_TypeId" class="ms-2">RGO Type</label>
+                                <label asp-for="RGOutput.RGO_TypeId" class="ms-2"></label>
                                 <span asp-validation-for="RGOutput.RGO_TypeId" class="text-danger"></span>
                             </div>
 
@@ -66,25 +66,31 @@
                                 <label asp-for="RGOutput.Created_By" class="ms-2"></label>
                                 <span asp-validation-for="RGOutput.Created_By" class="text-danger"></span>
                             </div>
-                            <div class="form-floating py-2 col-12">
-                                <input asp-for="RGOutput.Created_Date" class="form-control border-0 shadow" />
-                                <label asp-for="RGOutput.Created_Date" class="ms-2"></label>
-                                <span asp-validation-for="RGOutput.Created_Date" class="text-danger"></span>
-                            </div>
+
+
                             <div class="form-floating py-2 col-12">
                                 <input asp-for="RGOutput.Updated_By" class="form-control border-0 shadow" />
                                 <label asp-for="RGOutput.Updated_By" class="ms-2"></label>
                                 <span asp-validation-for="RGOutput.Updated_By" class="text-danger"></span>
                             </div>
-                            <div class="form-floating py-2 col-12">
-                                <input asp-for="RGOutput.Updated_Date" class="form-control border-0 shadow" />
-                                <label asp-for="RGOutput.Updated_Date" class="ms-2"></label>
-                                <span asp-validation-for="RGOutput.Updated_Date" class="text-danger"></span>
-                            </div>
+
                             <div class="py-2 col-12">
                                 <label asp-for="RGOutput.Notes" class="ms-2 text-muted"></label>
                                 <textarea asp-for="RGOutput.Notes" class="form-control border-0 shadow"></textarea>
                             </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGOutput.Created_Date" class="form-control border-0 shadow" readonly="readonly" />
+                                <label asp-for="RGOutput.Created_Date" class="ms-2"></label>
+                                <span asp-validation-for="RGOutput.Created_Date" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="RGOutput.Updated_Date" class="form-control border-0 shadow" readonly="readonly" />
+                                <label asp-for="RGOutput.Updated_Date" class="ms-2"></label>
+                                <span asp-validation-for="RGOutput.Updated_Date" class="text-danger"></span>
+                            </div>
+
 
 
                             <div class="row pt-2">

@@ -10,12 +10,15 @@ namespace RGO.Models
         [Key]
         public int Id { get; set; }
 
-        public int Evidence_TypeId { get; set; }
-        [ForeignKey("Evidence_TypeId")]
 
+        
+        [ForeignKey("Evidence_TypeId")]
+        [DisplayName("Evidence Type")]
+        public int Evidence_TypeId { get; set; }
+        [DisplayName("Evidence Type")]
         public Evidence_Type? Evidence_Type { get; set; }
 
-        [DisplayName("Evidence Name")]
+        [DisplayName("Evidence")]
         public string Name { get; set; } = "";
 
         [DisplayName("Evidence Details")]
@@ -34,11 +37,11 @@ namespace RGO.Models
 
         [DisplayName("Input By")] public string? Created_By { get; set; } = "";
 
-        public DateTime Created_Date { get; set; } = DateTime.UtcNow;
+        [DisplayName("Created Date")] public DateTime Created_Date { get; set; } = DateTime.Now;
 
-        public string? Updated_By { get; set; }
+        [DisplayName("Updated By")] public string? Updated_By { get; set; }
 
-        public DateTime? Updated_Date { get; set; }
+        [DisplayName("Updated Date")] public DateTime? Updated_Date { get; set; }
 
         public string? Notes { get; set; }
     }

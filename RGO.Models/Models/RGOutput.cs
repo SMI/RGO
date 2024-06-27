@@ -15,8 +15,11 @@ namespace RGO.Models
 
 
         
-        public int RGO_TypeId { get; set; }
+        
         [ForeignKey("RGO_TypeId")]
+        [DisplayName("RGO Type")]
+        public int RGO_TypeId { get; set; }
+        [DisplayName("RGO Type")]
         public RGO_Type? RGO_Type { get; set; }
 
 
@@ -29,7 +32,7 @@ namespace RGO.Models
         [DisplayName("Originating Group")]
         [ForeignKey("Originating_GroupId")]
         public int Originating_GroupId { get; set; }
-        
+        [DisplayName("Originating Group")]
         public Group? Group { get; set; }
 
         [DisplayName("Digital Object Id (DOI)")]
@@ -45,13 +48,14 @@ namespace RGO.Models
 
         [DisplayName("Input By")] public string? Created_By { get; set; } = "";
 
-        public DateTime Created_Date { get; set; } = DateTime.UtcNow;
+        [DisplayName("Created Date")] public DateTime Created_Date { get; set; } = DateTime.Now;
 
-        public string? Updated_By { get; set; }
+        [DisplayName("Updated By")] public string? Updated_By { get; set; }
 
-        public DateTime? Updated_Date { get; set; }
+        [DisplayName("Updated Date")] public DateTime? Updated_Date { get; set; }
 
         public string? Notes { get; set; }
+
 
 
 

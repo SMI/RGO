@@ -37,25 +37,31 @@
                                 <label asp-for="Created_By" class="ms-2"></label>
                                 <span asp-validation-for="Created_By" class="text-danger"></span>
                             </div>
-                            <div class="form-floating py-2 col-12">
-                                <input asp-for="Created_Date" class="form-control border-0 shadow" />
-                                <label asp-for="Created_Date" class="ms-2"></label>
-                                <span asp-validation-for="Created_Date" class="text-danger"></span>
-                            </div>
+
+
                             <div class="form-floating py-2 col-12">
                                 <input asp-for="Updated_By" class="form-control border-0 shadow" />
                                 <label asp-for="Updated_By" class="ms-2"></label>
                                 <span asp-validation-for="Updated_By" class="text-danger"></span>
                             </div>
-                            <div class="form-floating py-2 col-12">
-                                <input asp-for="Updated_Date" class="form-control border-0 shadow" />
-                                <label asp-for="Updated_Date" class="ms-2"></label>
-                                <span asp-validation-for="Updated_Date" class="text-danger"></span>
-                            </div>
+
                             <div class="py-2 col-12">
                                 <label asp-for="Notes" class="ms-2 text-muted"></label>
                                 <textarea asp-for="Notes" class="form-control border-0 shadow"></textarea>
                             </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Created_Date" class="form-control border-0 shadow" readonly="readonly" />
+                                <label asp-for="Created_Date" class="ms-2"></label>
+                                <span asp-validation-for="Created_Date" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-floating py-2 col-12">
+                                <input asp-for="Updated_Date" class="form-control border-0 shadow" readonly="readonly" />
+                                <label asp-for="Updated_Date" class="ms-2"></label>
+                                <span asp-validation-for="Updated_Date" class="text-danger"></span>
+                            </div>
+
 
 
                             <div class="row pt-2">

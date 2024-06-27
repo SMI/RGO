@@ -11,10 +11,10 @@ namespace RGO.Models
         public int Id { get; set; }
 
         [MaxLength(250)]
-        [DisplayName("Evidence Type Name")]
+        [DisplayName("Evidence Type")]
         public string Name { get; set; } = "";
 
-        public string? Description { get; set; } = "";
+        [DisplayName("Evidence Type Description")] public string? Description { get; set; } = "";
 
         public ICollection<Evidence>? Evidence { get; set; }
 
@@ -22,11 +22,11 @@ namespace RGO.Models
 
         [DisplayName("Input By")] public string? Created_By { get; set; } = "";
 
-        public DateTime Created_Date { get; set; } = DateTime.UtcNow;
+        [DisplayName("Created Date")] public DateTime Created_Date { get; set; } = DateTime.Now;
 
-        public string? Updated_By { get; set; }
+        [DisplayName("Updated By")] public string? Updated_By { get; set; }
 
-        public DateTime? Updated_Date { get; set; }
+        [DisplayName("Updated Date")] public DateTime? Updated_Date { get; set; }
 
         public string? Notes { get; set; }
 

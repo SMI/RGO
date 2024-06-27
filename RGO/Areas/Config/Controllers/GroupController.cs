@@ -73,13 +73,13 @@ namespace RGO.Areas.Config.Controllers
             {
                 if (groupVM.Group.Id == 0)
                 {
-                    //groupVM.Group.Created_Date = DateTime.UtcNow;
+                    //groupVM.Group.Created_Date = DateTime.Now;
                     _unitOfWork.Group.Add(groupVM.Group);
                     ActionType = "Create";
                 }
                 else
                 {
-                    //groupVM.Group.Updated_Date = DateTime.UtcNow;
+                    //groupVM.Group.Updated_Date = DateTime.Now;
                     _unitOfWork.Group.Update(groupVM.Group);
                     ActionType = "Update";
                 }

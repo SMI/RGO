@@ -78,11 +78,11 @@ namespace RGO.DataAccess.Repository
 
             //foreach (var entityEntry in entries)
             //{
-            //    ((Entity)entityEntry.Entity).Updated_Date = DateTime.UtcNow;
+            //    ((Entity)entityEntry.Entity).Updated_Date = DateTime.Now;
 
             //    if (entityEntry.State == EntityState.Added)
             //    {
-            //        ((Entity)entityEntry.Entity).Created_Date = DateTime.UtcNow;
+            //        ((Entity)entityEntry.Entity).Created_Date = DateTime.Now;
             //    }
             //}
 
@@ -91,7 +91,7 @@ namespace RGO.DataAccess.Repository
 
         //private void ProcessSave()
         //{
-        //    var thisTime = DateTime.UtcNow;
+        //    var thisTime = DateTime.Now;
         //    foreach (var item in ChangeTracker.Entries()
         //        .Where(e => e.State == EntityState.Added && e.Entity is Entity))
         //    {

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RGO.DataAccess.Data;
@@ -11,9 +12,11 @@ using RGO.DataAccess.Data;
 namespace RGO.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240625152957_maxlength")]
+    partial class maxlength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,7 +65,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("Evidence_TypeId");
 
-                    b.ToTable("Evidences", (string)null);
+                    b.ToTable("Evidences");
                 });
 
             modelBuilder.Entity("RGO.Models.Evidence_Type", b =>
@@ -98,7 +101,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Evidence_Types", (string)null);
+                    b.ToTable("Evidence_Types");
                 });
 
             modelBuilder.Entity("RGO.Models.Group_Type", b =>
@@ -130,7 +133,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Group_Types", (string)null);
+                    b.ToTable("Group_Types");
                 });
 
             modelBuilder.Entity("RGO.Models.Models.Group", b =>
@@ -173,7 +176,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("Group_TypeId");
 
-                    b.ToTable("Groups", (string)null);
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("RGO.Models.Models.RGO_Column", b =>
@@ -229,7 +232,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("RGO_RecordId");
 
-                    b.ToTable("RGO_Columns", (string)null);
+                    b.ToTable("RGO_Columns");
                 });
 
             modelBuilder.Entity("RGO.Models.Models.RGO_Column_Template", b =>
@@ -288,7 +291,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("Release_Status_Id");
 
-                    b.ToTable("RGO_Column_Templates", (string)null);
+                    b.ToTable("RGO_Column_Templates");
                 });
 
             modelBuilder.Entity("RGO.Models.Models.RGO_Dataset", b =>
@@ -341,7 +344,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("Release_Status_Id");
 
-                    b.ToTable("RGO_Datasets", (string)null);
+                    b.ToTable("RGO_Datasets");
                 });
 
             modelBuilder.Entity("RGO.Models.Models.RGO_Dataset_Template", b =>
@@ -386,7 +389,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("Release_Status_Id");
 
-                    b.ToTable("RGO_Dataset_Templates", (string)null);
+                    b.ToTable("RGO_Dataset_Templates");
                 });
 
             modelBuilder.Entity("RGO.Models.Models.RGO_ReIdentificationConfiguration", b =>
@@ -435,7 +438,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RGO_ReIdentification_Configurations", (string)null);
+                    b.ToTable("RGO_ReIdentification_Configurations");
                 });
 
             modelBuilder.Entity("RGO.Models.Models.RGO_Record", b =>
@@ -468,7 +471,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("RGO_DatasetId");
 
-                    b.ToTable("RGO_Records", (string)null);
+                    b.ToTable("RGO_Records");
                 });
 
             modelBuilder.Entity("RGO.Models.Models.RGO_Record_Person", b =>
@@ -514,7 +517,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("RGO_RecordId");
 
-                    b.ToTable("RGO_Record_People", (string)null);
+                    b.ToTable("RGO_Record_People");
                 });
 
             modelBuilder.Entity("RGO.Models.Person", b =>
@@ -552,7 +555,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("People", (string)null);
+                    b.ToTable("People");
                 });
 
             modelBuilder.Entity("RGO.Models.RGO_Evidence", b =>
@@ -593,7 +596,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("RGOutput_Id");
 
-                    b.ToTable("RGO_Evidences", (string)null);
+                    b.ToTable("RGO_Evidences");
                 });
 
             modelBuilder.Entity("RGO.Models.RGO_Release_Status", b =>
@@ -633,7 +636,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RGO_Release_Statuses", (string)null);
+                    b.ToTable("RGO_Release_Statuses");
                 });
 
             modelBuilder.Entity("RGO.Models.RGO_Type", b =>
@@ -669,7 +672,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RGO_Types", (string)null);
+                    b.ToTable("RGO_Types");
                 });
 
             modelBuilder.Entity("RGO.Models.RGOutput", b =>
@@ -720,7 +723,7 @@ namespace RGO.DataAccess.Migrations
 
                     b.HasIndex("RGO_TypeId");
 
-                    b.ToTable("RGOutputs", (string)null);
+                    b.ToTable("RGOutputs");
                 });
 
             modelBuilder.Entity("RGO.Models.Evidence", b =>

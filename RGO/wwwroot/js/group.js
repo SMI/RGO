@@ -1,9 +1,11 @@
 ﻿var dataTable;
 $(document).ready(function () {
+    $('#tblData').hide();
     loadDataTable();
 });
 
 function loadDataTable() {
+
     dataTable = $('#tblData').DataTable({
         "ajax": { url: '/config/group/getall'},
         "columns": [
@@ -28,11 +30,13 @@ function loadDataTable() {
         ]
 
     });
+
     dataTable.column(4).visible(false);
     dataTable.column(5).visible(false);
     dataTable.column(6).visible(false);
     dataTable.column(7).visible(false);
     dataTable.column(8).visible(false);
+    $('#tblData').show();
 }
 
 function Delete(url) {

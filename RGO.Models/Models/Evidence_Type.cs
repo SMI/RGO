@@ -10,7 +10,7 @@ namespace RGO.Models
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(250)]
         [DisplayName("Evidence Type")]
         public string Name { get; set; } = "";
 

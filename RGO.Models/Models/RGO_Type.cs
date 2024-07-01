@@ -10,7 +10,7 @@ namespace RGO.Models
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(250)]
         [DisplayName("RGO Type")]
         public string Name { get; set; } = "";
 

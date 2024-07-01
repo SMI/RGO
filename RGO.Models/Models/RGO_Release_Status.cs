@@ -8,8 +8,7 @@ public class RGO_Release_Status
 {
     [Key] public int Id { get; set; }
 
-    [DisplayName("Release Status")][MaxLength(20)] public string Name { get; set; } = "";
-
+    [DisplayName("Release Status")][MaxLength(250)] public string Name { get; set; } = "";
 
     [DisplayName("Release Status Description")] public string? Description { get; set; } = "";
 

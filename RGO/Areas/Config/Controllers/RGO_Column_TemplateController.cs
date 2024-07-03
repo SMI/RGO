@@ -50,7 +50,7 @@ public class RGO_Column_TemplateController : Controller
     {
         RGO_Column_TemplateVM rgo_column_templateVM = new()
         {
-            RGO_Dataset_TemplateList = _unitOfWork.RGO_Dataset_Template.GetAll().Where(u=>parentId==null?true:u.Id==parentId).Select(u => new SelectListItem
+            RGO_Dataset_TemplateList = _unitOfWork.RGO_Dataset_Template.GetAll().Where(u => parentId == null ? true : u.Id == parentId).Select(u => new SelectListItem
             {
                 Text = u.Name,
                 Value = u.Id.ToString()
@@ -76,7 +76,7 @@ public class RGO_Column_TemplateController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Upsert(RGO_Column_TemplateVM rgo_column_templateVM)
+    public IActionResult Upsert(RGO_Column_TemplateVM rgo_column_templateVM, int? id, int? parentId)
     {
         var ActionType = "";
 
@@ -101,7 +101,7 @@ public class RGO_Column_TemplateController : Controller
                 TempData["success"] = "RGO Column Template updated successfully";
 
 
-            return RedirectToAction(nameof(Index));
+            return Redirect($"Index?parentId={parentId}");
         }
 
         return View(rgo_column_templateVM);

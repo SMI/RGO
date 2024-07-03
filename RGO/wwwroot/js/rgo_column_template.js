@@ -68,15 +68,12 @@ function loadDataTable() {
                 },
                 "width": "20%"
             }
-        ]
+        ],
+        "columnDefs": [
+            { "visible": false, "targets": [7, 8, 9, 10, 11] }]
 
     });
 
-    dataTable.column(7).visible(false);
-    dataTable.column(8).visible(false);
-    dataTable.column(9).visible(false);
-    dataTable.column(10).visible(false);
-    dataTable.column(11).visible(false);
 }
 
 function Delete(url) {

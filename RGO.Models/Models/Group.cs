@@ -14,7 +14,7 @@ public class Group
 
     [DisplayName("Group Name")] public string Name { get; set; } = "";
 
-    [DisplayName("Lead Author (If supplied)")]
+    [DisplayName("Contact")]
     public string? ContactInfo { get; set; }
 
     [DisplayName("Reference Number")] public string? Reference_number { get; set; }

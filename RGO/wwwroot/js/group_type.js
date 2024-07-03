@@ -22,14 +22,12 @@ function loadDataTable() {
                 },
                 "width": "20%"
             }
-        ]
+        ],
+        "columnDefs": [
+            { "visible": false, "targets": [1, 2, 3, 4, 5] }]
 
     });
-    dataTable.column(1).visible(false);
-    dataTable.column(2).visible(false);
-    dataTable.column(3).visible(false);
-    dataTable.column(4).visible(false);
-    dataTable.column(5).visible(false);
+
 }
 
 function Delete(url) {

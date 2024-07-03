@@ -35,10 +35,10 @@ namespace RGO.Models
         [DisplayName("Originating Group")]
         public Group? Group { get; set; }
 
-        [DisplayName("Digital Object Id (DOI)")]
+        [DisplayName("RG Output DOI")]
         public string? Doi { get; set; }
 
-        [DisplayName("Standard Acknowledgement Text")]
+        [DisplayName("RG Output Acknowledgement Text")]
         public string? StandardAcknowledgement { get; set; }
 
         public ICollection<RGO_Dataset_Template>? RGO_Dataset_Template { get; set; }

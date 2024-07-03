@@ -20,7 +20,7 @@ namespace RGO.Models.Models
         public string? Dataset_Name { get; set; }
 
 
-        [DisplayName("Digital Object Id (DOI)")]
+        [DisplayName("Dataset DOI")]
         public string? Doi { get; set; }
 
 

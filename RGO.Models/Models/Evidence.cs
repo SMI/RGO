@@ -18,14 +18,14 @@ namespace RGO.Models
         [DisplayName("Evidence Type")]
         public Evidence_Type? Evidence_Type { get; set; }
 
-        [DisplayName("Evidence")]
+        [DisplayName("Details")]
         public string Name { get; set; } = "";
 
-        [DisplayName("Evidence Details")]
+        [DisplayName("Additional Info")]
         public string? EvidenceDetails { get; set; }
 
 
-        [DisplayName("Digital Object Id (DOI)")]
+        [DisplayName("Evidence DOI")]
         public string? Doi { get; set; }
 
         // Standard Acknowledgement Text moved to RGO_Evidence at JK's instruction (SL 17/06/2024)

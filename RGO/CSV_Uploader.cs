@@ -357,7 +357,7 @@ group by rec.""RGO_RecordId"") as mid on mid.""RGO_RecordId"" = rec.""RGO_Record
             from rc
             group by ""RGO_RecordId""
             ";
-        var ConnectionString = _config.GetValue(typeof(object), "ConnectionStrings:DefaultConnection");
+        var ConnectionString = System.Environment.GetEnvironmentVariable("ConnectionStrings:DefaultConnection")?? _config.GetValue(typeof(object), "ConnectionStrings:DefaultConnection");
         var server = new DiscoveredServer(ConnectionString.ToString(), DatabaseType.PostgreSql);
         using var conn = server.GetConnection();
         conn.Open();
@@ -407,7 +407,7 @@ group by rec.RGO_RecordId) as mid on mid.RGO_RecordId = rec.RGO_RecordId
                 for Name in ( {columns})
             ) p
             ";
-        var ConnectionString = _config.GetValue(typeof(object), "ConnectionStrings:DefaultConnection");
+        var ConnectionString = System.Environment.GetEnvironmentVariable("ConnectionStrings:DefaultConnection") ?? _config.GetValue(typeof(object), "ConnectionStrings:DefaultConnection");
         var server = new DiscoveredServer(ConnectionString.ToString(), DatabaseType.MicrosoftSQLServer);
         using var conn = server.GetConnection();
         conn.Open();

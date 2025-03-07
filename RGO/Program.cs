@@ -9,6 +9,7 @@ using RGO.Utility;
 using FAnsi.Implementation;
 using FAnsi.Implementations.MicrosoftSQL;
 using FAnsi.Implementations.PostgreSql;
+using System.Reflection;
 
 
 public class Program
@@ -16,6 +17,11 @@ public class Program
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+
+        builder.Configuration
+        .AddEnvironmentVariables();
+
         // Add services to the container.
         builder.Services.AddControllersWithViews()
             .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -29,6 +35,7 @@ public class Program
                     DatabaseHelper.Instance.SetDatabaseType(DatabaseTypes.MicrosoftSQL);
                     break;
                 case nameof(DatabaseTypes.Postgres):
+                    var x = builder.Configuration.GetConnectionString("DefaultConnection");
                     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
                     DatabaseHelper.Instance.SetDatabaseType(DatabaseTypes.Postgres);
                     break;
@@ -37,6 +44,7 @@ public class Program
             }
         });
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
         var app = builder.Build();
         ImplementationManager.Load<MicrosoftSQLImplementation>();

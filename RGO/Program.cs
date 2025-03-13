@@ -9,10 +9,21 @@ using RGO.Utility;
 using FAnsi.Implementation;
 using FAnsi.Implementations.MicrosoftSQL;
 using FAnsi.Implementations.PostgreSql;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
+using Npgsql;
 
 
 public class Program
 {
+
+    private static NpgsqlDbContextOptionsBuilder AdjustMigrationsHistoryTableSchemaFromSearchPath(NpgsqlDbContextOptionsBuilder builder, string connectionString)
+    {
+        var schemaName = new NpgsqlConnectionStringBuilder(connectionString).SearchPath;
+        if (schemaName != null)
+            builder.MigrationsHistoryTable(HistoryRepository.DefaultTableName, schemaName);
+        return builder;
+    }
 
     private static void Main(string[] args)
     {
@@ -36,7 +47,7 @@ public class Program
                     break;
                 case nameof(DatabaseTypes.Postgres):
                     var x = builder.Configuration.GetConnectionString("DefaultConnection");
-                    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+                    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), x => AdjustMigrationsHistoryTableSchemaFromSearchPath(x, builder.Configuration.GetConnectionString("DefaultConnection")));
                     DatabaseHelper.Instance.SetDatabaseType(DatabaseTypes.Postgres);
                     break;
                 default:
@@ -44,8 +55,7 @@ public class Program
             }
         });
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-
+        
         var app = builder.Build();
         ImplementationManager.Load<MicrosoftSQLImplementation>();
         ImplementationManager.Load<PostgreSqlImplementation>();

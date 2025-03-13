@@ -9,11 +9,11 @@ using RGO.Utility;
 using FAnsi.Implementation;
 using FAnsi.Implementations.MicrosoftSQL;
 using FAnsi.Implementations.PostgreSql;
-using System.Reflection;
 
 
 public class Program
 {
+
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);

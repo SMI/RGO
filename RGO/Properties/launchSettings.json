@@ -5,7 +5,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionStrings:DefaultConnection": "Host=localhost,5432; Database=rr; Username=postgres; Password=postgres;"
+        "ConnectionStrings:DefaultConnection": "Host=localhost,5432; Database=R-GO; Username=postgres; Password=postgres;"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5284"

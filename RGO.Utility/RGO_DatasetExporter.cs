@@ -26,7 +26,7 @@ public class RGO_DatasetExporter
     public string GenerateExportableData()
     {
         var _config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-        var ConnectionString = _config.GetValue(typeof(object), "ConnectionStrings:DefaultConnection");
+        var ConnectionString = System.Environment.GetEnvironmentVariable("ConnectionStrings:DefaultConnection") ?? _config.GetValue(typeof(object), "ConnectionStrings:DefaultConnection");
         var server = new DiscoveredServer(ConnectionString.ToString(), DatabaseType.PostgreSql);
         using var conn = server.GetConnection();
         conn.Open();

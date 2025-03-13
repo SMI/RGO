@@ -9,11 +9,11 @@ using RGO.Utility;
 using FAnsi.Implementation;
 using FAnsi.Implementations.MicrosoftSQL;
 using FAnsi.Implementations.PostgreSql;
-using System.Reflection;
 
 
 public class Program
 {
+
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -60,7 +60,7 @@ public class Program
         using (var scope = app.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            db.Database.EnsureCreated();
+            db.Database.Migrate();
         }
 
 

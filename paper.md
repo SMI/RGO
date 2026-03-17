@@ -17,6 +17,7 @@ affiliations:
    index: 1
 date: 10 March 2026
 bibliography: paper.bib
+---
 
 # Summary
 
@@ -47,7 +48,7 @@ RGO occupies a niche area of data curation and management. While typically groun
 
 # Software design
 
-RGO is a .NET Entity Framework application that leverages an MVC pattern to decouple the user-interface from the application logic and database implimentation. It supports both MicrosoftSQL and Postgres databases through the use of FansiSQL[]. The use of FansiSQL was chosen to allow RGO to seamlessly integrate into existing data management databases and pipelines without the need for additional database servers.
+RGO is a .NET Entity Framework application that leverages an MVC pattern to decouple the user-interface from the application logic and database implementation. It supports both MicrosoftSQL and Postgres databases through the use of FansiSQL[]. The use of FansiSQL was chosen to allow RGO to seamlessly integrate into existing data management databases and pipelines without the need for additional database servers.
 
 To reduce the scope of problem space for the initial RGO system, development was focused on the re-use of tabular ground truth data, such as that in table 1, while designing the system in a manner that would be extendable for non-tabular data, such as ML models, in future releases.
 
@@ -57,7 +58,6 @@ To reduce the scope of problem space for the initial RGO system, development was
 | /images/2.jpg | PC245 | T2 | 12/07/24 | ... |
 | /images/3.jpg | PC135 | T1 | 11/07/24 | ... |
 | ...| ... | ... | ... | ... |
-: Table1 : Sample CT Head Ground Truth Data
 
 As there is no fixed definition of what ground truth data should look like, the system was designed to be as flexible as possible to support the majority of ground truth data.
 To enable this, RGO allows users to describe a ground truth dataset with a variable number of columns, which each column being some data type e.g. Number, Date or Text. In addiction the columns can be given tailored labels or descriptions to aid future use.

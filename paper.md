@@ -52,25 +52,74 @@ RGO is a .NET Entity Framework application that leverages an MVC pattern to deco
 
 To reduce the scope of problem space for the initial RGO system, development was focused on the re-use of tabular ground truth data, such as that in table 1, while designing the system in a manner that would be extendable for non-tabular data, such as ML models, in future releases.
 
-| Image Location | Identifier | Ground Truth Value | Exam Date | ... |
-| --- | --- | --- | --- | --- | 
-| /images/1.jpg | PC123 | T1 | 11/07/24 | ... |
-| /images/2.jpg | PC245 | T2 | 12/07/24 | ... |
-| /images/3.jpg | PC135 | T1 | 11/07/24 | ... |
-| ...| ... | ... | ... | ... |
-
 As there is no fixed definition of what ground truth data should look like, the system was designed to be as flexible as possible to support the majority of ground truth data.
-To enable this, RGO allows users to describe a ground truth dataset with a variable number of columns, which each column being some data type e.g. Number, Date or Text. In addiction the columns can be given tailored labels or descriptions to aid future use.
-
-To reduce the complexity of using this system, a dataset has only three requirements:
+To enable this, users define templates for the structure of an expected dataset will look like before the dataset is uploaded to the RGO system.
+To reduce the complexity of using this system, a dataset template  has only two requirements:
 1.	Column(s) to identify the entity being labelled (e.g. anonymised image identifier or pseudonymous identifier) 
 2.	Column(s) containing the ground truth labels 
-3.	Data uploaded to the system is assumed to be validated by the originator 
-
 This design allows for flexibility for users describing and storing ground truth datasets. The addition of description fields and optional labelling within the system allows for improved understandability and usability for future users.
 
-To prevent the duplication of work when capturing ground truth data, RGO uses a templating system to efficiently create reusable data templates for ground truth data. 
-From this, the template can be reused by research projects for as long as the data structure remains consistent, allowing for multiple versions of actualised ground truth data to be captured by the system with minimal additional setup.
+Due to the flexible nature of the data structures managed by the RGO system, it was decided to deconstruct each uploaded dataset and dataset record into a standardised format that can be reconstructed for future use.
+
+Simplified Database Structure
+```mermaid
+erDiagram
+    RGODataset  ||-- |{ RGORecord: hasMany
+    RGORecord  ||-- |{ RGOColumn: hasMany
+    RGODataset{
+        int ID
+        string Name
+        string DOI
+    }
+    RGOColumn{
+        int ID
+        int RGO_RecordID
+        string Name
+        string Type
+        string Value
+    }
+    RGORecord{
+        int ID
+        int RGO_DatasetID
+    }
+```
+Example Ground Truth dataset uploaded by researcher
+| Image Location | Identifier | Ground Truth Value | Exam Date |
+| --- | --- | --- | --- |
+| /images/1.jpg | PC123 | T1 | 11/07/24 |
+| /images/2.jpg | PC245 | T2 | 12/07/24 |
+| /images/3.jpg | PC135 | T1 | 11/07/24 |
+| ...| ... | ... | ... |
+
+
+RGO Dataset Table
+| ID | Name | DOI |
+| 1 | CT Head Scans | TBD |
+
+RGO Records Table
+| ID | RGO_DatasetID |
+| 1 | 1 |
+| 2 | 1 |
+| 3 | 1 |
+
+
+RGO Columns Table
+| ID | RGO_RecordID | Name | Type | Value |
+| 1 | 1 | Image Location | string | /images/1.jpg |
+| 2 | 1 | Identifier | string | PC123 |
+| 3 | 1 | Ground Truth Value | string | T1 |
+| 4 | 1 | Exam Date | datetime | 11/07/24 |
+| 5 | 2 | Image Location | string | /images/2.jpg |
+| 6 | 2 | Identifier | string | PC245 |
+| 7 | 2 | Ground Truth Value | string | T2 |
+| 8 | 2 | Exam Date | datetime | 12/07/24 |
+| 9 | 3 | Image Location | string | /images/3.jpg |
+| 10 | 3 | Identifier | string | PC135 |
+| 11 | 3 | Ground Truth Value | string | T1 |
+| 12 | 3 | Exam Date | datetime | 11/07/24 |
+
+
+Evaulation of this destucturing and restucturing process proved that RGO can deconstruct and reconstruct a 100m record dataset in under 3 minutes. We believe this time delay is a reasonable tradeoff to allow the data to be managed and queried in a standardised format.
 
 
 # Research impact statement

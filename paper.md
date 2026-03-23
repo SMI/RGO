@@ -33,10 +33,10 @@ Designed to support data engineers provisioning research datasets, RGO facilitat
 
 In supervised machine learning, ground truth refers to the accurate and verifiable labels assigned to the dataset, typically provided by a domain expert.
 This data serves as a benchmark for training and evaluating machine learning (ML) models.
-The reliability of a supervised learning model is directly dependent on the quality of the ground truth data used to build the ML model [].
+The reliability of a supervised learning model is directly dependent on the quality of the ground truth data used to build the ML model [@MOHAMMED2025102549].
 Ground truth data is particularly critical in research domains that may have a direct impact on a person, such as medical imaging research.
 While this ground truth data is incredibly valuable, its generation is very time consuming and not a task domain experts can typically facilitate due to other commitments.
-As such, the need to reuse ground truth is becoming more and more pressing as the quantity of ML based research projects increase[].
+As such, the need to reuse ground truth is becoming more and more pressing as the quantity of ML based research projects increase[@MLDevelopment].
 
 RGO was designed by, and for, data engineers to integrate with existing data pipeline and storage systems to facilitate the re-use of this ground truth data across research projects.
 This integration was designed to reduce the time and cost of generating ground truth data for each research project while introducing minimal additional overheads to research dataset provisioning.
@@ -48,7 +48,7 @@ RGO occupies a niche area of data curation and management. While typically groun
 
 # Software design
 
-RGO is a .NET Entity Framework application that leverages an MVC pattern to decouple the user-interface from the application logic and database implementation. It supports both MicrosoftSQL and Postgres databases through the use of FansiSQL[]. The use of FansiSQL was chosen to allow RGO to seamlessly integrate into existing data management databases and pipelines without the need for additional database servers.
+RGO is a .NET Entity Framework application that leverages an MVC pattern to decouple the user-interface from the application logic and database implementation. It supports both MicrosoftSQL and Postgres databases through the use of FansiSQL[@FansiSql]. The use of FansiSQL was chosen to allow RGO to seamlessly integrate into existing data management databases and pipelines without the need for additional database servers.
 
 To reduce the scope of problem space for the initial RGO system, development was focused on the re-use of tabular ground truth data, while designing the system in a manner that would be extendable for non-tabular data, such as ML models, in future releases.
 

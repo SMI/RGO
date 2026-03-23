@@ -24,10 +24,14 @@ bibliography: paper.bib
 Ground truth data is data that has been reviewed and classified by a domain expert, ensuring that the data and its classification is highly accurate.
 RGO is a flexible data curation and management system. It was developed to capture, curate, and allow the re-use of this ground truth data for machine learning development.
 Designed to support data engineers provisioning research datasets, RGO facilitates:
-- The ingestion of new ground truth data into existing data management pipelines
-- Linkage between existing datasets and ingested ground truth data for cohort building purposes
-- Conditional merging of existing datasets and ingested ground truth data for research project dataset provisioning
-- Ground truth attribution, ensuring previous project outputs are correctly attributed
+
+* The ingestion of new ground truth data into existing data management pipelines
+
+* Linkage between existing datasets and ingested ground truth data for cohort building purposes
+
+* Conditional merging of existing datasets and ingested ground truth data for research project dataset provisioning
+
+* Ground truth attribution, ensuring previous project outputs are correctly attributed
 
 # Statement of need
 

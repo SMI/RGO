@@ -22,7 +22,7 @@ bibliography: paper.bib
 # Summary
 Ground truth data consists of expert-validated labels used to train and evaluate machine learning (ML) models.
 RGO is a flexible data curation and management system. It was developed to capture, curate, and allow the re-use of this ground truth data for machine learning development.
-Designed for data engineers provisioning research datasets, RGO facilitates:
+Designed for data engineers responsible for provisioning research datasets, RGO facilitates:
 
 * The ingestion of new ground truth data into existing data management pipelines
 
@@ -38,15 +38,15 @@ In supervised machine learning, ground truth refers to the accurate and verifiab
 This data serves as a benchmark for training and evaluating machine learning (ML) models.
 The reliability of a supervised learning model is directly dependent on the quality of the ground truth data used to build the ML model [@MOHAMMED2025102549].
 Ground truth data is particularly critical in research domains that may have a direct impact on a person, such as medical imaging research.
-While this ground truth data is incredibly valuable, its generation is very time-consuming which makes difficult to frequently gather data from domain experts.
-As such, the need to reuse ground truth is becoming more and more pressing as the quantity of ML-based research projects increase [@MLDevelopment].
+While this ground truth data is incredibly valuable, its generation is very time-consuming which makes it difficult to frequently gather data from domain experts.
+As such, the need to reuse ground truth is becoming increasingly pressing as the quantity of ML-based research projects increase [@MLDevelopment].
 
 RGO was designed by, and for, data engineers to integrate with existing data pipeline and storage systems to facilitate the re-use of this ground truth data across research projects.
 This integration was designed to reduce the time and cost of generating ground truth data for each research project while introducing minimal additional overheads to research dataset provisioning.
 
 # State of the field
 
- Existing data management systems focus on storage and access, but do not typically support reuse and attribution of research-generated outputs, such as ground truth data [@GUEDES2025753] [@DigitalScience2026]. Inefficient methods to credit researchers and scarce data management support are common barriers to the re-use of research outputs [@GUEDES2025753]. While there has been a bigger push for data reuse and data source attribution over the last few years [@DigitalScience2026], a system has yet to be developed that fulfills these needs while integrating into existing data management pipelines.
+ Existing data management systems focus on storage and access, but do not typically support reuse and attribution of research-generated outputs, such as ground truth data [@GUEDES2025753] [@DigitalScience2026]. Inefficient methods to credit researchers and scarce data management support are common barriers to the re-use of research outputs [@GUEDES2025753]. While there has been a bigger push for data reuse and data source attribution over the last few years [@DigitalScience2026], few systems exist that fulfills these needs while integrating into existing data management pipelines.
 
 
 # Software design

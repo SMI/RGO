@@ -60,6 +60,7 @@ As there is no fixed definition of what ground truth data should look like, the 
 To enable this, users define templates for the structure of an expected dataset before the dataset is uploaded to the RGO system.
 
 To reduce the complexity of using this system, a dataset template has only two requirements:
+
 1.	Column(s) to identify the entity being labelled (e.g. anonymised image identifier or pseudonymous identifier) 
 
 2.	Column(s) containing the ground truth labels 
@@ -141,5 +142,6 @@ No generative AI tools were used in the development of this software, the writin
 
 # Acknowledgements
 We would like to thank the eDRIS team for their support in the development of the RGO system.
+We would also like to thank Dr Smarti Reel for their support.
 
 # References

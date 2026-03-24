@@ -38,20 +38,20 @@ In supervised machine learning, ground truth refers to the accurate and verifiab
 This data serves as a benchmark for training and evaluating machine learning (ML) models.
 The reliability of a supervised learning model is directly dependent on the quality of the ground truth data used to build the ML model [@MOHAMMED2025102549].
 Ground truth data is particularly critical in research domains that may have a direct impact on a person, such as medical imaging research.
-While this ground truth data is incredibly valuable, its generation is very time-consuming which can make it difficult to frequently gather data from domain experts.
-As such, the need to reuse ground truth is becoming more and more pressing as the quantity of ML based research projects increase [@MLDevelopment].
+While this ground truth data is incredibly valuable, its generation is very time-consuming which makes difficult to frequently gather data from domain experts.
+As such, the need to reuse ground truth is becoming more and more pressing as the quantity of ML-based research projects increase [@MLDevelopment].
 
 RGO was designed by, and for, data engineers to integrate with existing data pipeline and storage systems to facilitate the re-use of this ground truth data across research projects.
 This integration was designed to reduce the time and cost of generating ground truth data for each research project while introducing minimal additional overheads to research dataset provisioning.
 
 # State of the field
 
-RGO occupies a niche area of data curation and management. Existing data management systems focus on storage and access, but do not typically support reuse and attribution of research-generated outputs, such as ground truth data. Ground truth data is typically retained by the research group once a project is completed. There is currently no scalable solution for the re-use of this data over time and across teams and projects.
+ Existing data management systems focus on storage and access, but do not typically support reuse and attribution of research-generated outputs, such as ground truth data [@GUEDES2025753] [@DigitalScience2026]. Inefficient methods to credit researchers and scarce data management support are common barriers to the re-use of research outputs [@GUEDES2025753]. While there has been a bigger push for data reuse and data source attribution over the last few years [@DigitalScience2026], a system has yet to be developed that fulfills these needs while integrating into existing data management pipelines.
 
 
 # Software design
 
-RGO is a .NET Entity Framework application that leverages an MVC pattern[] to decouple the user-interface from the application logic and database implementation. It supports both Microsoft SQL Server and Postgres databases through the use of FansiSQL[@FansiSql]. The use of FansiSQL was chosen to allow RGO to seamlessly integrate into existing data management databases and pipelines without the need for additional database servers.
+RGO is a .NET Entity Framework application that leverages an MVC pattern [@POP20141172] to decouple the user-interface from the application logic and database implementation. It supports both Microsoft SQL Server and PostgreSQL databases through the use of FansiSQL[@FansiSql]. The use of FansiSQL was chosen to allow RGO to seamlessly integrate into existing data management databases and pipelines without the need for additional database servers.
 
 To reduce the scope of the initial RGO system, development was focused on the re-use of tabular ground truth data, while designing the system in a manner that would be extendable for non-tabular data, such as ML models, in future releases.
 
@@ -62,12 +62,13 @@ To reduce the complexity of using this system, a dataset template has only two r
 
 1.	Identifier Column(s) for the entity being labelled (e.g. anonymised image identifier or pseudonymous identifier) 
 
-2.	Label Column(s) containing the experts decision on the record
+2.	Label column(s) containing the expert’s decision for each record
 
 This design allows for flexibility for users describing and storing ground truth datasets. The addition of custom description fields and optional labelling within the system allows for improved understandability and usability for future users.
 
 Due to the flexible nature of the data structures managed by the RGO system, it was decided to deconstruct each uploaded dataset and dataset record into a standardised format that can be reconstructed for future use.
-This deconstruction creates individual cell records across a number of tables, an example of this can be seen below.
+This enables schema-agnostic storage while preserving the ability to reconstruct the original dataset structure. An example of this process can be seen below.
+
 
 ### Example Ground Truth dataset uploaded by researcher (CT Head Scans)
 | Image Location | Identifier | Ground Truth Value | Exam Date |
@@ -133,7 +134,7 @@ This deployment has produced 10 reusable RGOs from a variety of projects. These 
 
 Since producing these RGOs, 4 studies have been approved to use these RGOs. Three of these projects are traditional brain-imaging projects, including the development of machine-learning models.
 The fourth study leverages the Structured Reports RGO, which has allowed them to re-use the extracted clinical terms derived by this RGO rather than extract this data themselves from electronic healthcare records.
-This has not only removed duplication of effort in this task, but is also an example of the data minimisation enabled by the use of RGOs
+This has not only removed duplication of effort in this task, but is also an example of the data minimisation enabled by the use of RGOs.
 
 # AI usage disclosure
 

@@ -9,7 +9,7 @@ authors:
       equal-contrib: true
       affiliation: 1
     - name: Suzie Law
-      orcid: 
+      orcid: 0009-0006-2440-2428
       equal-contrib: true
       affiliation: 1
 affiliations:

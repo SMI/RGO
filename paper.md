@@ -58,26 +58,77 @@ To reduce the scope of problem space for the initial RGO system, development was
 
 As there is no fixed definition of what ground truth data should look like, the system was designed to be as flexible as possible to support the majority of ground truth data.
 To enable this, users define templates for the structure of an expected dataset before the dataset is uploaded to the RGO system.
-To reduce the complexity of using this system, a dataset template  has only two requirements:
+
+To reduce the complexity of using this system, a dataset template has only two requirements:
 1.	Column(s) to identify the entity being labelled (e.g. anonymised image identifier or pseudonymous identifier) 
+
 2.	Column(s) containing the ground truth labels 
-This design allows for flexibility for users describing and storing ground truth datasets. The addition of description fields and optional labelling within the system allows for improved understandability and usability for future users.
+
+This design allows for flexibility for users describing and storing ground truth datasets. The addition of custom description fields and optional labelling within the system allows for improved understandability and usability for future users.
 
 Due to the flexible nature of the data structures managed by the RGO system, it was decided to deconstruct each uploaded dataset and dataset record into a standardised format that can be reconstructed for future use.
-This deconstruction created individual cell records across a number of tables, an example of this can be seen in appendix item 1. Restructuring this data simply involved collating cell records for the dataset and recreating the expected structure from the defined template.
-Evaluation of this destucturing and restucturing process proved that RGO can deconstruct and reconstruct a 100m record dataset in under 3 minutes. We believe this time delay is a reasonable tradeoff to allow the data to be managed and queried in a standardised format.
+This deconstruction creates individual cell records across a number of tables, an example of this can be seen below.
 
+### Example Ground Truth dataset uploaded by researcher (CT Head Scans)
+| Image Location | Identifier | Ground Truth Value | Exam Date |
+| :--- | :--- | :--- | :--- |
+| /images/1.jpg | PC123 | T1 | 11/07/24 |
+| /images/2.jpg | PC245 | T2 | 12/07/24 |
+| /images/3.jpg | PC135 | T1 | 11/07/24 |
+| ...| ... | ... | ... |
+
+### RGO Dataset Table
+
+| ID | Name | DOI |
+| :--- | :--- | :--- |
+| 1 | CT Head Scans | TBD |
+
+### RGO Records Table
+
+| ID | RGO_DatasetID |
+| :--- | :--- |
+| 1 | 1 |
+| 2 | 1 |
+| 3 | 1 |
+
+### RGO Columns Table
+| ID | RGO_RecordID | Name | Type | Value |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | 1 | Image Location | string | /images/1.jpg |
+| 2 | 1 | Identifier | string | PC123 |
+| 3 | 1 | Ground Truth Value | string | T1 |
+| 4 | 1 | Exam Date | datetime | 11/07/24 |
+| 5 | 2 | Image Location | string | /images/2.jpg |
+| 6 | 2 | Identifier | string | PC245 |
+| 7 | 2 | Ground Truth Value | string | T2 |
+| 8 | 2 | Exam Date | datetime | 12/07/24 |
+| 9 | 3 | Image Location | string | /images/3.jpg |
+| 10 | 3 | Identifier | string | PC135 |
+| 11 | 3 | Ground Truth Value | string | T1 |
+| 12 | 3 | Exam Date | datetime | 11/07/24 |
+
+Restructuring this data simply involved collating cell records for the dataset and recreating the expected structure from the defined template.
+Evaluation of this destructuring and restructuring process proved that RGO can deconstruct and reconstruct a 100m record dataset in under 3 minutes. We believe this time delay is a reasonable tradeoff to allow the data to be managed and queried in a standardised format.
+
+In order to facilitate the use of these reusable datasets, for cohort building or feasibility analysis,  while stored in the destructured format, database table views are automatically generated upon upload. These table views allow for the data to be queries in a tabular format that matches the originally uploaded data.
 
 # Research impact statement
 
 The RGO system is currently deployed and in use within the Electronic Data Research and Innovation Service (eDRIS) within Public Health Scotland (PHS).
 This deployment has produced 10 reusable RGOs from a variety of projects. These include:
+
 *	Extracted clinical terms from Structured Radiologist Reports (via NLP)
+
 *	Labelling of MRI brain scans
+
 *	MRI brain parcellation volumes
+
 *	MRI brain intracranial volumes
+
 *	CT & MRI image annotations
+
 *	Demographic data for patients with brain scans
+
 *	History of health service interaction for patients with brain scans
 
 Since producing these RGOs, 4 studies have been approved to use these RGOs. Three of these projects are traditional brain-imaging projects, including the development of machine-learning models.
@@ -91,46 +142,4 @@ No generative AI tools were used in the development of this software, the writin
 # Acknowledgements
 We would like to thank the eDRIS team for their support in the development of the RGO system.
 
-# Citations
-
 # References
-
-# Appendix
-## 1. Example dataset destructuring 
-### Example Ground Truth dataset uploaded by researcher
-| Image Location | Identifier | Ground Truth Value | Exam Date |
-| --- | --- | --- | --- |
-| /images/1.jpg | PC123 | T1 | 11/07/24 |
-| /images/2.jpg | PC245 | T2 | 12/07/24 |
-| /images/3.jpg | PC135 | T1 | 11/07/24 |
-| ...| ... | ... | ... |
-
-### RGO Dataset Table
-
-| ID | Name | DOI |
-| --- | --- | --- |
-| 1 | CT Head Scans | TBD |
-
-### RGO Records Table
-
-| ID | RGO_DatasetID |
-| --- | --- |
-| 1 | 1 |
-| 2 | 1 |
-| 3 | 1 |
-
-### RGO Columns Table
-| ID | RGO_RecordID | Name | Type | Value |
-| --- | --- | --- | --- | --- |
-| 1 | 1 | Image Location | string | /images/1.jpg |
-| 2 | 1 | Identifier | string | PC123 |
-| 3 | 1 | Ground Truth Value | string | T1 |
-| 4 | 1 | Exam Date | datetime | 11/07/24 |
-| 5 | 2 | Image Location | string | /images/2.jpg |
-| 6 | 2 | Identifier | string | PC245 |
-| 7 | 2 | Ground Truth Value | string | T2 |
-| 8 | 2 | Exam Date | datetime | 12/07/24 |
-| 9 | 3 | Image Location | string | /images/3.jpg |
-| 10 | 3 | Identifier | string | PC135 |
-| 11 | 3 | Ground Truth Value | string | T1 |
-| 12 | 3 | Exam Date | datetime | 11/07/24 |

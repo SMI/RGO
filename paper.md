@@ -20,6 +20,8 @@ bibliography: paper.bib
 ---
 
 # Summary
+Research generated outputs, or RGOs, are tangible `materials that are created during the research process.
+To reduce the initial scope of the RGO system, tabular ground truth data was selected as the target output type for this release of the RGO system.
 Ground truth data consists of expert-validated labels used to train and evaluate machine learning (ML) models.
 RGO is a flexible data curation and management system. It was developed to capture, curate, and allow the re-use of this ground truth data for machine learning development.
 Designed for data engineers responsible for provisioning research datasets, RGO facilitates:
@@ -46,7 +48,11 @@ This integration was designed to reduce the time and cost of generating ground t
 
 # State of the field
 
- Existing data management systems focus on storage and access, but do not typically support reuse and attribution of research-generated outputs, such as ground truth data [@GUEDES2025753] [@DigitalScience2026]. Inefficient methods to credit researchers and scarce data management support are common barriers to the re-use of research outputs [@GUEDES2025753]. While there has been a bigger push for data reuse and data source attribution over the last few years [@DigitalScience2026], few systems exist that fulfills these needs while integrating into existing data management pipelines.
+Existing data management systems primarily focus on data storage and access, through the use of data warehousing and metadata catalogues. While these systems are effective for organising and facilitating the use of data for research, they typically lack the ability to introduce research generated outputs and link these outputs back to the original data for future use.
+
+Research into the current state of data reuse for research has shown that the primary reasons for poor data reuse is ineffective researcher attribution and difficulty with integrating outputs back into existing systems [@GUEDES2025753] [@DigitalScience2026].
+
+RGO addresses these issues by focusing on the curation, standardiation and re-use of research generated outputs. Unlike existing data management systems, RGO enables schema-agnostic ingestion of ground truth data, and supports linkage back to existing datasets, while providing a mechanism for researcher attribution when the data is reused. By flexibly integrating with existing data management pipelines, RGO provides a lightweight, practical, approach to the reuse of research generated outputs.
 
 
 # Software design
@@ -109,7 +115,7 @@ This enables schema-agnostic storage while preserving the ability to reconstruct
 | 12 | 3 | Exam Date | datetime | 11/07/24 |
 
 Restructuring this data simply involved collating cell records for the dataset and recreating the expected structure from the defined template.
-Evaluation of this destructuring and restructuring process, within our test environment, proved that RGO can deconstruct and reconstruct a 100m record dataset in under 8 minutes. We believe this time delay is a reasonable tradeoff to allow the data to be managed and queried in a standardised format.
+Evaluation of this destructuring and restructuring process, using consumer-grade hardware, proved that RGO can deconstruct and reconstruct a 100,000 record dataset in under 8 minutes. We believe this time delay is a reasonable tradeoff to allow the data to be managed and queried in a standardised format.
 
 In order to facilitate the use of these reusable datasets, for cohort building or feasibility analysis,  while stored in the destructured format, database table views are automatically generated upon upload. These table views allow for the data to be queried in a tabular format that matches the originally uploaded data.
 

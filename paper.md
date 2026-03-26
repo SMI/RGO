@@ -52,7 +52,7 @@ Existing data management systems primarily focus on data storage and access, thr
 
 Research into the current state of data reuse for research has shown that the primary reasons for poor data reuse is ineffective researcher attribution and difficulty with integrating outputs back into existing systems [@GUEDES2025753] [@DigitalScience2026].
 
-RGO addresses these issues by focusing on the curation, standardiation and re-use of research generated outputs. Unlike existing data management systems, RGO enables schema-agnostic ingestion of ground truth data, and supports linkage back to existing datasets, while providing a mechanism for researcher attribution when the data is reused. By flexibly integrating with existing data management pipelines, RGO provides a lightweight, practical, approach to the reuse of research generated outputs.
+RGO addresses these issues by focusing on the curation, standardisation and re-use of research generated outputs. Unlike existing data management systems, RGO enables schema-agnostic ingestion of ground truth data, and supports linkage back to existing datasets, while providing a mechanism for researcher attribution when the data is reused. By flexibly integrating with existing data management pipelines, RGO provides a lightweight, practical, approach to the reuse of research generated outputs.
 
 
 # Software design

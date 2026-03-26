@@ -20,8 +20,8 @@ bibliography: paper.bib
 ---
 
 # Summary
-Research generated outputs, or RGOs, are tangible `materials that are created during the research process.
-To reduce the initial scope of the RGO system, tabular ground truth data was selected as the target output type for this release of the RGO system.
+Research generated outputs are tangible materials that are created during the research process.
+To reduce the initial project scope, tabular ground truth data was selected as the target output type for this release of the RGO system.
 Ground truth data consists of expert-validated labels used to train and evaluate machine learning (ML) models.
 RGO is a flexible data curation and management system. It was developed to capture, curate, and allow the re-use of this ground truth data for machine learning development.
 Designed for data engineers responsible for provisioning research datasets, RGO facilitates:
@@ -37,13 +37,13 @@ Designed for data engineers responsible for provisioning research datasets, RGO 
 # Statement of need
 
 In supervised machine learning, ground truth refers to the accurate and verifiable labels assigned to the dataset, typically provided by a domain expert.
-This data serves as a benchmark for training and evaluating machine learning (ML) models.
+This data serves as a benchmark for training and evaluating ML models.
 The reliability of a supervised learning model is directly dependent on the quality of the ground truth data used to build the ML model [@MOHAMMED2025102549].
 Ground truth data is particularly critical in research domains that may have a direct impact on a person, such as medical imaging research.
-While this ground truth data is incredibly valuable, its generation is very time-consuming which makes it difficult to frequently gather data from domain experts.
+While this ground truth data is incredibly valuable, its generation is very time-consuming. This makes it difficult to frequently gather data from domain experts.
 As such, the need to reuse ground truth is becoming increasingly pressing as the quantity of ML-based research projects increase [@MLDevelopment].
 
-RGO was designed by, and for, data engineers to integrate with existing data pipeline and storage systems to facilitate the re-use of this ground truth data across research projects.
+RGO was designed by, and for, data engineers to integrate with existing data pipeline and storage systems. Its goal is to facilitate the re-use of this ground truth data across research projects.
 This integration was designed to reduce the time and cost of generating ground truth data for each research project while introducing minimal additional overheads to research dataset provisioning.
 
 # State of the field
